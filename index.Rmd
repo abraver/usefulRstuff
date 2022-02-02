@@ -1,0 +1,375 @@
+---
+title: "Useful R Stuff"
+output:
+  html_document:
+    css: "style.css"
+    toc: true
+    toc_depth: 4
+    toc_float:
+      collapsed: false
+
+---
+<script src="fold_rmd.js"></script>
+
+
+<!-- <div class = "fold s o"></div> to hide "s"ource or "o"utput or both -->
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r echo = FALSE, results = "hide", message = FALSE}
+library(tidyverse)
+
+```
+
+
+# Working with dataframes
+## janitor - clean dirty data, tabulating tools, adornments
+
+Clean up column names
+```{r results = "hide", message = FALSE}
+library(janitor)
+```
+
+```{r}
+# Create a data.frame with dirty names
+test_df <- as.data.frame(matrix(ncol = 6))
+names(test_df) <- c("firstName", "ábc@!*", "% successful (2009)",
+                    "REPEAT VALUE", "REPEAT VALUE", "")
+
+test_df %>%
+  clean_names()
+
+test_df %>% 
+  clean_names(case = "small_camel")
+```
+
+Compare two or more DFs to see if they have the same types of columns and can be rbound
+```{r}
+df1 <- data.frame(a = 1:2, b = c("big", "small"))
+df2 <- data.frame(a = 10:12, b = c("medium", "small", "big"), c = 0, stringsAsFactors = TRUE) # here, column b is a factor
+df3 <- df1 %>%
+  dplyr::mutate(b = as.character(b))
+
+compare_df_cols(df1, df2, df3)
+```
+
+### tabyls - compare combinations of varibales like xtab
+
+```{r}
+mtcars %>%
+  tabyl(gear, cyl)
+```
+
+You can "adorn" tabuls with totals, percentages, and more
+
+```{r}
+mtcars %>%
+  tabyl(gear, cyl) %>%
+  adorn_totals("col") %>%
+  adorn_percentages("row") %>%
+  adorn_pct_formatting(digits = 2) %>%
+  adorn_ns() %>%
+  adorn_title()
+```
+
+[More on tabyls](http://sfirke.github.io/janitor/articles/tabyls.html)
+
+
+
+## diffobj - compare two dfs (or other objects) to see what's changed between them
+
+NB: in RStudio this will open a colorful thing in the Viewer that's easy to read
+
+<div class = "fold o">
+```{r}
+library(diffobj)
+a <- b <- matrix(1:100, ncol=2)
+a <- a[-20,]
+b <- b[-45,]
+b[c(18, 44)] <- 999
+diffPrint(target=a, current=b)
+```
+</div>
+
+
+<div class = "fold o">
+```{r}
+diffChr(letters[1:3], c("a", "B", "c"))
+```
+</div>
+
+
+
+# Summarizing
+## skimr::skim() - nice summary statistics for dfs and the like
+
+<div class = "fold o">
+```{r}
+library(skimr)
+iris %>% 
+  group_by(Species) %>% 
+  skim() %>% 
+  print() # print() only necessary so we don't get a kable table in this document
+```
+</div>
+
+---
+
+```{r}
+iris %>% 
+  skim() %>% 
+  summary() %>% 
+  print() # print() only necessary so we don't get a kable table in this document
+```
+
+---
+
+<div class = "fold o">
+```{r}
+iris %>% 
+  skim(Sepal.Length, Petal.Length) %>%  # tidyselect columns to summarize
+  print() # print() only necessary so we don't get a kable table in this document
+```
+</div>
+
+---
+
+<div class = "fold o">
+You can do cool stuff in the pipeline with it
+
+```{r}
+iris %>%
+  skim() %>%
+  dplyr::filter(numeric.sd > 1) %>% # "numeric" is the variable type that we're targeting
+  print()
+```
+
+</div>
+
+# Plotting
+## Khroma - color scales that are nice and colorblind friendly
+
+https://packages.tesselle.org/khroma/
+
+
+```{r}
+library(khroma)
+bright <- colour("bright")
+bright(7)
+```
+
+<div class="fold o">
+```{r}
+# Preview the theme
+plot_scheme(bright(7), colours = TRUE)
+```
+</div>
+
+Use with ggplot2
+
+```{r}
+
+data(mpg, package = "ggplot2")
+
+ggplot2::ggplot(data = mpg) +
+  ggplot2::aes(x = displ, y = hwy, colour = class) +
+  ggplot2::geom_point() +
+  scale_colour_bright()
+```
+
+
+
+## ggiraph - interactive graphs even in Rmd
+
+This can do a whole lot of cool stuff more than this simple example.
+
+More info: <https://davidgohel.github.io/ggiraph/>
+
+
+```{r}
+library(ggplot2)
+library(ggiraph)
+data <- mtcars
+data$carname <- row.names(data)
+
+gg_point = ggplot(data = data) +
+    geom_point_interactive(aes(x = wt, y = qsec, color = disp,
+    tooltip = carname, data_id = carname)) + 
+  theme_minimal()
+
+girafe(ggobj = gg_point)
+```
+
+
+
+## Patchwork - composing multiple plots together
+
+Setting up some plots we can stitch together
+<div class = "fold s">
+```{r messages = FALSE}
+library(patchwork)
+library(ggplot2)
+p1 <- ggplot(mtcars) + 
+  geom_point(aes(mpg, disp)) + 
+  ggtitle('Plot 1')
+
+p2 <- ggplot(mtcars) + 
+  geom_boxplot(aes(gear, disp, group = gear)) + 
+  ggtitle('Plot 2')
+
+p3 <- ggplot(mtcars) + 
+  geom_point(aes(hp, wt, colour = mpg)) + 
+  ggtitle('Plot 3')
+
+p4 <- ggplot(mtcars) + 
+  geom_bar(aes(gear)) + 
+  facet_wrap(~cyl) + 
+  ggtitle('Plot 4')
+```
+</div>
+
+
+<div class = "fold o">
+
+```{r}
+p1 + p2 # combine two plots
+```
+</div>
+
+
+<div class = "fold o">
+```{r}
+p1 + p2 + p3 + p4 # by default it makes a square grid, filling rowwise
+# plot_layout()
+p1 + p2 + p3 + p4 + plot_layout(nrow = 3, byrow = FALSE)
+```
+</div>
+
+
+Stacking and packing plots:
+<div class = "fold o">
+```{r}
+p1 / p2 # / stacks one on top of the other
+p1 | (p2 / p3) # | plots side by side.  Note the parens
+```
+</div>
+
+<div class = "fold o">
+```{r}
+p1 + p2 +
+  plot_annotation(
+    title = 'This is a title',
+    caption = 'made with patchwork',
+    theme = theme(plot.title = element_text(size = 16, hjust = 0.5))
+  )
+```
+</div>
+
+You can define your own layout using letters, with relative sizing
+<div class = "fold o">
+```{r}
+layout <- "
+##BBBB
+AACCDD
+##CCDD
+"
+p1 + p2 + p3 + p4 + 
+  plot_layout(design = layout)
+```
+
+</div>
+
+
+
+
+It gets a lot more [complicated and cool](https://patchwork.data-imaginist.com/).  See [here](https://patchwork.data-imaginist.com/articles/guides/multipage.html) for how this package can also avoid plots "jumping" around as you switch slides.
+
+# Package and project management
+
+
+## Package development workflow
+<https://r-pkgs.org>: the definitive book by Wickham and Bryan, which explains lots of the stuff below
+
+```{r eval = FALSE}
+
+devtools::load_all() # simulates installing and loading your package
+devtools::document() # updates all the documentation and stuff via roxygen2
+devtools::check() # run some checks when you think you're ready to release
+
+```
+
+
+## usethis
+
+
+```{r eval = FALSE}
+# Creating
+create_package()
+create_project()
+
+# Checking
+proj_sitrep() # show wd, proj dir, etc
+
+# Development
+use_package() # import packages into DESCRIPTION
+
+# Include important things
+use_pipe()
+use_tibble()
+
+# Git
+use_git()
+use_github()
+git_sitrep()
+
+```
+Also has git/github functions and other config stuff
+
+
+
+# Modeling
+
+## TidyModels
+<https://www.tidymodels.org>; has a bunch of subpackages, including broom
+
+
+
+# Data exploration
+## DataExplorer
+<https://boxuancui.github.io/DataExplorer/>
+
+<div class = "fold o">
+```{r message=FALSE}
+library(DataExplorer)
+plot_bar(ggplot2::diamonds) # Plot frequency of levels in each factor
+```
+```{r}
+plot_histogram(ggplot2::diamonds) # Histogram for all continuous variables
+```
+```{r}
+plot_boxplot(ggplot2::diamonds, by = "cut")
+```
+</div>
+
+# Stuff to add
+
+(broom)[https://broom.tidymodels.org] to tidy up models
+
+
+```{r}
+a <- b <- matrix(1:100, ncol=2)
+a <- a[-20,]
+b <- b[-45,]
+b[c(18, 44)] <- 999
+diffobj::diffPrint(target=a, current=b)
+```
+
+
+
+
+
