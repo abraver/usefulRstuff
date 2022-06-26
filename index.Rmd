@@ -28,6 +28,23 @@ library(tidyverse)
 
 
 # Working with dataframes
+
+## thinkr::peep() - see intermediate stages of piped dfs
+
+```{r}
+
+iris %>% 
+  thinkr::peep(head) %>% 
+  rename(species = Species)
+
+```
+```{r}
+iris %>% 
+  thinkr::peep(head(., n = 7)) %>% 
+  rename(species = Species)
+```
+
+
 ## janitor - clean dirty data, tabulating tools, adornments
 
 Clean up column names
@@ -58,7 +75,7 @@ df3 <- df1 %>%
 compare_df_cols(df1, df2, df3)
 ```
 
-### tabyls - compare combinations of varibales like xtab
+## janitor::tabyl - compare combinations of varibales like xtab
 
 ```{r}
 mtcars %>%
@@ -104,6 +121,14 @@ diffChr(letters[1:3], c("a", "B", "c"))
 </div>
 
 
+
+## fuzzyjoin: Join dfs on inexact matching
+
+Among other options:
+
+- Numeric values that are within some tolerance (difference_inner_join)
+- Strings that are similar in Levenshtein/cosine/Jaccard distance, or other metrics from the stringdist package (stringdist_inner_join)
+- A regular expression in one column matching to another (regex_inner_join)
 
 # Summarizing
 ## skimr::skim() - nice summary statistics for dfs and the like
@@ -181,6 +206,8 @@ ggplot2::ggplot(data = mpg) +
   ggplot2::geom_point() +
   scale_colour_bright()
 ```
+
+
 
 
 
@@ -289,6 +316,37 @@ p1 + p2 + p3 + p4 +
 
 It gets a lot more [complicated and cool](https://patchwork.data-imaginist.com/).  See [here](https://patchwork.data-imaginist.com/articles/guides/multipage.html) for how this package can also avoid plots "jumping" around as you switch slides.
 
+## Paginate faceted graphs and save as a single PDF
+
+You can manually select which page to print:
+
+```{r}
+USArrests %>% # dataset on US arrests
+  rownames_to_column("State") %>%  # This is just so we can see the state names
+  ggplot(aes(x = UrbanPop, y = Murder)) +
+  geom_point() +
+  ggforce::facet_wrap_paginate(~State, nrow =3, ncol = 3, page = 2)
+```
+Or you can be fancy and do a loop.  If you know the number of pages ahead of time (which you can get with `ggforce::n_pages(p)`), you can just loop through those:
+
+```{r eval = FALSE}
+cairo_pdf('filename.pdf', width = 11, height = 8.5, onefile = TRUE) #start building pdf
+for (i in 1:9) {
+  print( # don't forget this
+    USArrests %>% # dataset on US arrests
+    rownames_to_column("State") %>%  # This is just so we can see the state names
+    ggplot(aes(x = UrbanPop, y = Murder)) +
+    geom_point() +
+    ggforce::facet_wrap_paginate(~State, nrow =3, ncol = 3, page = 2)
+  )
+}
+dev.off() # end building pdf
+```
+
+Or you can calcuate the number of pages on the fly: (https://stackoverflow.com/questions/48544039/how-to-save-output-from-ggforcefacet-grid-paginate-in-only-one-pdf)
+
+
+
 # Package and project management
 
 
@@ -300,6 +358,8 @@ It gets a lot more [complicated and cool](https://patchwork.data-imaginist.com/)
 devtools::load_all() # simulates installing and loading your package
 devtools::document() # updates all the documentation and stuff via roxygen2
 devtools::check() # run some checks when you think you're ready to release
+
+usethis::use_version(which = c("major", "minor", "patch", "dev")) # update version number.  `which` is what level of x.y.z.dev to increment
 
 ```
 
@@ -356,6 +416,300 @@ plot_boxplot(ggplot2::diamonds, by = "cut")
 ```
 </div>
 
+# Regex
+
+## RegExplain add-in
+
+Select a variable name in your script, then Addins > RegExplain.  You may want to type out dataframe$variable so it selects just that column.
+
+Also Addins > RegExplain Cheatsheet has lots of helpful stuff
+
+
+## rex - "friendly regular expressions"
+
+A bunch of shortcuts to make regexprs more human-readable
+
+```{r message = FALSE}
+library(rex)
+```
+
+"shortcuts": Commonly used character classes and regular expressions. These shortcuts are substituted inside rex calls.
+
+NB: to have these shortcuts autocomplete in Rstudio, you must first run `rex::rex_mode()`
+
+<div class="fold o">
+```{r}
+rex::shortcuts
+```
+</div>
+
+
+Capture groups:
+
+```{r}
+x <- c("a=1", "b=3", "a=9", "c=2", "b=4", "a=2")
+
+matches <- re_matches(x,
+                      rex(
+                        capture(name="name", letter),
+                        "=",
+                        capture(name="value", digit)
+                      ))
+matches
+```
+
+More capture groups:
+<div class = "fold s o">
+```{r}
+# extract 2,9,22,22. These characters are between the / and after the first character within the /.
+
+mystrings <- c("X2/D2/F4",
+               "X10/D9/F4",
+               "X3/D22/F4",
+               "X9/D22/F9")
+
+matches <- re_matches(mystrings,
+                      rex(
+                        "/",
+                        any,
+                        capture(name = "numbers", digits)
+                      )
+)
+as.numeric(matches$numbers)
+
+```
+</div>
+
+Even more more capture groups
+<div class = "fold s o">
+```{r}
+j <- "What kind of cheese isn't your cheese? (wonder) Nacho cheese! (groan) (Laugh)"
+
+matches <- rematch2::re_match_all(j,
+                      rex(
+                        "(",
+                        capture(name = "text", except_any_of(")")),
+                        ")")) %>% unnest(text)
+matches
+```
+</div>
+
+`or()`
+```{r}
+re <- rex(or("A", "B", "C"))
+str_match(re, "A")
+str_match(re, "B")
+str_match(re, "C")
+```
+
+
+Create character classes
+```{r}
+re <- rex("gr", one_of("a", "e"), "y") # outputs gr[ae]y
+rematch2::re_match_all(c("gray", "grey"), re) %>% unnest()
+
+re <- rex(none_of("a", "e" ,"i", "o", "u")) # [^aeiou]
+rematch2::re_match_all(c("ay", "be", "cee"), re) %>% unnest()
+```
+Escape stuff:
+```{r}
+re <- rex(escape("[hello]")) # \[hello\]
+str_match("[hello]yello", re)
+
+# If using for a string that will define a character class, use character_class_escape() instead
+```
+
+Wildcards
+
+```{r}
+re <- rex(zero_or_more(digit))
+str_extract_all("123abc456", re)
+
+re <- rex(one_or_more(digit))
+str_extract_all("123abc456", re)
+
+re <- rex(maybe(digit))
+str_extract_all("123abc456", re)
+```
+
+
+
+## rematch2 - like str_match(_all), except put it in a tidy tibble instead of a list
+
+(May want to follow with `%>% unnest()` to expand the list-columns)
+
+
+```{r}
+name_rex <- paste0(
+  "(?<first>[[:upper:]][[:lower:]]+) ",
+  "(?<last>[[:upper:]][[:lower:]]+)"
+)
+notables <- c(
+  "  Ben Franklin and Jefferson Davis",
+  "\tMillard Fillmore"
+)
+not <- rematch2::re_match_all(notables, name_rex)
+
+not
+
+not %>% unnest(c(first, last))
+```
+
+# Sorting
+
+## naturalsort - sort numbers without having to left-zero-pad them
+
+```{r}
+sprintf("hoge%s", 1:12) %>% sample(.) %>%
+  naturalsort::naturalsort(.) %>% print()
+```
+
+
+
+# Etc
+
+## Progress bars with `progress`
+
+```{r eval = FALSE}
+list_to_traverse <- 1:10
+
+# Set up the progress bar
+pb <- progress::progress_bar$new(total = 10,
+                                 format = "  [:bar] :spin :percent (:current/:total) in :elapsedfull (eta: :eta) ",
+                                 clear = FALSE)
+purrr::walk(list_to_traverse,
+            function(x) {
+              Sys.sleep(.5)
+              pb$tick() #call pb$tick() after each iteration
+            })
+
+beepr::beep(sound = "fanfare") # play a sound after
+```
+
+You can also do this inline in a one-sided formula (~).  NB that the entire one-sided formula after the ~ must be in {curly braces} and use semicolon to separate "lines"
+```{r eval = FALSE}
+purrr::walk(list_to_traverse,
+            ~ {Sys.sleep(.5); pb$tick()}
+            )
+```
+
+Package `asbutils` has a version of `progress_bar` with sane defaults:
+```{r eval = FALSE}
+pb <- asbutils::asb_progress(total = 10)
+```
+
+
+
+
+## datapasta - copy/paste data
+
+```{r message = FALSE}
+library(datapasta)
+```
+
+Paste as a tribble or as a df
+
+| A | B | C | D | E |
+|---|---|---|---|---|
+| 1 | 4 | 5 | 7 | 9 |
+| 8 | 5 | 8 | 0 | 8 |
+| 5 | 6 | 8 | 9 | 0 |
+
+
+```{r eval = FALSE}
+datapasta::tribble_paste()
+# Pastes the following
+# tibble::tribble(
+#      ~A, ~B, ~C, ~D, ~E,
+#      1L, 4L, 5L, 7L, 9L,
+#      8L, 5L, 8L, 0L, 8L,
+#      5L, 6L, 8L, 9L, 0L
+#      )
+
+datapasta::df_paste()
+# data.frame(
+#            A = c(1L, 8L, 5L),
+#            B = c(4L, 5L, 6L),
+#            C = c(5L, 8L, 8L),
+#            D = c(7L, 0L, 9L),
+#            E = c(9L, 8L, 0L)
+#    )
+```
+
+| A | B | C | D | E |
+|---|---|---|---|---|
+
+```{r eval = FALSE}
+datapasta::vector_paste()
+# Pastes the following
+# c("A", "B", "C", "D", "E")
+
+datapasta::vector_paste_vertical()
+# c("A",
+#      "B",
+#      "C",
+#      "D",
+#      "E")
+```
+
+Get data from an existing table into usable format - useful for making a reprex/mwe!
+```{r eval = FALSE}
+paste_me <- tibble::tribble(
+     ~A, ~B, ~C, ~D, ~E,
+     1L, 4L, 5L, 7L, 9L,
+     8L, 5L, 8L, 0L, 8L,
+     5L, 6L, 8L, 9L, 0L
+     )
+
+dpasta(paste_me)
+# Pastes the following
+# tibble::tribble(
+#      ~A, ~B, ~C, ~D, ~E,
+#      1L, 4L, 5L, 7L, 9L,
+#      8L, 5L, 8L, 0L, 8L,
+#      5L, 6L, 8L, 9L, 0L
+#      )
+
+# dmdclip(paste_me) does the same as dpasta, but pastes to keyboard
+```
+
+Two useful Addins:
+`Toggle Vector Quotes` highlight a c() expression and it either wraps or unwraps all elements with double quotes
+
+`Fiddle Selection` does a bunch:
+
+- If you highlight raw data (separated by commas, spaces, newlines), it will turn it into a c()
+- If you select a c() expression, will toggle between horizontal and vertical
+- If you select a tribble or df, reflows it pretty-like
+
+
+# When upgrading R
+
+If you upgrade R to a new major or minor release (eg, 1.3 or 2.0), you will lose all packages that are installed!
+
+BEFORE upgrading, get a list of all your packages:
+
+```{r eval = FALSE}
+devtools::package_info("installed")
+```
+
+This will give a df showing package names, versions, and where they're from (CRAN or github).
+
+Then filter by source and install as appropriate.  Will need to install `devtools` first
+
+```{r}
+CRAN_packages <- devtools::package_info("installed") %>% filter(str_detect(source, "CRAN"))
+github_packages <- devtools::package_info("installed") %>% filter(str_detect(source, "Github"))
+```
+
+```{r eval = FALSE}
+install.packages(CRAN_packages$package)
+install_github(github_packages$package)
+```
+
+
+
+
 # Stuff to add
 
 (broom)[https://broom.tidymodels.org] to tidy up models
@@ -369,7 +723,27 @@ b[c(18, 44)] <- 999
 diffobj::diffPrint(target=a, current=b)
 ```
 
+Nesting - unnest, unnest_longer, unnest_wider, hoist (tidyr)
 
+https://uribo.github.io/rpkg_showcase/index.html
+
+
+http://personality-project.org/r/psych/
+
+https://github.com/eddelbuettel/anytime VS lubridate
+
+zoo - rollmean(), rollapply()...
+
+lobstr package
+
+iris %>% 
+  boomer::boom()
+
+https://github.com/Pakillo/grateful
+
+https://cran.r-project.org/web/packages/report/vignettes/report.html
+
+https://cran.r-project.org/web/packages/MBESS/index.html
 
 
 
