@@ -687,15 +687,21 @@ Two useful Addins:
 
 If you upgrade R to a new major or minor release (eg, 1.3 or 2.0), you will lose all packages that are installed!
 
+ALWAYS install new versions of R using the installer from the official R page—DO NOT USE HOMEBREW
+
 BEFORE upgrading, get a list of all your packages:
 
 ```{r eval = FALSE}
 devtools::package_info("installed")
 ```
 
-This will give a df showing package names, versions, and where they're from (CRAN or github).
+This will give a df showing package names, versions, and where they're from (CRAN or github).  Save this somewhere so you can read it back in after you install the upgrade.
 
-Then filter by source and install as appropriate.  Will need to install `devtools` first
+Next, get a list of which addins you have active from rsam.  Run rsam::rsam(), open it in Safari, and then copy/paste the list into TextEdit.  You'll have to manually re-enter all this stuff using rsam::rsam() after the upgrade.
+
+Now, upgrade.
+
+Then after installing, filter by source and install as appropriate.  Will need to install `devtools` first
 
 ```{r}
 CRAN_packages <- devtools::package_info("installed") %>% filter(str_detect(source, "CRAN"))
@@ -746,4 +752,4 @@ https://cran.r-project.org/web/packages/report/vignettes/report.html
 https://cran.r-project.org/web/packages/MBESS/index.html
 
 
-
+https://rpkgs.datanovia.com/ggpubr/index.html
