@@ -1,0 +1,23 @@
+/* css styles */
+
+/* Wrap a kable table in a div with class constrain-table
+    to make it constrained to 25ex in height, with the
+    rest visible upon scroll*/
+.constrain-table .kable-table {
+  max-height: 25ex;
+  border: 1px solid #ddd;
+  padding: 0px;
+  margin: 0px;
+}
+.constrain-table th {
+  position: sticky;
+  top: 0px;
+  background: white;
+  border-bottom: 1px solid #ddd;
+}
+
+
+/* Make output/results a little smaller */
+.cell-output {
+  font-size:  90%;
+}

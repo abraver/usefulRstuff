@@ -1,0 +1,26 @@
+project:
+  type: website
+  output-dir: docs
+
+execute:
+  freeze: true
+  cache: true
+    
+website:
+  title: "Useful R Stuff"
+  navbar:
+    left:
+      - href: http://www.aaronbraver.com
+        text: Aaron Braver
+    collapse-below: md
+  
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: false
+    df-print: kable
+    code-link: true
+    code-annotations: hover
+    
+editor: source

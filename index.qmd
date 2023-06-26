@@ -1,0 +1,15 @@
+---
+title: "Useful R Stuff"
+listing:
+  type: table
+  fields: [title , categories, date]
+  date-format: medium
+  categories: true
+  sort-ui: false
+  contents:
+    - "posts/"
+---
+
+This is a collection of R packages, bits of code, and other trivia that I find useful.
+
+<br>

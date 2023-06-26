@@ -1,0 +1,18 @@
+<hr>
+<details>
+<summary>Session info and package versions</summary>
+```{r}
+#| echo: false
+cat("─ Session info ───────────────────────────────────────────────────────────────")
+sessioninfo::platform_info()
+cat("─ Packages ───────────────────────────────────────────────────────────────────")
+sessioninfo::package_info() |> dplyr::select(package, loadedversion, date, source) |> print.data.frame(row.names = FALSE)
+```
+</details>
+
+
+
+```{r}
+#| include: false
+renv::snapshot(project = "./", lockfile = "./renv.loc")
+```

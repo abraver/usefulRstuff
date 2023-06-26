@@ -1,0 +1,55 @@
+---
+title: "`thinkr::peep()`: See intermediate stages of piped dfs"
+
+date: "6/1/23"
+
+categories:
+  - dataframes
+  - piping
+---
+
+{{< include /_include_header.qmd >}}
+
+<!-- begin content -->
+
+```{r setup}
+#| code-fold: true
+#| code-summary: "Setup"
+#| output: false
+#| warning: false
+
+library(tidyverse)
+library(thinkr)
+```
+
+Insert `thinkr::peep(head)` into a `df` pipeline to print a few rows at a particular intermediate stage in the pipeline. Here it prints a few lines of the `df` before it gets summarized:
+
+```{r}
+palmerpenguins::penguins |> 
+  peep(head) |>
+  group_by(species) |>  # <1>
+  summarize(across(where(is.numeric), \(x) mean(x, na.rm = TRUE)))
+```
+
+1.  How convenient that the base R pipe looks like a penguin.
+
+You can use multiple functions, like `head` and `tail` to see two views of the intermediate step; `verbose = TRUE` prints the functions used for these peeps:
+
+```{r}
+palmerpenguins::penguins |>
+  peep(head, tail, verbose = TRUE) |> 
+  group_by(species) |> 
+  summarize(across(where(is.numeric), \(x) mean(x, na.rm = TRUE)))
+```
+
+And you can include arguments to functions inside `peep()` with dot syntax:
+
+```{r}
+palmerpenguins::penguins %>% 
+  peep(head(., n = 7)) |> 
+  group_by(species) |> 
+  summarize(across(where(is.numeric), \(x) mean(x, na.rm = TRUE)))
+```
+
+<!-- End content -->
+{{< include /_include_footer.qmd >}}

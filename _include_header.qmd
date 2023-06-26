@@ -1,0 +1,27 @@
+<script src="/jquery-3.7.0.min.js"></script>
+<script src="/fold.js"></script>
+
+```{r renv}
+#| include: false
+if(file.exists("./renv.loc")) { renv:::restore(lockfile = "./renv.loc") }
+```
+
+
+```{r gt_df_tables_theme}
+#| include: false
+
+# ab_gt_theme <- function(data, ...) {
+#   data |>
+#     gt::tab_options(
+#     ...
+#   ) |>
+#     gt::opt_row_striping() |>
+#     gt::opt_interactive(use_pagination_info = FALSE,
+#                     use_compact_mode = TRUE,
+#                     use_highlight = TRUE,
+#                     page_size_default = 5)
+# }
+
+```
+
+

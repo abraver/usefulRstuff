@@ -1,0 +1,111 @@
+---
+title: "`janitor`: Clean dirty data, plus improved tables and crosstab"
+
+date: 6/25/23
+
+categories:
+  - data cleaning
+
+toc: true
+---
+
+{{< include /_include_header.qmd >}}
+
+<!-- begin content -->
+
+```{r setup}
+#| code-fold: true
+#| code-summary: "Setup"
+#| output: false
+#| warning: false
+
+library(janitor)
+```
+
+
+[`janitor`](https://sfirke.github.io/janitor/index.html) contains various tools for examining and cleaning dirty data.
+
+
+## Cleaning dirty data
+
+### Clean column names
+
+Let's create a `df` with some poorly-chosen column names:
+
+```{r}
+test_df <- as.data.frame(matrix(ncol = 6))
+names(test_df) <- c("firstName", "ábc@!*", "% successful (2009)",
+                    "REPEAT VALUE", "REPEAT VALUE", "")
+
+```
+
+`clean_names()` does just as the name implies:
+
+```{r}
+test_df |> 
+  clean_names()
+```
+
+
+The `case` argument to `clean_names()` specifies what case you'd like output names to be in.  You can specify any case style that's available in `snakecase::to_any_case()`, including "screaming_snake" if you want to be perverse:
+
+```{r}
+test_df |> 
+  clean_names(case = "screaming_snake")
+```
+
+### Check if `df`s are row-bind-able
+
+Also useful is `compare_df_cols` which summarizes whether the specified `df`s can be row-bound (i.e., have columns of the same names/types):
+
+```{r}
+df1 <- data.frame(A= 1:2, b = c("big", "small"))
+df2 <- data.frame(a = 10:12, b = c("medium", "small", "big"), c = 0, stringsAsFactors = TRUE) # here, column b is a factor
+df3 <- df1 |> 
+  dplyr::mutate(b = as.character(b))
+
+compare_df_cols(df1, df2, df3)
+```
+
+If you just want a simple `TRUE`/`FALSE` value telling you whether the `df`s match, you can use `compare_df_cols_same()`:
+
+```{r}
+str(compare_df_cols_same(df1, df2, df3, verbose = FALSE))
+```
+
+
+
+## Examining data and crosstabs
+
+`janitor`'s version of tables are called `tabyls`.  You can easily generate crosstabs:
+
+```{r}
+palmerpenguins::penguins |> 
+  tabyl(species, island)
+```
+
+There are lots of ways to pretty up the output via `adorn_*` commands, giving things like column or row percentages, optionally with `n`s in parentheses:
+
+```{r}
+palmerpenguins::penguins |> 
+  tabyl(species, island) |> 
+  adorn_totals("col")  |> 
+  adorn_percentages("row")  |> 
+  adorn_pct_formatting(digits = 2) |> 
+  adorn_ns()
+```
+You can also use the `adorn_*` functions on regular ol' `df`s:
+
+```{r}
+palmerpenguins::penguins |> 
+  dplyr::sample_n(10) |> # <1>
+  dplyr::select(-year) |> 
+  adorn_totals("row")
+```
+1. Choose 10 random rows so this doesn't print forever
+
+Check out the [`tabyl`s vignette](https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html) for more info.
+
+<!-- End content -->
+{{< include /_include_footer.qmd >}}
+
