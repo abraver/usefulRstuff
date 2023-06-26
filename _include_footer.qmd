@@ -16,3 +16,4 @@ sessioninfo::package_info() |> dplyr::select(package, loadedversion, date, sourc
 #| include: false
 renv::snapshot(project = "./", lockfile = "./renv.loc")
 ```
+

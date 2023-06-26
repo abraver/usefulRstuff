@@ -1,0 +1,89 @@
+---
+title: "`fuzzyjoin`: Join `df`s with inexact matching"
+
+date: "6/26/23"
+
+categories:
+  - dataframes
+  - joins
+  
+toc: true
+---
+
+{{< include /_include_header.qmd >}}
+
+<!-- begin content -->
+
+```{r setup}
+#| code-fold: true
+#| code-summary: "Setup"
+#| output: false
+#| warning: false
+
+library(tidyverse)
+```
+
+## Join `df`s by string distance
+
+Sometimes you want to join `df`s on fuzzy criteria.  That's where `fuzzyjoin` comes in.  Consider this example lifted partially from the documentation:
+
+
+Set up a `df` with some typos.  We'll join this to `ggplot2::diamonds` by `cut`, which has levels: `r levels(ggplot2::diamonds$cut)`.
+```{r}
+# Create a dataframe with some typos
+d <- data.frame(approximate_name = c("Idea", "Premiums", "Premioom",
+                                     "VeryGood", "VeryGood", "Faiir"),
+                type = 1:6)
+```
+A regular inner join finds no matches, due to the typos:
+
+```{r}
+inner_join(diamonds, d, by = c(cut = "approximate_name")) |> 
+  nrow()
+```
+
+`stringdist_inner_join()` however will match strings based on any of the methods available in the `stringdist` package (e.g. Levenshtein distance, Jaccard distance, etc).
+
+```{r}
+fuzzyjoin::stringdist_inner_join(diamonds, d,
+                                 by = c(cut = "approximate_name"),
+                                 method = "lv", # <1>
+                                 max_dist = 3,
+                                 distance_col = "distance") |> 
+  relocate(approximate_name, .after = "cut") |>  # <2>
+  head(10)
+```
+1. Levenshtein distance
+2. Move these columns closer together for easier visual comparison
+
+<!-- End content -->
+{{< include /_include_footer.qmd >}}
+
+
+## Join `df`s by regex matches
+
+Also extremely useful are the `regex_*_join` functions, which join based on whether there is a regex match between columns.  (This example also from [the documentation](http://varianceexplained.org/fuzzyjoin/reference/regex_join.html))
+
+```{r}
+d <- data.frame(regex_name = c("^Idea", "mium", "Good"), type = 1:3)
+
+fuzzyjoin::regex_inner_join(diamonds, d, by = c(cut = "regex_name")) |> 
+  relocate(regex_name, .after = cut) |> 
+  head()
+```
+
+## Join `df`s by absolute difference between columns
+
+Say you want to join by two columns so long as they are equal within a certain degree of tolerance.  Here we join so long as `sepal_lengths$Sepal.Length` is within 0.5 of the `iris$Sepal.Length`:
+
+```{r}
+sepal_lengths <- data.frame(Sepal.Length = c(5, 6, 7), Type = 1:3)
+
+fuzzyjoin::difference_inner_join(iris, sepal_lengths,
+                                 max_dist = 0.5,
+                                 distance_col = "distance") |> 
+  relocate(Sepal.Length.x, .after = Sepal.Length.y) |> 
+  head()
+```
+
+

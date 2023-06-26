@@ -6,6 +6,7 @@ listing:
   date-format: medium
   categories: true
   sort-ui: false
+  sort: "date desc"
   contents:
     - "posts/"
 ---
