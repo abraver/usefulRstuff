@@ -24,4 +24,10 @@ if(file.exists("./renv.loc")) { renv:::restore(lockfile = "./renv.loc") }
 
 ```
 
+```{r}
+#| echo: false
+#| include: false
+#| 
+gdtools::addGFontHtmlDependency(family = c("Roboto Condensed"))
+```
 

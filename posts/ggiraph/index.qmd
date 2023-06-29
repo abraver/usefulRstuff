@@ -1,0 +1,126 @@
+---
+title: "Interactive plots with `ggiraph`"
+
+date: "6/29/23"
+
+categories:
+  - visualization
+  - interactivity
+
+toc: true
+---
+
+{{< include /_include_header.qmd >}}
+
+```{r}
+#| echo: false
+#| include: false
+
+ggplot2::theme_set(asbutils::theme_asb())
+```
+
+
+<!-- begin content -->
+
+## `ggiraph`
+
+::: {.float-right}
+[![](images/ggiraph-logo.png){fig-alt="ggiraph logo" width=150}](https://davidgohel.github.io/ggiraph/)
+:::
+
+`ggiraph` allows for the creation of interactive plots in documents that will output as HTML or in [Shiny](https://shiny.posit.co).  In static HTML pages, `ggiraph` allows for tooltips, mouseover highlighting, and JavaScript on click.  In Shiny documents there is [additional interactivity](https://www.ardata.fr/ggiraph-book/ggiraph-shiny.html) available---but since this document is static HTML, I won't cover these here.
+
+(For more details, see the [`ggiraph` overview](https://davidgohel.github.io/ggiraph/), and for even more details, see the [`ggiraph book`](https://www.ardata.fr/ggiraph-book/); some examples here come from those sources.)
+
+(You may also be interested in the [`plotly` package](https://plotly.com/r/) as another option for adding interactivity to plots.)
+
+## Simple example
+
+As a simple example, here is a plot of the `palmerpenguins` dataset, showing `bill_depth_mm` vs. `bill_length_mm`; species are shown by color, and hovering over a point shows which island the sample was collected on (and highlights all other points from that island):
+
+```{r}
+#| warning: false
+library(ggiraph)
+library(ggplot2)
+library(palmerpenguins) # Load penguins dataset
+
+plot_1 <- penguins |> 
+  ggplot(
+  aes(
+    x = bill_depth_mm, y = bill_length_mm,
+    tooltip = paste("Island:", island),
+    data_id = island, color = species
+    )) +
+  geom_point_interactive(
+     hover_nearest = TRUE
+  )
+
+girafe(ggobj = plot_1)
+
+```
+
+The `data_id` argument is how items will be grouped for tooltips and hover effects---here, we want all the dots from the same island to behave together.
+
+Note, too, the `ggobj` argument to `girafe()`.  The actual first argument to `girafe()` is _not_ a `ggplot` object; this means the `ggobj` argument needs to be called explicitly, and also makes piping into `girafe` a bit annoying (hence saving the plot to `plot_1` and referring to that within the `girafe()` call.
+
+
+## Slightly more complicated example
+
+In this slightly more complicated example, the weight of chicks is shown over time. Hovering over a line highlights all chicks in that diet (and dims those in other diets)^[For similar functionality in static graphs (i.e., highlighting one particular group), the [`gghighlight` package](https://cran.r-project.org/web/packages/gghighlight/vignettes/gghighlight.html).], and shows the chick number in a tooltip.
+
+The styling of moused-over elements is controlled with the `css` argument to `opts_hover` (which is called inside `girafe()`).  I like making non-moused-over elements gray (in `opts_hover_inv`) and leaving the moused-over elements with their original color by specifiying `css=""`.
+
+```{r}
+plot_2 <- ChickWeight |>
+  ggplot(
+  aes(
+    x = Time, y = weight, color = Diet,
+    group = Chick,
+    tooltip = paste0("Diet ", Diet, " (Chick ", Chick, ")"),
+    data_id = Diet
+    )) +
+  geom_line_interactive(
+     hover_nearest = TRUE
+  )
+
+girafe(ggobj = plot_2,
+      options = list(
+        opts_hover(css = ""), # Don't change CSS for selected group
+        opts_hover_inv(css = "opacity: 0.1"), # CSS for other groups
+        opts_toolbar(saveaspng = FALSE) # Don't include save button
+      ))
+```
+
+## Javascript on click
+
+The `onclick` aesthetic allows for execution of JavaScript on click.  This is probably more useful in a Shiny project, but it does work even on static HTML pages.  Here we get an alert when we click:
+
+```{r}
+#| warning: false
+
+plot_3 <- penguins |> 
+  ggplot(aes(x = species, fill = island,
+             tooltip = sprintf('Island: %s | Species: %s', island, species),
+             data_id = island,
+             onclick = sprintf('alert("Island: %s | Species: %s");', island, species)
+             )
+         ) +
+  geom_bar_interactive()
+
+girafe(ggobj = plot_3,
+       options = list(
+         opts_hover(css = ""), # Don't change CSS for selected group
+         opts_hover_inv(css = "fill: gray"), # CSS for non-selected groups
+         opts_toolbar(saveaspng = FALSE) # Don't include save button
+       )
+)
+```
+
+
+```
+
+
+
+<!-- End content -->
+
+{{< include /_include_footer.qmd >}}

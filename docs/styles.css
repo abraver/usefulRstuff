@@ -21,3 +21,14 @@
 .cell-output {
   font-size:  90%;
 }
+
+
+/* Floats for images */
+.float-left {
+  float: left;
+  padding: 2ex;
+}
+.float-right {
+  float: right;
+  padding: 2ex;
+}

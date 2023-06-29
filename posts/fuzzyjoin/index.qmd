@@ -56,9 +56,6 @@ fuzzyjoin::stringdist_inner_join(diamonds, d,
 1. Levenshtein distance
 2. Move these columns closer together for easier visual comparison
 
-<!-- End content -->
-{{< include /_include_footer.qmd >}}
-
 
 ## Join `df`s by regex matches
 
@@ -86,4 +83,7 @@ fuzzyjoin::difference_inner_join(iris, sepal_lengths,
   head()
 ```
 
+
+<!-- End content -->
+{{< include /_include_footer.qmd >}}
 

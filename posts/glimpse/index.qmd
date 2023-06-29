@@ -1,0 +1,32 @@
+---
+title: "`dplyr::glimpse()`: Prettier than `str()`"
+
+date: "6/26/23"
+
+categories:
+  - dataframes
+  - summarizing
+---
+
+{{< include /_include_header.qmd >}}
+
+<!-- begin content -->
+
+Instead of `str(df)` to see the structure of a dataframe, try `dplyr::glimpse()`^[Technically, `glimpse` is from the `pillar` package, but it's re-exported by `dplyr`, which I usually have loaded anyway.] instead.  It gives a horizontal output and shows more data than fits with `str()`:
+
+```{r}
+dplyr::glimpse(palmerpenguins::penguins)
+```
+
+You can also force more data to be shown with the `width` option:
+
+```{r}
+dplyr::glimpse(palmerpenguins::penguins, width = 200)
+```
+
+
+
+
+<!-- End content -->
+{{< include /_include_footer.qmd >}}
+

@@ -2,14 +2,39 @@
 title: "Useful R Stuff"
 listing:
   type: table
-  fields: [title , categories, date]
-  date-format: medium
+  fields: [title , categories, file-modified]
+  date-format: short
   categories: true
-  sort-ui: false
-  sort: "date desc"
+  sort-ui: [title, file-modified]
+  sort: "file-modified desc"
   contents:
     - "posts/"
 ---
+<!-- This style block and the following script blocks are all because the `categories` column defaults to not having spaces after commas -->
+<style>
+table.quarto-listing-table * td:first-child {
+  width: 55%;
+}
+table.quarto-listing-table * td:nth-child(2) {
+  width: 35%;
+}
+table.quarto-listing-table * td:nth-child(2) {
+  width: 10%;
+}
+</style>
+
+<script src="/jquery-3.7.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $tds = $(".listing-categories");
+  
+  $tds.each(function () {
+    this.innerHTML = this.innerHTML.replace(",", ", ");
+    $(this).parent().css("width", "30%");
+  });
+  
+});
+</script>
 
 This is a collection of R packages, bits of code, and other trivia that I find useful.
 
