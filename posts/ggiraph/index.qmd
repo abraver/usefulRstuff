@@ -68,7 +68,7 @@ Note, too, the `ggobj` argument to `girafe()`.  The actual first argument to `gi
 
 In this slightly more complicated example, the weight of chicks is shown over time. Hovering over a line highlights all chicks in that diet (and dims those in other diets)^[For similar functionality in static graphs (i.e., highlighting one particular group), the [`gghighlight` package](https://cran.r-project.org/web/packages/gghighlight/vignettes/gghighlight.html).], and shows the chick number in a tooltip.
 
-The styling of moused-over elements is controlled with the `css` argument to `opts_hover` (which is called inside `girafe()`).  I like making non-moused-over elements gray (in `opts_hover_inv`) and leaving the moused-over elements with their original color by specifiying `css=""`.
+The styling of moused-over elements is controlled with the `css` argument to `opts_hover` (which is called inside `girafe()`).  I like making non-moused-over elements gray (in `opts_hover_inv`) and leaving the moused-over elements with their original color by specifiying `css="".
 
 ```{r}
 plot_2 <- ChickWeight |>

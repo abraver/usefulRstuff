@@ -1,0 +1,78 @@
+---
+title: "Upgrading R without losing all your packages"
+
+date: "6-30-23"
+
+categories:
+  - upgrading
+  - package management
+---
+
+{{< include /_include_header.qmd >}}
+
+<!-- begin content -->
+
+If you upgrade R to a new major or minor release (e.g. 4.0 or 4.1, but not 4.1.1), your library of installed packages doesn't come along for the ride.
+
+## Before you upgrade
+
+*Before* you upgrade, you should make a list of all of your installed packages---this is easy with `sessioninfo::package_info("installed")`. If you've got packages installed from multiple sources (like CRAN and also Github), it's best to save these as separate lists to facilitate automated reinstallation of these grouped by source:
+
+```{r}
+#| messages: false
+
+library(tidyverse)
+
+# Figure out what's installed
+installed_packages <- sessioninfo::package_info("installed") |> 
+  mutate("where_from" = case_when(
+    str_detect(source, "CRAN") ~ "CRAN",
+    str_detect(source, "Github") ~ "Github",
+    .default = "other" # catch any packages from other sources;
+                       # not automatically installed below
+    )
+  ) |> 
+  nest(.by = where_from)
+
+# Where to write the lists of packages.  Change as needed
+file_location <- fs::path("~/Desktop/tmp/")
+
+# Write these lists to disk
+installed_packages %>% 
+  pwalk(function(where_from, data) {
+    write_csv(data,
+              file = fs::path(file_location,
+                              paste0(where_from, "_packages"),
+                              ext = "csv"))
+  })
+
+```
+
+
+## After you upgrade 
+
+Then, after you upgrade R, you can re-install the packages from these lists:
+
+```{r}
+#| eval: false
+
+# Install manually some things we'll need since they won't be installed anymore
+install.packages(c("remotes", "dplyr", "stringr"))
+
+file_location <- "~/Desktop/tmp/" # Change as needed
+
+# Install CRAN packages
+CRAN_packages <- read.csv(paste0(file_location, "CRAN_packages", ".csv"))
+remotes::install_cran(CRAN_packages$package)
+
+# Install Github packages
+github_packages <- read.csv(paste0(file_location, "Github_packages", ".csv")) |>
+  dplyr::mutate(github_source = stringr::str_extract(source,
+      "(?<=Github \\().*(?=@)")) # Get the username and repo name
+remotes::install_github(github_packages$github_source)
+```
+NB: If you have locally installed packages, or packages from another source, these aren't automatically reinstalled with the code above, but are listed in `other_packages.csv`.
+
+<!-- End content -->
+
+{{< include /_include_footer.qmd >}}

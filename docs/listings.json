@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/upgrading_R/index.html",
       "/posts/ggiraph/index.html",
       "/posts/skimr/index.html",
       "/posts/glimpse/index.html",

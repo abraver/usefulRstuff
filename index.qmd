@@ -36,6 +36,6 @@ $(document).ready(function() {
 });
 </script>
 
-This is a collection of R packages, bits of code, and other trivia that I find useful.
+This is a collection of R packages, bits of code, and other trivia that I find useful.  It was originally written for myself, but hopefully others will find some useful tidbits.
 
 <br>
