@@ -1,0 +1,103 @@
+---
+title: "Paginate a faceted graph and save as a single multi-page PDF"
+
+date: "7/1/23"
+
+categories:
+  - visualization
+---
+
+{{< include /_include_header.qmd >}}
+
+<!-- begin content -->
+
+```{r}
+#| echo: false
+#| include: false
+
+library(tidyverse)
+library(ggforce)
+ggplot2::theme_set(asbutils::theme_asb())
+```
+
+When you have a plot with just a few facets, it's easy to fit them all on a single page. But what if you have a whole bunch of facets that you want to visualize? For example, the `USArrests` dataset has data from all 50 US states.
+
+If we just use the usual `facet_wrap` or `facet_grid` from `ggplot2`, you end up with one massive, smooshed-together image:
+
+```{r}
+#| message: false
+
+library(tidyverse)
+
+plot_1 <- USArrests |>  # dataset on US arrests
+  rownames_to_column("State") |>   # This is just so we can see the state names
+  ggplot(aes(x = UrbanPop, y = Murder)) +
+  geom_point()  +
+  facet_wrap(~ State,
+             nrow = 5, ncol = 10)
+
+plot_1
+```
+
+The [`ggforce`](https://ggforce.data-imaginist.com) library, among its many useful functions, includes `facet_wrap_paginate` and `facet_grid_paginate`. These work like `facet_wrap` and `facet_grid`, but take an additional `page` argument. Here we specify that we want 4 rows and 5 columns per page, so for 50 states there will be 2 full pages plus one page with the remaining 10 states:
+
+```{r}
+library(ggforce)
+
+plot_2 <- plot_1  +
+  facet_wrap_paginate(~ State,
+             nrow = 4, ncol = 5, page = 2)
+
+plot_2
+```
+
+Note that we had to specify which page we wanted to print. We can then easily put this into a loop to generate all the necessary pages. The helpful `n_pages()` will count the pages needed, which we can then use in a loop. This gives us 3 separate plots.
+
+```{r}
+#| echo: false
+#| include: false
+
+ggplot2::theme_set(asbutils::theme_asb())
+```
+
+
+```{r}
+#| classes: .fold .o .g
+
+plot_pages <- plot_2 |> 
+  n_pages()
+
+for (i in 1:plot_pages) {
+  print(
+    plot_1 + facet_wrap_paginate(~ State,
+             nrow = 4, ncol = 5, page = i)
+  )  
+}
+
+```
+
+<br>
+
+That's better, but for inclusion in a longer document or for sharing the plot, you may want all three pages in a single PDF. This can be accomplished by calling `pdf()` before the loop and `dev.off()` after.^[In the past I've had issues with getting `pdf()` to work, especially if I use any fancy fonts in the ggplot theme.  If you run into issues, you can replace `pdf()` with `cairo_pdf(..., onefile = TRUE)`, which seems to work even with exotic fonts.]
+
+```{r}
+#| eval: false
+#| output: false
+
+pdf('many_plots.pdf', width = 11, height = 8.5) #start building pdf
+  for (i in 1:plot_pages) {
+    print( # don't forget this
+      plot_1 +
+      facet_wrap_paginate(~State, nrow = 4, ncol = 5, page = i)
+    )
+  }
+dev.off() # end building pdf
+```
+
+The [resulting PDF](many_plots.pdf) is a single file with 3 pages, as we expect.
+
+(This post was inspired by [this conversation on StackOverflow](https://stackoverflow.com/questions/48544039/how-to-save-output-from-ggforcefacet-grid-paginate-in-only-one-pdf).)
+
+<!-- End content -->
+
+{{< include /_include_footer.qmd >}}

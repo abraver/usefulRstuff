@@ -1,4 +1,9 @@
-<hr>
+```{r}
+#| include: false
+renv::snapshot(project = "./", lockfile = "./renv.loc")
+```
+
+
 <details>
 <summary>Session info and package versions</summary>
 ```{r}
@@ -9,11 +14,3 @@ cat("─ Packages ────────────────────�
 sessioninfo::package_info() |> dplyr::select(package, loadedversion, date, source) |> print.data.frame(row.names = FALSE)
 ```
 </details>
-
-
-
-```{r}
-#| include: false
-renv::snapshot(project = "./", lockfile = "./renv.loc")
-```
-

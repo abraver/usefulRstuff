@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/paginate_faceted_graphs/index.html",
       "/posts/upgrading_R/index.html",
       "/posts/ggiraph/index.html",
       "/posts/skimr/index.html",
