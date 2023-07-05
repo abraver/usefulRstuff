@@ -1,0 +1,103 @@
+---
+title: "`khroma` and `colorblindr`: Tools for colorblind-friendly plots"
+
+date: "7/4/23"
+
+categories:
+  - visualization
+  - colors
+
+toc: true
+
+---
+
+{{< include /_include_header.qmd >}}
+
+<!-- begin content -->
+
+```{r setup}
+#| code-fold: true
+#| code-summary: "Setup/libraries"
+#| output: false
+#| warning: false
+
+library(dplyr)
+library(ggplot2)
+```
+
+```{r}
+#| include: false
+
+theme_set(asbutils::theme_asb())
+```
+
+
+## `khroma` - colorblind-friendly palettes
+
+[`khroma`](https://packages.tesselle.org/khroma/) contains a number of color schemes that are colorblind-friendly, divided into diverging, qualitative, and sequential types:
+
+```{r}
+khroma::info() |>
+  group_by(type) |>
+  summarize(palettes = paste(palette, collapse = ", "))
+```
+
+The `color` function takes a palette name and returns a function, which in turn returns a palette of specified size:
+
+```{r}
+library(khroma)
+
+bright_fun <- color("bright")
+bright_fun(5)
+```
+And you can preview these palettes with `plot_scheme()`:
+
+```{r}
+#| fig-height: 2
+
+plot_scheme(bright_fun(7), names = TRUE,
+            colours = TRUE) # NB: `colours` must be spelled British-ly
+```
+
+Further, you can preview the palette as viewed by several types of colorblindness:
+
+```{r}
+#| classes: .fold .o
+
+plot_scheme_colorblind(bright_fun(7))
+```
+<br>
+
+Each of the schemes have built-in `ggplot` scales in the form `scale_color_{palettename}` and `scale_fill_{palettename}`:
+
+```{r}
+#| fig-cap: Percent of population with a college degree vs. percent of population below the poverty line, by state.  Data from `ggplot2::midwest`
+#| fig-alt: Percent of population with a college degree vs. percent of population below the poverty line, by state.  Data from `ggplot2::midwest`
+
+plot <- midwest |> 
+  filter(percbelowpoverty < 30) |> 
+  ggplot(aes(x = percollege, y = percbelowpoverty, color = state)) +
+    geom_point(size = 3, alpha =.5) +
+    scale_color_bright()
+
+plot
+```
+
+
+## `colorblindr` - Preview your plots with colorblind simulation
+
+`colorblindr::cvd_grid` will simulate how your plots will look to people with various types of colorblindness.  The `midwest` plot from above is shown here:
+
+```{r}
+#| warning: false
+#| fig-width: 10
+
+# remotes::install_github("clauswilke/colorblindr")
+
+colorblindr::cvd_grid(plot)
+```
+
+
+<!-- End content -->
+{{< include /_include_footer.qmd >}}
+

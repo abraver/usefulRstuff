@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/khroma/index.html",
       "/posts/paginate_faceted_graphs/index.html",
       "/posts/upgrading_R/index.html",
       "/posts/ggiraph/index.html",
@@ -12,5 +13,9 @@
       "/posts/diffobj/index.html",
       "/posts/thinkr_peep/index.html"
     ]
+  },
+  {
+    "listing": "/hidden.html",
+    "items": []
   }
 ]

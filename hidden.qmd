@@ -9,7 +9,7 @@ listing:
   sort: "file-modified desc"
   contents:
     - "posts/"
-  exclude:
+  include:
     categories: "hidden"
 ---
 <!-- This style block and the following script blocks are all because the `categories` column defaults to not having spaces after commas -->
