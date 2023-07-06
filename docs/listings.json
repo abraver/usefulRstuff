@@ -6,13 +6,14 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/upgrading_R/index.html",
+      "/posts/gghighlight/index.html",
       "/posts/khroma/index.html",
       "/posts/paginate_faceted_graphs/index.html",
+      "/posts/upgrading_R/index.html",
       "/posts/ggiraph/index.html",
       "/posts/skimr/index.html",
-      "/posts/glimpse/index.html",
       "/posts/fuzzyjoin/index.html",
+      "/posts/glimpse/index.html",
       "/posts/janitor/index.html",
       "/posts/diffobj/index.html",
       "/posts/thinkr_peep/index.html"

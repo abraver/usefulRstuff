@@ -1,3 +1,7 @@
+<script src="/jquery-3.7.0.min.js"></script>
+<script src="/fold.js"></script>
+<script src="/move_session_info.js"></script>
+
 ```{r renv}
 #| include: false
 if(file.exists("./renv.loc")) { renv:::restore(lockfile = "./renv.loc") }

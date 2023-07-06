@@ -65,7 +65,7 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-title','listing-categories','listing-file-modified',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-title-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-title','listing-categories','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-title-sort'] },{ data: ['listing-date-sort'] }],
       
       searchColumns: ["listing-date","listing-title","listing-author"],
     };
@@ -120,7 +120,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(10)</span></div><div class="category" data-category="colors">colors <span class="quarto-category-count">(1)</span></div><div class="category" data-category="data cleaning">data cleaning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dataframes">dataframes <span class="quarto-category-count">(5)</span></div><div class="category" data-category="interactivity">interactivity <span class="quarto-category-count">(1)</span></div><div class="category" data-category="joins">joins <span class="quarto-category-count">(1)</span></div><div class="category" data-category="package management">package management <span class="quarto-category-count">(1)</span></div><div class="category" data-category="piping">piping <span class="quarto-category-count">(1)</span></div><div class="category" data-category="summarizing">summarizing <span class="quarto-category-count">(2)</span></div><div class="category" data-category="upgrading">upgrading <span class="quarto-category-count">(1)</span></div><div class="category" data-category="visualization">visualization <span class="quarto-category-count">(3)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(11)</span></div><div class="category" data-category="colors">colors <span class="quarto-category-count">(1)</span></div><div class="category" data-category="data cleaning">data cleaning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dataframes">dataframes <span class="quarto-category-count">(5)</span></div><div class="category" data-category="interactivity">interactivity <span class="quarto-category-count">(1)</span></div><div class="category" data-category="joins">joins <span class="quarto-category-count">(1)</span></div><div class="category" data-category="package management">package management <span class="quarto-category-count">(1)</span></div><div class="category" data-category="piping">piping <span class="quarto-category-count">(1)</span></div><div class="category" data-category="summarizing">summarizing <span class="quarto-category-count">(2)</span></div><div class="category" data-category="upgrading">upgrading <span class="quarto-category-count">(1)</span></div><div class="category" data-category="visualization">visualization <span class="quarto-category-count">(4)</span></div></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">Useful R Stuff</h1>
@@ -136,7 +136,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
   </div>
   
 
-</header><!-- This style block and the following script blocks are all because the `categories` column defaults to not having spaces after commas --><style>
+</header><script src="./jquery-3.7.0.min.js"></script><script src="./fold.js"></script><script src="./move_session_info.js"></script><!-- This style block and the following script blocks are all because the `categories` column defaults to not having spaces after commas --><style>
 table.quarto-listing-table * td:first-child {
   width: 55%;
 }
@@ -172,11 +172,11 @@ $(document).ready(function() {
 <option value="listing-title-sort" data-direction="asc">
           Title
         </option>
-<option value="listing-file-modified-sort" data-direction="asc">
-          Modified - Oldest
+<option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
         </option>
-<option value="listing-file-modified-sort" data-direction="desc">
-          Modified - Newest
+<option value="listing-date-sort" data-direction="desc">
+          Date - Newest
         </option></select>
 </div>
     <div class="input-group input-group-sm quarto-listing-filter">
@@ -194,19 +194,19 @@ $(document).ready(function() {
 Categories
 </th>
 <th>
-<a class="sort" data-sort="listing-file-modified-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Modified</a>
+<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
 </th>
 </tr></thead>
 <tbody class="list">
-<tr data-index="0" data-categories="upgrading,package management" data-listing-date-sort="1845349200000" data-listing-file-modified-sort="1688658610411" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-title-sort="Upgrading R without losing all your packages" data-listing-filename-sort="index.qmd">
+<tr data-index="0" data-categories="visualization" data-listing-date-sort="1688619600000" data-listing-file-modified-sort="1688685617243" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-title-sort="Spotlight subsets of data in your plots with `gghighlight`" data-listing-filename-sort="index.qmd">
 <td>
-<a href="./posts/upgrading_R/index.html" class="title listing-title">Upgrading R without losing all your packages</a>
+<a href="./posts/gghighlight/index.html" class="title listing-title">Spotlight subsets of data in your plots with <code>gghighlight</code></a>
 </td>
 <td>
-<span class="listing-categories">upgrading,package management</span>
+<span class="listing-categories">visualization</span>
 </td>
 <td>
-<span class="listing-file-modified">7/6/23</span>
+<span class="listing-date">7/6/23</span>
 </td>
 </tr>
 <tr data-index="1" data-categories="visualization,colors" data-listing-date-sort="1688446800000" data-listing-file-modified-sort="1688579825463" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-title-sort="`khroma` and `colorblindr`: Tools for colorblind-friendly plots" data-listing-filename-sort="index.qmd">
@@ -217,7 +217,7 @@ Categories
 <span class="listing-categories">visualization,colors</span>
 </td>
 <td>
-<span class="listing-file-modified">7/5/23</span>
+<span class="listing-date">7/4/23</span>
 </td>
 </tr>
 <tr data-index="2" data-categories="visualization" data-listing-date-sort="1688187600000" data-listing-file-modified-sort="1688255010277" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-title-sort="Paginate a faceted graph and save as a single multi-page PDF" data-listing-filename-sort="index.qmd">
@@ -228,10 +228,21 @@ Categories
 <span class="listing-categories">visualization</span>
 </td>
 <td>
-<span class="listing-file-modified">7/1/23</span>
+<span class="listing-date">7/1/23</span>
 </td>
 </tr>
-<tr data-index="3" data-categories="visualization,interactivity" data-listing-date-sort="1688014800000" data-listing-file-modified-sort="1688169304997" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-title-sort="Interactive plots with `ggiraph`" data-listing-filename-sort="index.qmd">
+<tr data-index="3" data-categories="upgrading,package management" data-listing-date-sort="1688101200000" data-listing-file-modified-sort="1688660362489" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-title-sort="Upgrading R without losing all your packages" data-listing-filename-sort="index.qmd">
+<td>
+<a href="./posts/upgrading_R/index.html" class="title listing-title">Upgrading R without losing all your packages</a>
+</td>
+<td>
+<span class="listing-categories">upgrading,package management</span>
+</td>
+<td>
+<span class="listing-date">6/30/23</span>
+</td>
+</tr>
+<tr data-index="4" data-categories="visualization,interactivity" data-listing-date-sort="1688014800000" data-listing-file-modified-sort="1688682430623" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-title-sort="Interactive plots with `ggiraph`" data-listing-filename-sort="index.qmd">
 <td>
 <a href="./posts/ggiraph/index.html" class="title listing-title">Interactive plots with <code>ggiraph</code></a>
 </td>
@@ -239,10 +250,10 @@ Categories
 <span class="listing-categories">visualization,interactivity</span>
 </td>
 <td>
-<span class="listing-file-modified">6/30/23</span>
+<span class="listing-date">6/29/23</span>
 </td>
 </tr>
-<tr data-index="4" data-categories="dataframes,summarizing" data-listing-date-sort="1687755600000" data-listing-file-modified-sort="1688058705328" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-title-sort="Summary statistics for `df`s with `skimr`" data-listing-filename-sort="index.qmd">
+<tr data-index="5" data-categories="dataframes,summarizing" data-listing-date-sort="1687755600000" data-listing-file-modified-sort="1688058705328" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-title-sort="Summary statistics for `df`s with `skimr`" data-listing-filename-sort="index.qmd">
 <td>
 <a href="./posts/skimr/index.html" class="title listing-title">Summary statistics for <code>df</code>s with <code>skimr</code></a>
 </td>
@@ -250,21 +261,10 @@ Categories
 <span class="listing-categories">dataframes,summarizing</span>
 </td>
 <td>
-<span class="listing-file-modified">6/29/23</span>
+<span class="listing-date">6/26/23</span>
 </td>
 </tr>
-<tr data-index="5" data-categories="dataframes,summarizing" data-listing-date-sort="1687755600000" data-listing-file-modified-sort="1687798214076" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-title-sort="`dplyr::glimpse()`: Prettier than `str()`" data-listing-filename-sort="index.qmd">
-<td>
-<a href="./posts/glimpse/index.html" class="title listing-title"><code>dplyr::glimpse()</code>: Prettier than <code>str()</code></a>
-</td>
-<td>
-<span class="listing-categories">dataframes,summarizing</span>
-</td>
-<td>
-<span class="listing-file-modified">6/26/23</span>
-</td>
-</tr>
-<tr data-index="6" data-categories="dataframes,joins" data-listing-date-sort="1687755600000" data-listing-file-modified-sort="1687795670861" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-title-sort="`fuzzyjoin`: Join `df`s with inexact matching" data-listing-filename-sort="index.qmd">
+<tr data-index="6" data-categories="dataframes,joins" data-listing-date-sort="1687755600000" data-listing-file-modified-sort="1688682204402" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-title-sort="`fuzzyjoin`: Join `df`s with inexact matching" data-listing-filename-sort="index.qmd">
 <td>
 <a href="./posts/fuzzyjoin/index.html" class="title listing-title"><code>fuzzyjoin</code>: Join <code>df</code>s with inexact matching</a>
 </td>
@@ -272,10 +272,21 @@ Categories
 <span class="listing-categories">dataframes,joins</span>
 </td>
 <td>
-<span class="listing-file-modified">6/26/23</span>
+<span class="listing-date">6/26/23</span>
 </td>
 </tr>
-<tr data-index="7" data-categories="data cleaning" data-listing-date-sort="1687669200000" data-listing-file-modified-sort="1687792041068" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-title-sort="`janitor`: Clean dirty data, plus improved tables and crosstab" data-listing-filename-sort="index.qmd">
+<tr data-index="7" data-categories="dataframes,summarizing" data-listing-date-sort="1687755600000" data-listing-file-modified-sort="1687798214076" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-title-sort="`dplyr::glimpse()`: Prettier than `str()`" data-listing-filename-sort="index.qmd">
+<td>
+<a href="./posts/glimpse/index.html" class="title listing-title"><code>dplyr::glimpse()</code>: Prettier than <code>str()</code></a>
+</td>
+<td>
+<span class="listing-categories">dataframes,summarizing</span>
+</td>
+<td>
+<span class="listing-date">6/26/23</span>
+</td>
+</tr>
+<tr data-index="8" data-categories="data cleaning" data-listing-date-sort="1687669200000" data-listing-file-modified-sort="1687792041068" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-title-sort="`janitor`: Clean dirty data, plus improved tables and crosstab" data-listing-filename-sort="index.qmd">
 <td>
 <a href="./posts/janitor/index.html" class="title listing-title"><code>janitor</code>: Clean dirty data, plus improved tables and crosstab</a>
 </td>
@@ -283,10 +294,10 @@ Categories
 <span class="listing-categories">data cleaning</span>
 </td>
 <td>
-<span class="listing-file-modified">6/26/23</span>
+<span class="listing-date">6/25/23</span>
 </td>
 </tr>
-<tr data-index="8" data-categories="dataframes" data-listing-date-sort="1687669200000" data-listing-file-modified-sort="1687735960973" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-title-sort="`diffobj`: Compare two dfs (or other objects)" data-listing-filename-sort="index.qmd">
+<tr data-index="9" data-categories="dataframes" data-listing-date-sort="1687669200000" data-listing-file-modified-sort="1687735960973" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-title-sort="`diffobj`: Compare two dfs (or other objects)" data-listing-filename-sort="index.qmd">
 <td>
 <a href="./posts/diffobj/index.html" class="title listing-title"><code>diffobj</code>: Compare two dfs (or other objects)</a>
 </td>
@@ -294,10 +305,10 @@ Categories
 <span class="listing-categories">dataframes</span>
 </td>
 <td>
-<span class="listing-file-modified">6/25/23</span>
+<span class="listing-date">6/25/23</span>
 </td>
 </tr>
-<tr data-index="9" data-categories="dataframes,piping" data-listing-date-sort="1685595600000" data-listing-file-modified-sort="1687726548521" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-title-sort="`thinkr::peep()`: See intermediate stages of piped dfs" data-listing-filename-sort="index.qmd">
+<tr data-index="10" data-categories="dataframes,piping" data-listing-date-sort="1685595600000" data-listing-file-modified-sort="1687726548521" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-title-sort="`thinkr::peep()`: See intermediate stages of piped dfs" data-listing-filename-sort="index.qmd">
 <td>
 <a href="./posts/thinkr_peep/index.html" class="title listing-title"><code>thinkr::peep()</code>: See intermediate stages of piped dfs</a>
 </td>
@@ -305,7 +316,7 @@ Categories
 <span class="listing-categories">dataframes,piping</span>
 </td>
 <td>
-<span class="listing-file-modified">6/25/23</span>
+<span class="listing-date">6/1/23</span>
 </td>
 </tr>
 </tbody>

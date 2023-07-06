@@ -2,11 +2,11 @@
 title: "Useful R Stuff"
 listing:
   type: table
-  fields: [title , categories, file-modified]
+  fields: [title , categories, date]
   date-format: short
   categories: true
-  sort-ui: [title, file-modified]
-  sort: "file-modified desc"
+  sort-ui: [title, date]
+  sort: "date desc"
   contents:
     - "posts/"
   exclude:

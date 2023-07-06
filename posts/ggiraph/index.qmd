@@ -117,8 +117,6 @@ girafe(ggobj = plot_3,
 ```
 
 
-```
-
 
 
 <!-- End content -->

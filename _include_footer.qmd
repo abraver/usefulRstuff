@@ -3,7 +3,7 @@
 renv::snapshot(project = "./", lockfile = "./renv.loc")
 ```
 
-
+<div id = "footer-session-info">
 <details>
 <summary>Session info and package versions</summary>
 ```{r}
@@ -21,3 +21,4 @@ sessioninfo::package_info() |> dplyr::select(package, loadedversion, date, sourc
   print.data.frame(row.names = FALSE)
 ```
 </details>
+</div>

@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.361">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="dcterms.date" content="2023-07-06">
+<title>Useful R Stuff - Spotlight subsets of data in your plots with gghighlight</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-N1MBV4L3FV"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
+</script><link href="../../site_libs/roboto-condensed-0.3.3/css/roboto-condensed.css" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-md navbar-dark "><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Useful R Stuff</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item">
+    <a class="nav-link" href="http://www.aaronbraver.com" rel="" target="">
+ <span class="menu-text">Aaron Braver</span></a>
+  </li>  
+</ul>
+<div class="quarto-navbar-tools ms-auto">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem">The problem</a></li>
+  <li><a href="#gghighlight-basics" id="toc-gghighlight-basics" class="nav-link" data-scroll-target="#gghighlight-basics"><code>gghighlight</code> basics</a></li>
+  <li><a href="#more-complicated-filtering-criteria" id="toc-more-complicated-filtering-criteria" class="nav-link" data-scroll-target="#more-complicated-filtering-criteria">More complicated filtering criteria</a></li>
+  <li><a href="#labels" id="toc-labels" class="nav-link" data-scroll-target="#labels">Labels</a></li>
+  <li><a href="#other-geoms" id="toc-other-geoms" class="nav-link" data-scroll-target="#other-geoms">Other geoms</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">Spotlight subsets of data in your plots with <code>gghighlight</code>
+</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">visualization</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 6, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header><script src="../../jquery-3.7.0.min.js"></script><script src="../../fold.js"></script><script src="../../move_session_info.js"></script><!-- begin content --><div class="cell" data-hash="index_cache/html/setup_0783afa8f9deef83b579ef81990a317f">
+<details><summary>Setup</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="the-problem" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="the-problem">The problem</h2>
+<p>We often want to make a subset of data stand out from the rest, but doing so manually is a bit tedious. You could, for example, add a logical column to the data <code>highlight</code>, and set a plot aesthetic to make <code>1</code>s in a bright color and <code>0</code>s in grey.</p>
+<p>But <code>gghighlight</code> automates this process for <code>ggplot2</code> plots. Let’s look at the life expectancy dataset from <code>gapminder</code>. Even when color-coding by continent, it’s very difficult to pick out individual countries. We can use <code>gghighlight</code>, though, to emphasize countries with the top 10 highest populations:</p>
+<div class="page-columns page-full">
+<details><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yutannihilation.github.io/gghighlight/">gghighlight</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">base_plot</span> <span class="op">&lt;-</span> <span class="fu">gapminder</span><span class="fu">::</span><span class="va"><a href="https://jennybc.github.io/gapminder/reference/gapminder.html">gapminder</a></span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">lifeExp</span>, color <span class="op">=</span> <span class="va">continent</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">country</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pretty_plot</span> <span class="op">&lt;-</span> <span class="va">base_plot</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html">expansion</a></span><span class="op">(</span>mult <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.25</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://yutannihilation.github.io/gghighlight/reference/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>, max_highlight <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>              unhighlighted_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>                                          color <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>              <span class="op">)</span>,</span>
+<span>              line_label_type <span class="op">=</span> <span class="st">"ggrepel_text"</span>,</span>
+<span>              label_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>                                  hjust <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>                                  direction <span class="op">=</span> <span class="st">"y"</span>,</span>
+<span>                                  nudge_x <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>                                  segment.size <span class="op">=</span> <span class="fl">0.2</span></span>
+<span>              <span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">base_plot</span></span>
+<span><span class="va">pretty_plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell column-page quarto-layout-panel" data-hash="index_cache/html/unnamed-chunk-3_7744008167bb4802266d0e231bf2af25">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Vanilla <code>ggplot</code>: Too busy to glean any insights</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Countries with the top 10 highest populations <code>gghighlight</code>ed</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section id="gghighlight-basics" class="level2"><h2 class="anchored" data-anchor-id="gghighlight-basics">
+<code>gghighlight</code> basics</h2>
+<p>Let’s start with the busy plot from above, which we’ve saved as <code>base_plot</code>. The <code><a href="https://yutannihilation.github.io/gghighlight/reference/gghighlight.html">gghighlight()</a></code> function can be added to any <code>ggplot</code>, and requires only a predicate to select the highlighted portion of the data (passed directly to <code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code>, so anything you can do there is fair game). Here we highlight countries with a population greater than 50 million.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_16cb847a85bfba61e6b45a1b3c522e93">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_plot</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://yutannihilation.github.io/gghighlight/reference/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="va">pop</span> <span class="op">&gt;</span> <span class="fl">50000000</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Since there are so many un-highlighted lines, it’s quite hard to see what’s happening. We can change the aesthetics of the un-highlighted lines with <code>unhighlighted_params</code>.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-5_4a0a79869438ca44c665b4c8716e29b6">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_plot</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://yutannihilation.github.io/gghighlight/reference/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="va">pop</span> <span class="op">&gt;</span> <span class="fl">50000000</span>,</span>
+<span>              unhighlighted_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section><section id="more-complicated-filtering-criteria" class="level2"><h2 class="anchored" data-anchor-id="more-complicated-filtering-criteria">More complicated filtering criteria</h2>
+<p>Since the first argument(s) of <code>gghighlight</code> get passed directly to <code>filter</code>, you can include multiple filtering criteria, like population over 50 million and only countries in Asia:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-6_fab23f3917dc72f287476fd4d6fbf42b">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_plot</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://yutannihilation.github.io/gghighlight/reference/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="va">pop</span> <span class="op">&gt;</span> <span class="fl">50000000</span>, <span class="va">continent</span> <span class="op">==</span> <span class="st">"Asia"</span>,</span>
+<span>              unhighlighted_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>(Note that in this plot, where we have relatively few highlighted lines, <code>gghighlight</code> adds labels for us.)</p>
+<p>We can also provide a non-logical predicate to filter by, for example the top ten countries by population. The predicate is used to order the results, and the <code>max_highlight</code> argument determines the top <code>n</code> rows/groups based on that criterion:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-7_b0506595696cd561a1a9b70469c2f48a">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_plot</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://yutannihilation.github.io/gghighlight/reference/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>, max_highlight <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>              unhighlighted_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section><section id="labels" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="labels">Labels</h2>
+<p>The labels in the previous plot make things pretty crowded. <code>gghighlight</code> uses the <code><a href="https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html">ggrepel::geom_label_repel</a></code> geom by default, and arguments can be passed to that function with the <code>label_params</code> argument.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Here we’ll modify <code>max.overlaps</code>, which removes some labels when there are too many overlapping objects:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_5a5a2fe492057f84b38a77a82b62303c">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_plot</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://yutannihilation.github.io/gghighlight/reference/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>, max_highlight <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>              unhighlighted_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span>,</span>
+<span>              label_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>                max.overlaps <span class="op">=</span> <span class="fl">5</span></span>
+<span>              <span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>What if we want to have all of the labels off on one side, rather than on top of the plotted data? We can once again avail ourselves of <code>label_params</code>. I also prefer the labels to be text only—no border—which is accomplished with <code>line_label_type = "ggrepel_text"</code>.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_dbf11ea3d2b3114ca9bd0ed8d0fbdab4">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_plot</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://yutannihilation.github.io/gghighlight/reference/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>, max_highlight <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>    unhighlighted_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span>,</span>
+<span>    line_label_type <span class="op">=</span> <span class="st">"ggrepel_text"</span>,</span>
+<span>    label_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>      hjust <span class="op">=</span> <span class="fl">0</span>, <span class="co"># align label text</span></span>
+<span>      direction <span class="op">=</span> <span class="st">"y"</span>, <span class="co"># allow shifting labels on y axis to make room</span></span>
+<span>      nudge_x <span class="op">=</span> <span class="fl">10</span>, <span class="co"># push everything further to the right</span></span>
+<span>      segment.size <span class="op">=</span> <span class="fl">0.2</span> <span class="co"># make pointing lines thinner</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>One final tweak is to expand the plot rightward, so there is more room for labels. This is done by modifying the scale of the plot, as below. (I have not found a good way to make the labels appear in the margin)</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-10_7e8874583566e4211ef291579490c8a2">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_plot</span> <span class="op">+</span></span>
+<span> <span class="co"># Modify scale:</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html">expansion</a></span><span class="op">(</span>mult <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.25</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://yutannihilation.github.io/gghighlight/reference/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>, max_highlight <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>    unhighlighted_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span>,</span>
+<span>    line_label_type <span class="op">=</span> <span class="st">"ggrepel_text"</span>,</span>
+<span>    label_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>      hjust <span class="op">=</span> <span class="fl">0</span>, <span class="co"># align label text</span></span>
+<span>      direction <span class="op">=</span> <span class="st">"y"</span>, <span class="co"># allow shifting labels on y axis to make room</span></span>
+<span>      nudge_x <span class="op">=</span> <span class="fl">10</span>, <span class="co"># push everything further to the right</span></span>
+<span>      segment.size <span class="op">=</span> <span class="fl">0.2</span> <span class="co"># make pointing lines thinner</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>You’ll notice that in the plot above, the labels are drawn <em>inside</em> the plotting area, and not in the margin. I have not found a good way to make the labels in the margin only. The closest built-in option to <code>gghighlight</code> is to set <code>line_label_type = "sec_axis"</code> instead of <code>"ggrepel_text"</code>, but this does not prevent the labels from overlapping each other (since it’s not using <code>ggrepel</code> anymore). This is ok in a plot with only a few—or very spaced out—labels, but doesn’t work well for our current plot. You can see in the second plot below that it looks pretty good when we select, say, only the top 3 countries by population.</p>
+<div class="page-columns page-full">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_plot</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://yutannihilation.github.io/gghighlight/reference/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>, max_highlight <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>    unhighlighted_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span>,</span>
+<span>    line_label_type <span class="op">=</span> <span class="st">"sec_axis"</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="va">base_plot</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://yutannihilation.github.io/gghighlight/reference/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>, max_highlight <span class="op">=</span> <span class="fl">3</span>, <span class="co"># ***</span></span>
+<span>    unhighlighted_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span>,</span>
+<span>    line_label_type <span class="op">=</span> <span class="st">"sec_axis"</span></span>
+<span>    <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell column-page quarto-layout-panel" data-hash="index_cache/html/unnamed-chunk-11_da8f956f00fb211eb8bddbd5bc47c19c">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="index_files/figure-html/unnamed-chunk-11-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</section><section id="other-geoms" class="level2"><h2 class="anchored" data-anchor-id="other-geoms">Other geoms</h2>
+<p><code>gghighlight</code> works on geoms other than <code>line</code>, and in fact looks pretty snazzy in barplots/histograms plotted by group, where there is a lot of overlap. In the highlighted plot we facet by continent, but also show the overall distribution in gray.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Highlighting</a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">No highlighting</a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-12_3c856c951a325ed97087878376a99a9a">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">gapminder</span><span class="fu">::</span><span class="va"><a href="https://jennybc.github.io/gapminder/reference/gapminder.html">gapminder</a></span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lifeExp</span>, fill <span class="op">=</span> <span class="va">continent</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">continent</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://yutannihilation.github.io/gghighlight/reference/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-13_da168861c59a408b87d1eb4a11145c7e">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">gapminder</span><span class="fu">::</span><span class="va"><a href="https://jennybc.github.io/gapminder/reference/gapminder.html">gapminder</a></span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lifeExp</span>, fill <span class="op">=</span> <span class="va">continent</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>And with <code>geom_point</code>, for example, we can call out the top ten countries by population in the data from 2002:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-14_e484093087c7fe8e281bbffef7e0ee87">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">gapminder</span><span class="fu">::</span><span class="va"><a href="https://jennybc.github.io/gapminder/reference/gapminder.html">gapminder</a></span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fl">2002</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lifeExp</span>, y <span class="op">=</span> <span class="va">pop</span>, color <span class="op">=</span> <span class="va">country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://yutannihilation.github.io/gghighlight/reference/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>, max_highlight <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>              label_key <span class="op">=</span> <span class="va">country</span>,</span>
+<span>              label_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>                max.overlaps <span class="op">=</span> <span class="fl">1</span></span>
+<span>              <span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ggrepel: 6 unlabeled data points (too many overlaps). Consider
+increasing max.overlaps</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Note above that we’re warned that there were “too many overlaps,” and therefore some labels are omitted. In fact, if there are too many overlapping data points, all labels will be omitted You can remedy this by either having fewer highlighted points and/or changing <code>max.overlaps</code>.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-15_dc5df6f0627fca95d85dadf4fc4d26d6">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">gapminder</span><span class="fu">::</span><span class="va"><a href="https://jennybc.github.io/gapminder/reference/gapminder.html">gapminder</a></span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fl">2002</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lifeExp</span>, y <span class="op">=</span> <span class="va">pop</span>, color <span class="op">=</span> <span class="va">country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://yutannihilation.github.io/gghighlight/reference/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>, max_highlight <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>              label_key <span class="op">=</span> <span class="va">country</span>,</span>
+<span>              label_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>                max.overlaps <span class="op">=</span> <span class="fl">50</span></span>
+<span>              <span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<!-- End content -->
+<div id="footer-session-info">
+<details><summary>
+Session info and package versions
+</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-17_7d3bee37198077f6180cd1acce5de912">
+<div class="cell-output cell-output-stdout">
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> setting  value
+ version  R version 4.3.1 (2023-06-16)
+ os       macOS Ventura 13.4.1
+ system   aarch64, darwin20
+ ui       X11
+ language (EN)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       America/Chicago
+ date     2023-07-06
+ pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>─ Packages ───────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           package loadedversion       date         source
+          asbutils    0.0.0.9001 2023-07-06          local
+               cli         3.6.1 2023-03-23 CRAN (R 4.3.0)
+         codetools        0.2-19 2023-02-01 CRAN (R 4.3.1)
+        colorspace         2.1-0 2023-01-23 CRAN (R 4.3.0)
+            crayon         1.5.2 2022-09-29 CRAN (R 4.3.0)
+              crul         1.4.0 2023-05-17 CRAN (R 4.3.0)
+              curl         5.0.1 2023-06-07 CRAN (R 4.3.0)
+            digest        0.6.31 2022-12-11 CRAN (R 4.3.0)
+             dplyr         1.1.2 2023-04-20 CRAN (R 4.3.0)
+          ellipsis         0.3.2 2021-04-29 CRAN (R 4.3.0)
+          evaluate          0.21 2023-05-05 CRAN (R 4.3.0)
+         extrafont          0.19 2023-01-18 CRAN (R 4.3.0)
+       extrafontdb           1.0 2012-06-11 CRAN (R 4.3.0)
+             fansi         1.0.4 2023-01-22 CRAN (R 4.3.0)
+            farver         2.1.1 2022-07-06 CRAN (R 4.3.0)
+           fastmap         1.1.1 2023-02-24 CRAN (R 4.3.0)
+ fontBitstreamVera         0.1.1 2017-02-01 CRAN (R 4.3.0)
+    fontLiberation         0.1.0 2016-10-15 CRAN (R 4.3.0)
+        fontquiver         0.2.1 2017-02-01 CRAN (R 4.3.0)
+           forcats         1.0.0 2023-01-29 CRAN (R 4.3.0)
+         gapminder         1.0.0 2023-03-10 CRAN (R 4.3.0)
+           gdtools         0.3.3 2023-03-27 CRAN (R 4.3.0)
+          generics         0.1.3 2022-07-05 CRAN (R 4.3.0)
+            gfonts         0.2.0 2023-01-08 CRAN (R 4.3.0)
+       gghighlight         0.4.0 2022-10-16 CRAN (R 4.3.0)
+           ggplot2         3.4.2 2023-04-03 CRAN (R 4.3.0)
+           ggrepel         0.9.3 2023-02-03 CRAN (R 4.3.0)
+              glue         1.6.2 2022-02-24 CRAN (R 4.3.0)
+            gtable         0.3.3 2023-03-21 CRAN (R 4.3.0)
+               hms         1.1.3 2023-03-21 CRAN (R 4.3.0)
+        hrbrthemes         0.8.0 2020-03-06 CRAN (R 4.3.0)
+         htmltools         0.5.5 2023-03-23 CRAN (R 4.3.0)
+       htmlwidgets         1.6.2 2023-03-17 CRAN (R 4.3.0)
+          httpcode         0.3.0 2020-04-10 CRAN (R 4.3.0)
+            httpuv        1.6.11 2023-05-11 CRAN (R 4.3.0)
+          jsonlite         1.8.7 2023-06-29 CRAN (R 4.3.0)
+             knitr          1.43 2023-05-25 CRAN (R 4.3.0)
+          labeling         0.4.2 2020-10-20 CRAN (R 4.3.0)
+             later         1.3.1 2023-05-02 CRAN (R 4.3.0)
+         lifecycle         1.0.3 2022-10-07 CRAN (R 4.3.0)
+         lubridate         1.9.2 2023-02-10 CRAN (R 4.3.0)
+          magrittr         2.0.3 2022-03-30 CRAN (R 4.3.0)
+              mime          0.12 2021-09-28 CRAN (R 4.3.0)
+           munsell         0.5.0 2018-06-12 CRAN (R 4.3.0)
+            pillar         1.9.0 2023-03-22 CRAN (R 4.3.0)
+         pkgconfig         2.0.3 2019-09-22 CRAN (R 4.3.0)
+          promises       1.2.0.1 2021-02-11 CRAN (R 4.3.0)
+             purrr         1.0.1 2023-01-10 CRAN (R 4.3.0)
+                R6         2.5.1 2021-08-19 CRAN (R 4.3.0)
+              Rcpp        1.0.10 2023-01-22 CRAN (R 4.3.0)
+             readr         2.1.4 2023-02-10 CRAN (R 4.3.0)
+              renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
+             rlang         1.1.1 2023-04-28 CRAN (R 4.3.0)
+         rmarkdown          2.22 2023-06-01 CRAN (R 4.3.0)
+        rstudioapi          0.14 2022-08-22 CRAN (R 4.3.0)
+          Rttf2pt1        1.3.12 2023-01-22 CRAN (R 4.3.0)
+            scales         1.2.1 2022-08-20 CRAN (R 4.3.0)
+       sessioninfo         1.2.2 2021-12-06 CRAN (R 4.3.0)
+             shiny         1.7.4 2022-12-15 CRAN (R 4.3.0)
+           stringi        1.7.12 2023-01-11 CRAN (R 4.3.0)
+           stringr         1.5.0 2022-12-02 CRAN (R 4.3.0)
+       systemfonts         1.0.4 2022-02-11 CRAN (R 4.3.0)
+            tibble         3.2.1 2023-03-20 CRAN (R 4.3.0)
+             tidyr         1.3.0 2023-01-24 CRAN (R 4.3.0)
+        tidyselect         1.2.0 2022-10-10 CRAN (R 4.3.0)
+         tidyverse         2.0.0 2023-02-22 CRAN (R 4.3.0)
+        timechange         0.2.0 2023-01-11 CRAN (R 4.3.0)
+              tzdb         0.4.0 2023-05-12 CRAN (R 4.3.0)
+              utf8         1.2.3 2023-01-31 CRAN (R 4.3.0)
+             vctrs         0.6.3 2023-06-14 CRAN (R 4.3.0)
+             withr         2.5.0 2022-03-03 CRAN (R 4.3.0)
+              xfun          0.39 2023-04-20 CRAN (R 4.3.0)
+            xtable         1.8-4 2019-04-21 CRAN (R 4.3.0)
+              yaml         2.3.7 2023-01-23 CRAN (R 4.3.0)</code></pre>
+</div>
+</div>
+</details>
+</div>
+
+
+</section><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+<ol>
+<li id="fn1"><p>NB: unless you set <code>use_direct_label = FALSE</code>, the legend will not be included in a highlighted plot. Also, if you want the colors to match an unhighlighted version of the plot, use <code>keep_scales = TRUE</code>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>See the <code>geom_label_repel</code> documentation for more options.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Handle positioning of the toggle
+      window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
+          }
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

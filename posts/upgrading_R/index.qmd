@@ -1,7 +1,7 @@
 ---
 title: "Upgrading R without losing all your packages"
 
-date: "6-30-23"
+date: "6/30/23"
 
 categories:
   - upgrading
