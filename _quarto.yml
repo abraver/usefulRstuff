@@ -3,8 +3,8 @@ project:
   output-dir: docs
 
 execute:
-  freeze: true
-  cache: true
+  freeze: false
+  cache: false
     
 website:
   title: "Useful R Stuff"

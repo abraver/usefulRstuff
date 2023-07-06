@@ -9,6 +9,8 @@ categories:
 
 toc: true
 
+fig-cap-location: top
+
 ---
 
 {{< include /_include_header.qmd >}}
@@ -17,7 +19,7 @@ toc: true
 
 ```{r setup}
 #| code-fold: true
-#| code-summary: "Setup/libraries"
+#| code-summary: "Load packages"
 #| output: false
 #| warning: false
 
@@ -82,20 +84,33 @@ plot <- midwest |>
 
 plot
 ```
-
+(NB: you can use the _sequential_ and _diverging_ type palettes for discrete/categorical data if you add the argument `discrete = TRUE`)
 
 ## `colorblindr` - Preview your plots with colorblind simulation
 
-`colorblindr::cvd_grid` will simulate how your plots will look to people with various types of colorblindness.  The `midwest` plot from above is shown here:
+`colorblindr::cvd_grid` will simulate how your plots will look to people with various types of colorblindness:
 
 ```{r}
 #| warning: false
+#| fig-show: hold
+#| fig-cap:
+#|  - Density of hours of REM sleep, for carnivores, omnivores, herbivores, and insectivores.  Data from the mammal sleep dataset (`ggplot::msleep`).
+#|  - The same plot in various simulations of colorblindness
 #| fig-width: 10
 
 # remotes::install_github("clauswilke/colorblindr")
 
+plot <- msleep |> 
+  filter(!is.na(vore)) |> 
+  ggplot(aes(x = sleep_rem, fill = vore)) +
+  geom_density(alpha = 0.75) +
+  scale_fill_light()
+
+plot
+
 colorblindr::cvd_grid(plot)
 ```
+
 
 
 <!-- End content -->
