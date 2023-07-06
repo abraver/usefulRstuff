@@ -88,7 +88,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><link href="../../site_libs/roboto-condensed-0.3.3/css/roboto-condensed.css" rel="stylesheet">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-N1MBV4L3FV"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
+</script><link href="../../site_libs/roboto-condensed-0.3.3/css/roboto-condensed.css" rel="stylesheet">
 <link rel="stylesheet" href="../../styles.css">
 </head>
 <body class="nav-fixed fullcontent">
@@ -144,15 +150,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-</header><script src="../../jquery-3.7.0.min.js"></script><script src="../../fold.js"></script><!-- begin content --><p>If you upgrade R to a new major or minor release (e.g.&nbsp;4.0 or 4.1, but not 4.1.1), your library of installed packages doesn’t come along for the ride.</p>
+</header><!-- begin content --><p>If you upgrade R to a new major or minor release (e.g.&nbsp;4.0 or 4.1, but not 4.1.1), your library of installed packages doesn’t come along for the ride.</p>
 <section id="before-you-upgrade" class="level2"><h2 class="anchored" data-anchor-id="before-you-upgrade">Before you upgrade</h2>
 <p><em>Before</em> you upgrade, you should make a list of all of your installed packages—this is easy with <code>sessioninfo::package_info("installed")</code>. If you’ve got packages installed from multiple sources (like CRAN and also Github), it’s best to save these as separate lists to facilitate automated reinstallation of these grouped by source:</p>
-<div class="cell" data-messages="false" data-hash="index_cache/html/unnamed-chunk-2_62f704cc5d2df678700fed6c59f0e170">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Figure out what's installed</span></span>
+<div class="cell" data-messages="false" data-hash="index_cache/html/unnamed-chunk-2_7ec31f620afef15343686dc17f9d1d9c">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Figure out what's installed</span></span>
 <span><span class="va">installed_packages</span> <span class="op">&lt;-</span> <span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/package_info.html">package_info</a></span><span class="op">(</span><span class="st">"installed"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="st">"where_from"</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="st">"where_from"</span> <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">source</span>, <span class="st">"CRAN"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"CRAN"</span>,</span>
 <span>    <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">source</span>, <span class="st">"Github"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"Github"</span>,</span>
 <span>    .default <span class="op">=</span> <span class="st">"other"</span> <span class="co"># catch any packages from other sources;</span></span>
@@ -176,7 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section><section id="after-you-upgrade" class="level2"><h2 class="anchored" data-anchor-id="after-you-upgrade">After you upgrade</h2>
 <p>Then, after you upgrade R, you can re-install the packages from these lists:</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-3_d70f0a5367ab8e9d2e15c9233da4a0da">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Install manually some things we'll need since they won't be installed anymore</span></span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Install manually some things we'll need since they won't be installed anymore</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"remotes"</span>, <span class="st">"dplyr"</span>, <span class="st">"stringr"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">file_location</span> <span class="op">&lt;-</span> <span class="st">"~/Desktop/tmp/"</span> <span class="co"># Change as needed</span></span>
@@ -193,10 +210,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>NB: If you have locally installed packages, or packages from another source, these aren’t automatically reinstalled with the code above, but are listed in <code>other_packages.csv</code>.</p>
 <!-- End content -->
-<hr>
 <details><summary>
 Session info and package versions
-</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-4_eb582c6ddcbcc3e85f8f7774932cec40">
+</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-5_fe6c786aaee706612df17c5cb43ebc51">
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
 </div>
@@ -210,87 +226,82 @@ Session info and package versions
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/Chicago
- date     2023-06-30
+ date     2023-07-06
  pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Packages ───────────────────────────────────────────────────────────────────</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     package loadedversion       date         source
-         bit         4.0.5 2022-11-15 CRAN (R 4.3.0)
-       bit64         4.0.5 2020-08-30 CRAN (R 4.3.0)
-      cachem         1.0.8 2023-05-01 CRAN (R 4.3.0)
-       callr         3.7.3 2022-11-02 CRAN (R 4.3.0)
-         cli         3.6.1 2023-03-23 CRAN (R 4.3.0)
-   codetools        0.2-19 2023-02-01 CRAN (R 4.3.1)
-  colorspace         2.1-0 2023-01-23 CRAN (R 4.3.0)
-      crayon         1.5.2 2022-09-29 CRAN (R 4.3.0)
-    devtools         2.4.5 2022-10-11 CRAN (R 4.3.0)
-      digest        0.6.31 2022-12-11 CRAN (R 4.3.0)
-       dplyr         1.1.2 2023-04-20 CRAN (R 4.3.0)
-    ellipsis         0.3.2 2021-04-29 CRAN (R 4.3.0)
-    evaluate          0.21 2023-05-05 CRAN (R 4.3.0)
-       fansi         1.0.4 2023-01-22 CRAN (R 4.3.0)
-     fastmap         1.1.1 2023-02-24 CRAN (R 4.3.0)
-     forcats         1.0.0 2023-01-29 CRAN (R 4.3.0)
-          fs         1.6.2 2023-04-25 CRAN (R 4.3.0)
-    generics         0.1.3 2022-07-05 CRAN (R 4.3.0)
-     ggplot2         3.4.2 2023-04-03 CRAN (R 4.3.0)
-        glue         1.6.2 2022-02-24 CRAN (R 4.3.0)
-      gtable         0.3.3 2023-03-21 CRAN (R 4.3.0)
-         hms         1.1.3 2023-03-21 CRAN (R 4.3.0)
-   htmltools         0.5.5 2023-03-23 CRAN (R 4.3.0)
- htmlwidgets         1.6.2 2023-03-17 CRAN (R 4.3.0)
-      httpuv        1.6.11 2023-05-11 CRAN (R 4.3.0)
-    jsonlite         1.8.7 2023-06-29 CRAN (R 4.3.0)
-       knitr          1.43 2023-05-25 CRAN (R 4.3.0)
-       later         1.3.1 2023-05-02 CRAN (R 4.3.0)
-   lifecycle         1.0.3 2022-10-07 CRAN (R 4.3.0)
-   lubridate         1.9.2 2023-02-10 CRAN (R 4.3.0)
-    magrittr         2.0.3 2022-03-30 CRAN (R 4.3.0)
-     memoise         2.0.1 2021-11-26 CRAN (R 4.3.0)
-        mime          0.12 2021-09-28 CRAN (R 4.3.0)
-      miniUI       0.1.1.1 2018-05-18 CRAN (R 4.3.0)
-     munsell         0.5.0 2018-06-12 CRAN (R 4.3.0)
-      pillar         1.9.0 2023-03-22 CRAN (R 4.3.0)
-    pkgbuild         1.4.2 2023-06-26 CRAN (R 4.3.0)
-   pkgconfig         2.0.3 2019-09-22 CRAN (R 4.3.0)
-     pkgload         1.3.2 2022-11-16 CRAN (R 4.3.0)
- prettyunits         1.1.1 2020-01-24 CRAN (R 4.3.0)
-    processx         3.8.1 2023-04-18 CRAN (R 4.3.0)
-     profvis         0.3.8 2023-05-02 CRAN (R 4.3.0)
-    promises       1.2.0.1 2021-02-11 CRAN (R 4.3.0)
-          ps         1.7.5 2023-04-18 CRAN (R 4.3.0)
-       purrr         1.0.1 2023-01-10 CRAN (R 4.3.0)
-          R6         2.5.1 2021-08-19 CRAN (R 4.3.0)
-        Rcpp        1.0.10 2023-01-22 CRAN (R 4.3.0)
-       readr         2.1.4 2023-02-10 CRAN (R 4.3.0)
-     remotes         2.4.2 2021-11-30 CRAN (R 4.3.0)
-        renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
-       rlang         1.1.1 2023-04-28 CRAN (R 4.3.0)
-   rmarkdown          2.22 2023-06-01 CRAN (R 4.3.0)
-  rstudioapi          0.14 2022-08-22 CRAN (R 4.3.0)
-      scales         1.2.1 2022-08-20 CRAN (R 4.3.0)
- sessioninfo         1.2.2 2021-12-06 CRAN (R 4.3.0)
-       shiny         1.7.4 2022-12-15 CRAN (R 4.3.0)
-     stringi        1.7.12 2023-01-11 CRAN (R 4.3.0)
-     stringr         1.5.0 2022-12-02 CRAN (R 4.3.0)
-      tibble         3.2.1 2023-03-20 CRAN (R 4.3.0)
-       tidyr         1.3.0 2023-01-24 CRAN (R 4.3.0)
-  tidyselect         1.2.0 2022-10-10 CRAN (R 4.3.0)
-   tidyverse         2.0.0 2023-02-22 CRAN (R 4.3.0)
-  timechange         0.2.0 2023-01-11 CRAN (R 4.3.0)
-        tzdb         0.4.0 2023-05-12 CRAN (R 4.3.0)
-  urlchecker         1.0.1 2021-11-30 CRAN (R 4.3.0)
-     usethis         2.2.1 2023-06-23 CRAN (R 4.3.0)
-        utf8         1.2.3 2023-01-31 CRAN (R 4.3.0)
-       vctrs         0.6.3 2023-06-14 CRAN (R 4.3.0)
-       vroom         1.6.3 2023-04-28 CRAN (R 4.3.0)
-       withr         2.5.0 2022-03-03 CRAN (R 4.3.0)
-        xfun          0.39 2023-04-20 CRAN (R 4.3.0)
-      xtable         1.8-4 2019-04-21 CRAN (R 4.3.0)
-        yaml         2.3.7 2023-01-23 CRAN (R 4.3.0)</code></pre>
+<pre><code>           package loadedversion       date         source
+               bit         4.0.5 2022-11-15 CRAN (R 4.3.0)
+             bit64         4.0.5 2020-08-30 CRAN (R 4.3.0)
+               cli         3.6.1 2023-03-23 CRAN (R 4.3.0)
+         codetools        0.2-19 2023-02-01 CRAN (R 4.3.1)
+        colorspace         2.1-0 2023-01-23 CRAN (R 4.3.0)
+            crayon         1.5.2 2022-09-29 CRAN (R 4.3.0)
+              crul         1.4.0 2023-05-17 CRAN (R 4.3.0)
+              curl         5.0.1 2023-06-07 CRAN (R 4.3.0)
+            digest        0.6.31 2022-12-11 CRAN (R 4.3.0)
+             dplyr         1.1.2 2023-04-20 CRAN (R 4.3.0)
+          ellipsis         0.3.2 2021-04-29 CRAN (R 4.3.0)
+          evaluate          0.21 2023-05-05 CRAN (R 4.3.0)
+             fansi         1.0.4 2023-01-22 CRAN (R 4.3.0)
+           fastmap         1.1.1 2023-02-24 CRAN (R 4.3.0)
+ fontBitstreamVera         0.1.1 2017-02-01 CRAN (R 4.3.0)
+    fontLiberation         0.1.0 2016-10-15 CRAN (R 4.3.0)
+        fontquiver         0.2.1 2017-02-01 CRAN (R 4.3.0)
+           forcats         1.0.0 2023-01-29 CRAN (R 4.3.0)
+                fs         1.6.2 2023-04-25 CRAN (R 4.3.0)
+           gdtools         0.3.3 2023-03-27 CRAN (R 4.3.0)
+          generics         0.1.3 2022-07-05 CRAN (R 4.3.0)
+            gfonts         0.2.0 2023-01-08 CRAN (R 4.3.0)
+           ggplot2         3.4.2 2023-04-03 CRAN (R 4.3.0)
+              glue         1.6.2 2022-02-24 CRAN (R 4.3.0)
+            gtable         0.3.3 2023-03-21 CRAN (R 4.3.0)
+               hms         1.1.3 2023-03-21 CRAN (R 4.3.0)
+         htmltools         0.5.5 2023-03-23 CRAN (R 4.3.0)
+       htmlwidgets         1.6.2 2023-03-17 CRAN (R 4.3.0)
+          httpcode         0.3.0 2020-04-10 CRAN (R 4.3.0)
+            httpuv        1.6.11 2023-05-11 CRAN (R 4.3.0)
+          jsonlite         1.8.4 2023-06-29 CRAN (R 4.3.0)
+             knitr          1.43 2023-05-25 CRAN (R 4.3.0)
+             later         1.3.1 2023-05-02 CRAN (R 4.3.0)
+         lifecycle         1.0.3 2022-10-07 CRAN (R 4.3.0)
+         lubridate         1.9.2 2023-02-10 CRAN (R 4.3.0)
+          magrittr         2.0.3 2022-03-30 CRAN (R 4.3.0)
+              mime          0.12 2021-09-28 CRAN (R 4.3.0)
+           munsell         0.5.0 2018-06-12 CRAN (R 4.3.0)
+            pillar         1.9.0 2023-03-22 CRAN (R 4.3.0)
+         pkgconfig         2.0.3 2019-09-22 CRAN (R 4.3.0)
+          promises       1.2.0.1 2021-02-11 CRAN (R 4.3.0)
+             purrr         1.0.1 2023-01-10 CRAN (R 4.3.0)
+                R6         2.5.1 2021-08-19 CRAN (R 4.3.0)
+              Rcpp        1.0.10 2023-01-22 CRAN (R 4.3.0)
+             readr         2.1.4 2023-02-10 CRAN (R 4.3.0)
+              renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
+             rlang         1.1.1 2023-04-28 CRAN (R 4.3.0)
+         rmarkdown          2.21 2023-06-01 CRAN (R 4.3.0)
+        rstudioapi          0.14 2022-08-22 CRAN (R 4.3.0)
+            scales         1.2.1 2022-08-20 CRAN (R 4.3.0)
+       sessioninfo         1.2.2 2021-12-06 CRAN (R 4.3.0)
+             shiny         1.7.4 2022-12-15 CRAN (R 4.3.0)
+           stringi        1.7.12 2023-01-11 CRAN (R 4.3.0)
+           stringr         1.5.0 2022-12-02 CRAN (R 4.3.0)
+       systemfonts         1.0.4 2022-02-11 CRAN (R 4.3.0)
+            tibble         3.2.1 2023-03-20 CRAN (R 4.3.0)
+             tidyr         1.3.0 2023-01-24 CRAN (R 4.3.0)
+        tidyselect         1.2.0 2022-10-10 CRAN (R 4.3.0)
+         tidyverse         2.0.0 2023-02-22 CRAN (R 4.3.0)
+        timechange         0.2.0 2023-01-11 CRAN (R 4.3.0)
+              tzdb         0.4.0 2023-05-12 CRAN (R 4.3.0)
+              utf8         1.2.3 2023-01-31 CRAN (R 4.3.0)
+             vctrs         0.6.3 2023-06-14 CRAN (R 4.3.0)
+             vroom         1.6.3 2023-04-28 CRAN (R 4.3.0)
+             withr         2.5.0 2022-03-03 CRAN (R 4.3.0)
+              xfun          0.39 2023-04-20 CRAN (R 4.3.0)
+            xtable         1.8-4 2019-04-21 CRAN (R 4.3.0)
+              yaml         2.3.7 2023-01-23 CRAN (R 4.3.0)</code></pre>
 </div>
 </div>
 </details>

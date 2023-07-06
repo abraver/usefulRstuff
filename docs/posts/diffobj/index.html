@@ -88,7 +88,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><link rel="stylesheet" href="../../styles.css">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-N1MBV4L3FV"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
+</script><link href="../../site_libs/roboto-condensed-0.3.3/css/roboto-condensed.css" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 <body class="nav-fixed">
 
@@ -145,9 +152,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-</header><script src="../../jquery-3.7.0.min.js"></script><script src="../../fold.js"></script><!-- begin content --><p>What’s the difference between two <code>df</code>s?</p>
+</header><!-- begin content --><p>What’s the difference between two <code>df</code>s?</p>
 <p><code><a href="https://rdrr.io/pkg/diffobj/man/diffPrint.html">diffobj::diffPrint()</a></code> gives a handy visual way to check differences:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-1_4a5bf75421431a0e6d0ec13a81aa06d3">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_f637eadf0e2e683b17e3d825c2bb25cc">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/brodieG/diffobj">diffobj</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, ncol<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
@@ -179,7 +186,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <details><summary>
 (In RStudio, this is shown in a colorful manner in the Viewer)
 </summary><img src="diffobj-rstudio.jpg" class="img-fluid" width="400"></details><p>This also works for other types of objects, such as character vectors:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_2eb520d2c91aebf4d9424cacfa39534a">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_03d0dc9d3a9e315c1be192acc7920490">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/diffobj/man/diffPrint.html">diffPrint</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"B"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt; letters[1:3]     &gt; c("a", "B", "..
@@ -189,10 +196,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>For more details, see the <a href="https://cran.r-project.org/web/packages/diffobj/vignettes/diffobj.html">Introduction to diffobjj vignette</a>, or the <a href="https://github.com/brodieG/diffobj">diffobj github rep</a>.</p>
 <!-- End content -->
-<hr>
 <details><summary>
 Session info and package versions
-</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-3_7b24da9e1e9e91f53f915cbc658f4f85">
+</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-5_fe6c786aaee706612df17c5cb43ebc51">
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
 </div>
@@ -206,71 +212,62 @@ Session info and package versions
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/Chicago
- date     2023-06-25
+ date     2023-07-06
  pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Packages ───────────────────────────────────────────────────────────────────</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     package loadedversion       date         source
-         cli         3.6.1 2023-03-23 CRAN (R 4.3.0)
-  colorspace         2.1-0 2023-01-23 CRAN (R 4.3.0)
-      crayon         1.5.2 2022-09-29 CRAN (R 4.3.0)
-     diffobj         0.3.5 2021-10-05 CRAN (R 4.3.0)
-      digest        0.6.31 2022-12-11 CRAN (R 4.3.0)
-       dplyr         1.1.2 2023-04-20 CRAN (R 4.3.0)
-    ellipsis         0.3.2 2021-04-29 CRAN (R 4.3.0)
-    evaluate          0.21 2023-05-05 CRAN (R 4.3.0)
-       fansi         1.0.4 2023-01-22 CRAN (R 4.3.0)
-     fastmap         1.1.1 2023-02-24 CRAN (R 4.3.0)
-     forcats         1.0.0 2023-01-29 CRAN (R 4.3.0)
-    generics         0.1.3 2022-07-05 CRAN (R 4.3.0)
-     ggExtra        0.10.0 2022-03-23 CRAN (R 4.3.0)
-     ggplot2         3.4.2 2023-04-03 CRAN (R 4.3.0)
-        glue         1.6.2 2022-02-24 CRAN (R 4.3.0)
-      gtable         0.3.3 2023-03-21 CRAN (R 4.3.0)
-         hms         1.1.3 2023-03-21 CRAN (R 4.3.0)
-   htmltools         0.5.5 2023-03-23 CRAN (R 4.3.0)
- htmlwidgets         1.6.2 2023-03-17 CRAN (R 4.3.0)
-      httpuv        1.6.11 2023-05-11 CRAN (R 4.3.0)
-    jsonlite         1.8.4 2022-12-06 CRAN (R 4.3.0)
-       knitr          1.43 2023-05-25 CRAN (R 4.3.0)
-       later         1.3.1 2023-05-02 CRAN (R 4.3.0)
-   lifecycle         1.0.3 2022-10-07 CRAN (R 4.3.0)
-   lubridate         1.9.2 2023-02-10 CRAN (R 4.3.0)
-    magrittr         2.0.3 2022-03-30 CRAN (R 4.3.0)
-        mime          0.12 2021-09-28 CRAN (R 4.3.0)
-      miniUI       0.1.1.1 2018-05-18 CRAN (R 4.3.0)
-     munsell         0.5.0 2018-06-12 CRAN (R 4.3.0)
-      pillar         1.9.0 2023-03-22 CRAN (R 4.3.0)
-   pkgconfig         2.0.3 2019-09-22 CRAN (R 4.3.0)
-    promises       1.2.0.1 2021-02-11 CRAN (R 4.3.0)
-       purrr         1.0.1 2023-01-10 CRAN (R 4.3.0)
-          R6         2.5.1 2021-08-19 CRAN (R 4.3.0)
-        Rcpp        1.0.10 2023-01-22 CRAN (R 4.3.0)
-       readr         2.1.4 2023-02-10 CRAN (R 4.3.0)
-        renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
-       rlang         1.1.1 2023-04-28 CRAN (R 4.3.0)
-   rmarkdown          2.21 2023-03-26 CRAN (R 4.3.0)
-  rstudioapi          0.14 2022-08-22 CRAN (R 4.3.0)
-      scales         1.2.1 2022-08-20 CRAN (R 4.3.0)
- sessioninfo         1.2.2 2021-12-06 CRAN (R 4.3.0)
-       shiny         1.7.4 2022-12-15 CRAN (R 4.3.0)
-     stringi        1.7.12 2023-01-11 CRAN (R 4.3.0)
-     stringr         1.5.0 2022-12-02 CRAN (R 4.3.0)
-      tibble         3.2.1 2023-03-20 CRAN (R 4.3.0)
-       tidyr         1.3.0 2023-01-24 CRAN (R 4.3.0)
-  tidyselect         1.2.0 2022-10-10 CRAN (R 4.3.0)
-   tidyverse         2.0.0 2023-02-22 CRAN (R 4.3.0)
-  timechange         0.2.0 2023-01-11 CRAN (R 4.3.0)
-        tzdb         0.3.0 2022-03-28 CRAN (R 4.3.0)
-        utf8         1.2.3 2023-01-31 CRAN (R 4.3.0)
-       vctrs         0.6.2 2023-04-19 CRAN (R 4.3.0)
-       withr         2.5.0 2022-03-03 CRAN (R 4.3.0)
-        xfun          0.39 2023-04-20 CRAN (R 4.3.0)
-      xtable         1.8-4 2019-04-21 CRAN (R 4.3.0)
-        yaml         2.3.7 2023-01-23 CRAN (R 4.3.0)</code></pre>
+<pre><code>           package loadedversion       date         source
+               cli         3.6.1 2023-03-23 CRAN (R 4.3.0)
+         codetools        0.2-19 2023-02-01 CRAN (R 4.3.1)
+            crayon         1.5.2 2022-09-29 CRAN (R 4.3.0)
+              crul         1.4.0 2023-05-17 CRAN (R 4.3.0)
+              curl         5.0.0 2023-01-12 CRAN (R 4.3.0)
+           diffobj         0.3.5 2021-10-05 CRAN (R 4.3.0)
+            digest        0.6.31 2022-12-11 CRAN (R 4.3.0)
+             dplyr         1.1.2 2023-04-20 CRAN (R 4.3.0)
+          ellipsis         0.3.2 2021-04-29 CRAN (R 4.3.0)
+          evaluate          0.21 2023-05-05 CRAN (R 4.3.0)
+             fansi         1.0.4 2023-01-22 CRAN (R 4.3.0)
+           fastmap         1.1.1 2023-02-24 CRAN (R 4.3.0)
+ fontBitstreamVera         0.1.1 2017-02-01 CRAN (R 4.3.0)
+    fontLiberation         0.1.0 2016-10-15 CRAN (R 4.3.0)
+        fontquiver         0.2.1 2017-02-01 CRAN (R 4.3.0)
+           gdtools         0.3.3 2023-03-27 CRAN (R 4.3.0)
+          generics         0.1.3 2022-07-05 CRAN (R 4.3.0)
+            gfonts         0.2.0 2023-01-08 CRAN (R 4.3.0)
+              glue         1.6.2 2022-02-24 CRAN (R 4.3.0)
+         htmltools         0.5.5 2023-03-23 CRAN (R 4.3.0)
+       htmlwidgets         1.6.2 2023-03-17 CRAN (R 4.3.0)
+          httpcode         0.3.0 2020-04-10 CRAN (R 4.3.0)
+            httpuv        1.6.11 2023-05-11 CRAN (R 4.3.0)
+          jsonlite         1.8.7 2022-12-06 CRAN (R 4.3.0)
+             knitr          1.43 2023-05-25 CRAN (R 4.3.0)
+             later         1.3.1 2023-05-02 CRAN (R 4.3.0)
+         lifecycle         1.0.3 2022-10-07 CRAN (R 4.3.0)
+          magrittr         2.0.3 2022-03-30 CRAN (R 4.3.0)
+              mime          0.12 2021-09-28 CRAN (R 4.3.0)
+            pillar         1.9.0 2023-03-22 CRAN (R 4.3.0)
+         pkgconfig         2.0.3 2019-09-22 CRAN (R 4.3.0)
+          promises       1.2.0.1 2021-02-11 CRAN (R 4.3.0)
+                R6         2.5.1 2021-08-19 CRAN (R 4.3.0)
+              Rcpp        1.0.10 2023-01-22 CRAN (R 4.3.0)
+              renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
+             rlang         1.1.1 2023-04-28 CRAN (R 4.3.0)
+         rmarkdown          2.22 2023-03-26 CRAN (R 4.3.0)
+        rstudioapi          0.14 2022-08-22 CRAN (R 4.3.0)
+       sessioninfo         1.2.2 2021-12-06 CRAN (R 4.3.0)
+             shiny         1.7.4 2022-12-15 CRAN (R 4.3.0)
+       systemfonts         1.0.4 2022-02-11 CRAN (R 4.3.0)
+            tibble         3.2.1 2023-03-20 CRAN (R 4.3.0)
+        tidyselect         1.2.0 2022-10-10 CRAN (R 4.3.0)
+              utf8         1.2.3 2023-01-31 CRAN (R 4.3.0)
+             vctrs         0.6.2 2023-04-19 CRAN (R 4.3.0)
+              xfun          0.39 2023-04-20 CRAN (R 4.3.0)
+            xtable         1.8-4 2019-04-21 CRAN (R 4.3.0)
+              yaml         2.3.7 2023-01-23 CRAN (R 4.3.0)</code></pre>
 </div>
 </div>
 </details>

@@ -94,6 +94,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-N1MBV4L3FV"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
+</script>
+<link href="../../site_libs/roboto-condensed-0.3.3/css/roboto-condensed.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -162,8 +172,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<script src="../../jquery-3.7.0.min.js"></script>
-<script src="../../fold.js"></script>
 <!-- begin content -->
 <div class="cell" data-hash="index_cache/html/setup_3d128d30258acd457e6aab6cf60de21a">
 <details>
@@ -173,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>Insert <code>thinkr::peep(head)</code> into a <code>df</code> pipeline to print a few rows at a particular intermediate stage in the pipeline. Here it prints a few lines of the <code>df</code> before it gets summarized:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-1_1778331bcb7553dfdf28d087dd3f1977">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_f53720937ec52262e8f6e687bff1cada">
 <div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>palmerpenguins<span class="sc">::</span>penguins <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">peep</span>(head) <span class="sc">|&gt;</span></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
@@ -182,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="3" data-code-cell="annotated-cell-2" data-code-annotation="1">How convenient that the base R pipe looks like a penguin.</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="1" data-code-lines="3">How convenient that the base R pipe looks like a penguin.</span>
 </dd>
 </dl>
 </div>
@@ -250,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>You can use multiple functions, like <code>head</code> and <code>tail</code> to see two views of the intermediate step; <code>verbose = TRUE</code> prints the functions used for these peeps:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_2e8d1b87658cd5c580318c491ad95d79">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_960ed7bec4aef10d66e227f2f95a779c">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>palmerpenguins<span class="sc">::</span>penguins <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">peep</span>(head, tail, <span class="at">verbose =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span> </span>
@@ -337,7 +345,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>And you can include arguments to functions inside <code>peep()</code> with dot syntax:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_01caf3d87a4f2579db8cd96ecc25b41b">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_eee2facdc69258f1d1cbff3bc982229c">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>palmerpenguins<span class="sc">::</span>penguins <span class="sc">%&gt;%</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">peep</span>(<span class="fu">head</span>(., <span class="at">n =</span> <span class="dv">7</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span> </span>
@@ -407,12 +415,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <!-- End content -->
-<hr>
 <details>
 <summary>
 Session info and package versions
 </summary>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_eb582c6ddcbcc3e85f8f7774932cec40">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-6_033bb19118c34c3bfd99cbeccafa1a30">
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
 </div>
@@ -426,7 +433,7 @@ Session info and package versions
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/Chicago
- date     2023-06-26
+ date     2023-07-06
  pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -480,6 +487,7 @@ Session info and package versions
            munsell         0.5.0 2018-06-12 CRAN (R 4.3.0)
            officer         0.6.2 2023-03-28 CRAN (R 4.3.0)
            openssl         2.0.6 2023-03-09 CRAN (R 4.3.0)
+    palmerpenguins         0.1.1 2022-08-15 CRAN (R 4.3.0)
             pillar         1.9.0 2023-03-22 CRAN (R 4.3.0)
           pkgbuild         1.4.0 2022-11-27 CRAN (R 4.3.1)
          pkgconfig         2.0.3 2019-09-22 CRAN (R 4.3.0)

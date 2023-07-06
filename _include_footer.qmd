@@ -13,7 +13,7 @@ cat("─ Session info ───────────────────�
 sessioninfo::platform_info()
 cat("─ Packages ───────────────────────────────────────────────────────────────────")
 sessioninfo::package_info() |> dplyr::select(package, loadedversion, date, source) |>
-  dplyr::mutate(source = case_when(
+  dplyr::mutate(source = dplyr::case_when(
     stringr::str_detect(source, "Github") ~ "Github",
     stringr::str_detect(source, "local") ~ "local",
     .default = source

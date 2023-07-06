@@ -1,10 +1,14 @@
 [
   {
+    "listing": "/hidden.html",
+    "items": []
+  },
+  {
     "listing": "/index.html",
     "items": [
+      "/posts/upgrading_R/index.html",
       "/posts/khroma/index.html",
       "/posts/paginate_faceted_graphs/index.html",
-      "/posts/upgrading_R/index.html",
       "/posts/ggiraph/index.html",
       "/posts/skimr/index.html",
       "/posts/glimpse/index.html",
@@ -13,9 +17,5 @@
       "/posts/diffobj/index.html",
       "/posts/thinkr_peep/index.html"
     ]
-  },
-  {
-    "listing": "/hidden.html",
-    "items": []
   }
 ]

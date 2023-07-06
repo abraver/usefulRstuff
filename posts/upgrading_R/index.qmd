@@ -25,7 +25,7 @@ library(tidyverse)
 
 # Figure out what's installed
 installed_packages <- sessioninfo::package_info("installed") |> 
-  mutate("where_from" = case_when(
+  mutate("where_from" = dplyr::case_when(
     str_detect(source, "CRAN") ~ "CRAN",
     str_detect(source, "Github") ~ "Github",
     .default = "other" # catch any packages from other sources;

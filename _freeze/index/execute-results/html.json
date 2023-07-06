@@ -1,0 +1,18 @@
+{
+  "hash": "5de3b6cd812811531a1d05c2c0529d95",
+  "result": {
+    "markdown": "---\ntitle: \"Useful R Stuff\"\nlisting:\n  type: table\n  fields: [title , categories, file-modified]\n  date-format: short\n  categories: true\n  sort-ui: [title, file-modified]\n  sort: \"file-modified desc\"\n  contents:\n    - \"posts/\"\n  exclude:\n    categories: \"hidden\"\n---\n\n\n\n\n\n\n\n\n\n\n<!-- This style block and the following script blocks are all because the `categories` column defaults to not having spaces after commas -->\n<style>\ntable.quarto-listing-table * td:first-child {\n  width: 55%;\n}\ntable.quarto-listing-table * td:nth-child(2) {\n  width: 35%;\n}\ntable.quarto-listing-table * td:nth-child(2) {\n  width: 10%;\n}\n</style>\n\n<script src=\"/jquery-3.7.0.min.js\"></script>\n<script type=\"text/javascript\">\n$(document).ready(function() {\n  $tds = $(\".listing-categories\");\n  \n  $tds.each(function () {\n    this.innerHTML = this.innerHTML.replace(\",\", \", \");\n    $(this).parent().css(\"width\", \"30%\");\n  });\n  \n});\n</script>\n\nThis is a collection of R packages, bits of code, and other trivia that I find useful.  It was originally written for myself, but hopefully others will find some useful tidbits.\n\n<br>\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<link href=\"site_libs/roboto-condensed-0.3.3/css/roboto-condensed.css\" rel=\"stylesheet\" />\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

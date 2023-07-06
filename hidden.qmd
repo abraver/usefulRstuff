@@ -13,8 +13,6 @@ listing:
     categories: "hidden"
 ---
 
-{{< include /_include_header.qmd >}}
-
 <!-- This style block and the following script blocks are all because the `categories` column defaults to not having spaces after commas -->
 <style>
 table.quarto-listing-table * td:first-child {
@@ -44,3 +42,4 @@ $(document).ready(function() {
 This is a collection of R packages, bits of code, and other trivia that I find useful.  It was originally written for myself, but hopefully others will find some useful tidbits.
 
 <br>
+

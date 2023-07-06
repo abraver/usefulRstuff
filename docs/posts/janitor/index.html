@@ -94,6 +94,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-N1MBV4L3FV"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
+</script>
+<link href="../../site_libs/roboto-condensed-0.3.3/css/roboto-condensed.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -174,8 +184,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<script src="../../jquery-3.7.0.min.js"></script>
-<script src="../../fold.js"></script>
 <!-- begin content -->
 <div class="cell" data-hash="index_cache/html/setup_bc5001da98b7296b9ceacbd9285ac791">
 <details>
@@ -189,13 +197,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="clean-column-names" class="level3">
 <h3 class="anchored" data-anchor-id="clean-column-names">Clean column names</h3>
 <p>Let’s create a <code>df</code> with some poorly-chosen column names:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-1_0aad6c9a7bcb7ef6e669b8dfdafb643b">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_30d372928b3f73125da2597151a23351">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>test_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">6</span>))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(test_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"firstName"</span>, <span class="st">"ábc@!*"</span>, <span class="st">"% successful (2009)"</span>,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"REPEAT VALUE"</span>, <span class="st">"REPEAT VALUE"</span>, <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>clean_names()</code> does just as the name implies:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_8c4afc9ea02817c5049fa9afdbd0c1b1">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_216e882d4f6a068d35e4a97ad855376e">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>test_df <span class="sc">|&gt;</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -234,7 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>The <code>case</code> argument to <code>clean_names()</code> specifies what case you’d like output names to be in. You can specify any case style that’s available in <code>snakecase::to_any_case()</code>, including “screaming_snake” if you want to be perverse:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_df69664538ad5e10f4fb3dfdb55e2684">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_0476a974f2b13cd2107c026956699ed5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>test_df <span class="sc">|&gt;</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>(<span class="at">case =</span> <span class="st">"screaming_snake"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -276,7 +284,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="check-if-dfs-are-row-bind-able" class="level3">
 <h3 class="anchored" data-anchor-id="check-if-dfs-are-row-bind-able">Check if <code>df</code>s are row-bind-able</h3>
 <p>Also useful is <code>compare_df_cols</code> which summarizes whether the specified <code>df</code>s can be row-bound (i.e., have columns of the same names/types):</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_12e675ce4fc9475071893789efa58772">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-5_4c37a288047afee4c788cb83c32de09c">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">A=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">b =</span> <span class="fu">c</span>(<span class="st">"big"</span>, <span class="st">"small"</span>))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">b =</span> <span class="fu">c</span>(<span class="st">"medium"</span>, <span class="st">"small"</span>, <span class="st">"big"</span>), <span class="at">c =</span> <span class="dv">0</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>) <span class="co"># here, column b is a factor</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> df1 <span class="sc">|&gt;</span> </span>
@@ -325,7 +333,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>If you just want a simple <code>TRUE</code>/<code>FALSE</code> value telling you whether the <code>df</code>s match, you can use <code>compare_df_cols_same()</code>:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-5_b8b1483665b63e10192397cca690364c">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-6_bf392710a988fa766067b9ee165f4aff">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(<span class="fu">compare_df_cols_same</span>(df1, df2, df3, <span class="at">verbose =</span> <span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> logi FALSE</code></pre>
@@ -336,7 +344,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="examining-data-and-crosstabs" class="level2">
 <h2 class="anchored" data-anchor-id="examining-data-and-crosstabs">Examining data and crosstabs</h2>
 <p><code>janitor</code>’s version of tables are called <code>tabyls</code>. You can easily generate crosstabs:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-6_45bd14bbd0239cfa6ecd0dd392430b02">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-7_52897fdb6a5b3c7b0a273a763154b6eb">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>palmerpenguins<span class="sc">::</span>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(species, island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -375,7 +383,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>There are lots of ways to pretty up the output via <code>adorn_*</code> commands, giving things like column or row percentages, optionally with <code>n</code>s in parentheses:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-7_6fba3a6294465000c106c20f82540183">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_17b663b09b702842c27fa0ef8cae3858">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>palmerpenguins<span class="sc">::</span>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(species, island) <span class="sc">|&gt;</span> </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_totals</span>(<span class="st">"col"</span>)  <span class="sc">|&gt;</span> </span>
@@ -422,7 +430,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>You can also use the <code>adorn_*</code> functions on regular ol’ <code>df</code>s:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_51bea6a2b4249153632ed084427e4f66">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_0f36ee2029ccf65aa7e1af92b5db09b2">
 <div class="sourceCode cell-code" id="annotated-cell-9"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a>palmerpenguins<span class="sc">::</span>penguins <span class="sc">|&gt;</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1">1</button><span id="annotated-cell-9-2" class="code-annotation-target"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">sample_n</span>(<span class="dv">10</span>) <span class="sc">|&gt;</span></span>
 <span id="annotated-cell-9-3"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>year) <span class="sc">|&gt;</span> </span>
@@ -431,7 +439,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-9" data-code-lines="2">Choose 10 random rows so this doesn’t print forever</span>
+<span data-code-cell="annotated-cell-9" data-code-lines="2" data-code-annotation="1">Choose 10 random rows so this doesn’t print forever</span>
 </dd>
 </dl>
 </div>
@@ -439,12 +447,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="kable-table">
 <table class="table table-sm table-striped small">
 <colgroup>
-<col style="width: 11%">
+<col style="width: 9%">
 <col style="width: 11%">
 <col style="width: 17%">
 <col style="width: 16%">
-<col style="width: 20%">
-<col style="width: 13%">
+<col style="width: 21%">
+<col style="width: 14%">
 <col style="width: 8%">
 </colgroup>
 <thead>
@@ -462,100 +470,100 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Adelie</td>
 <td style="text-align: left;">Dream</td>
-<td style="text-align: right;">36.0</td>
+<td style="text-align: right;">42.2</td>
 <td style="text-align: right;">18.5</td>
-<td style="text-align: right;">186</td>
-<td style="text-align: right;">3100</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">3550</td>
 <td style="text-align: left;">female</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">Gentoo</td>
+<td style="text-align: left;">Biscoe</td>
+<td style="text-align: right;">50.7</td>
+<td style="text-align: right;">15.0</td>
+<td style="text-align: right;">223</td>
+<td style="text-align: right;">5550</td>
+<td style="text-align: left;">male</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">Adelie</td>
 <td style="text-align: left;">Torgersen</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: left;">NA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Gentoo</td>
-<td style="text-align: left;">Biscoe</td>
-<td style="text-align: right;">51.1</td>
-<td style="text-align: right;">16.3</td>
-<td style="text-align: right;">220</td>
-<td style="text-align: right;">6000</td>
-<td style="text-align: left;">male</td>
+<td style="text-align: right;">33.5</td>
+<td style="text-align: right;">19.0</td>
+<td style="text-align: right;">190</td>
+<td style="text-align: right;">3600</td>
+<td style="text-align: left;">female</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Dream</td>
-<td style="text-align: right;">36.6</td>
-<td style="text-align: right;">18.4</td>
-<td style="text-align: right;">184</td>
-<td style="text-align: right;">3475</td>
-<td style="text-align: left;">female</td>
+<td style="text-align: left;">Biscoe</td>
+<td style="text-align: right;">41.0</td>
+<td style="text-align: right;">20.0</td>
+<td style="text-align: right;">203</td>
+<td style="text-align: right;">4725</td>
+<td style="text-align: left;">male</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Gentoo</td>
-<td style="text-align: left;">Biscoe</td>
-<td style="text-align: right;">48.1</td>
-<td style="text-align: right;">15.1</td>
-<td style="text-align: right;">209</td>
-<td style="text-align: right;">5500</td>
+<td style="text-align: left;">Adelie</td>
+<td style="text-align: left;">Torgersen</td>
+<td style="text-align: right;">42.5</td>
+<td style="text-align: right;">20.7</td>
+<td style="text-align: right;">197</td>
+<td style="text-align: right;">4500</td>
 <td style="text-align: left;">male</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Chinstrap</td>
+<td style="text-align: left;">Gentoo</td>
+<td style="text-align: left;">Biscoe</td>
+<td style="text-align: right;">48.7</td>
+<td style="text-align: right;">15.7</td>
+<td style="text-align: right;">208</td>
+<td style="text-align: right;">5350</td>
+<td style="text-align: left;">male</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Adelie</td>
+<td style="text-align: left;">Torgersen</td>
+<td style="text-align: right;">46.0</td>
+<td style="text-align: right;">21.5</td>
+<td style="text-align: right;">194</td>
+<td style="text-align: right;">4200</td>
+<td style="text-align: left;">male</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gentoo</td>
+<td style="text-align: left;">Biscoe</td>
+<td style="text-align: right;">45.4</td>
+<td style="text-align: right;">14.6</td>
+<td style="text-align: right;">211</td>
+<td style="text-align: right;">4800</td>
+<td style="text-align: left;">female</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Adelie</td>
 <td style="text-align: left;">Dream</td>
-<td style="text-align: right;">50.2</td>
-<td style="text-align: right;">18.8</td>
-<td style="text-align: right;">202</td>
+<td style="text-align: right;">36.3</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">190</td>
 <td style="text-align: right;">3800</td>
 <td style="text-align: left;">male</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Torgersen</td>
-<td style="text-align: right;">39.7</td>
-<td style="text-align: right;">18.4</td>
-<td style="text-align: right;">190</td>
-<td style="text-align: right;">3900</td>
-<td style="text-align: left;">male</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Gentoo</td>
-<td style="text-align: left;">Biscoe</td>
-<td style="text-align: right;">47.5</td>
-<td style="text-align: right;">15.0</td>
-<td style="text-align: right;">218</td>
-<td style="text-align: right;">4950</td>
-<td style="text-align: left;">female</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Gentoo</td>
-<td style="text-align: left;">Biscoe</td>
-<td style="text-align: right;">49.2</td>
-<td style="text-align: right;">15.2</td>
-<td style="text-align: right;">221</td>
-<td style="text-align: right;">6300</td>
-<td style="text-align: left;">male</td>
-</tr>
 <tr class="even">
 <td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Torgersen</td>
-<td style="text-align: right;">39.6</td>
-<td style="text-align: right;">17.2</td>
-<td style="text-align: right;">196</td>
-<td style="text-align: right;">3550</td>
+<td style="text-align: left;">Biscoe</td>
+<td style="text-align: right;">36.5</td>
+<td style="text-align: right;">16.6</td>
+<td style="text-align: right;">181</td>
+<td style="text-align: right;">2850</td>
 <td style="text-align: left;">female</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Total</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">398.0</td>
-<td style="text-align: right;">152.9</td>
-<td style="text-align: right;">1826</td>
-<td style="text-align: right;">40575</td>
+<td style="text-align: right;">422.8</td>
+<td style="text-align: right;">181.1</td>
+<td style="text-align: right;">1977</td>
+<td style="text-align: right;">42925</td>
 <td style="text-align: left;">-</td>
 </tr>
 </tbody>
@@ -565,12 +573,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Check out the <a href="https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html"><code>tabyl</code>s vignette</a> for more info.</p>
 <!-- End content -->
-<hr>
 <details>
 <summary>
 Session info and package versions
 </summary>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_60e6e79c6f17e8691912e2c729e3e2cb">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-11_1b544aa21e541faabc8f825df43eb4e8">
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
 </div>
@@ -584,63 +591,71 @@ Session info and package versions
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/Chicago
- date     2023-06-25
+ date     2023-07-06
  pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Packages ───────────────────────────────────────────────────────────────────</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>        package loadedversion       date         source
-            cli         3.6.1 2023-03-23 CRAN (R 4.3.0)
-      codetools        0.2-19 2023-02-01 CRAN (R 4.3.1)
-     colorspace         2.1-0 2023-01-23 CRAN (R 4.3.0)
-         digest        0.6.31 2022-12-11 CRAN (R 4.3.0)
-          dplyr         1.1.2 2023-04-20 CRAN (R 4.3.0)
-       evaluate          0.21 2023-05-05 CRAN (R 4.3.0)
-          fansi         1.0.4 2023-01-22 CRAN (R 4.3.0)
-        fastmap         1.1.1 2023-02-24 CRAN (R 4.3.0)
-        forcats         1.0.0 2023-01-29 CRAN (R 4.3.0)
-       generics         0.1.3 2022-07-05 CRAN (R 4.3.0)
-        ggplot2         3.4.2 2023-04-03 CRAN (R 4.3.0)
-           glue         1.6.2 2022-02-24 CRAN (R 4.3.0)
-         gtable         0.3.3 2023-03-21 CRAN (R 4.3.0)
-            hms         1.1.3 2023-03-21 CRAN (R 4.3.0)
-      htmltools         0.5.5 2023-03-23 CRAN (R 4.3.0)
-    htmlwidgets         1.6.2 2023-03-17 CRAN (R 4.3.0)
-        janitor         2.2.0 2023-02-02 CRAN (R 4.3.0)
-       jsonlite         1.8.4 2022-12-06 CRAN (R 4.3.0)
-          knitr          1.43 2023-05-25 CRAN (R 4.3.0)
-      lifecycle         1.0.3 2022-10-07 CRAN (R 4.3.0)
-      lubridate         1.9.2 2023-02-10 CRAN (R 4.3.0)
-       magrittr         2.0.3 2022-03-30 CRAN (R 4.3.0)
-        munsell         0.5.0 2018-06-12 CRAN (R 4.3.0)
- palmerpenguins         0.1.1 2022-08-15 CRAN (R 4.3.0)
-         pillar         1.9.0 2023-03-22 CRAN (R 4.3.0)
-      pkgconfig         2.0.3 2019-09-22 CRAN (R 4.3.0)
-          purrr         1.0.1 2023-01-10 CRAN (R 4.3.0)
-             R6         2.5.1 2021-08-19 CRAN (R 4.3.0)
-          readr         2.1.4 2023-02-10 CRAN (R 4.3.0)
-           renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
-          rlang         1.1.1 2023-04-28 CRAN (R 4.3.0)
-      rmarkdown          2.21 2023-03-26 CRAN (R 4.3.0)
-     rstudioapi          0.14 2022-08-22 CRAN (R 4.3.0)
-         scales         1.2.1 2022-08-20 CRAN (R 4.3.0)
-    sessioninfo         1.2.2 2021-12-06 CRAN (R 4.3.0)
-      snakecase        0.11.0 2019-05-25 CRAN (R 4.3.0)
-        stringi        1.7.12 2023-01-11 CRAN (R 4.3.0)
-        stringr         1.5.0 2022-12-02 CRAN (R 4.3.0)
-         tibble         3.2.1 2023-03-20 CRAN (R 4.3.0)
-          tidyr         1.3.0 2023-01-24 CRAN (R 4.3.0)
-     tidyselect         1.2.0 2022-10-10 CRAN (R 4.3.0)
-      tidyverse         2.0.0 2023-02-22 CRAN (R 4.3.0)
-     timechange         0.2.0 2023-01-11 CRAN (R 4.3.0)
-           tzdb         0.3.0 2022-03-28 CRAN (R 4.3.0)
-           utf8         1.2.3 2023-01-31 CRAN (R 4.3.0)
-          vctrs         0.6.2 2023-04-19 CRAN (R 4.3.0)
-          withr         2.5.0 2022-03-03 CRAN (R 4.3.0)
-           xfun          0.39 2023-04-20 CRAN (R 4.3.0)
-           yaml         2.3.7 2023-01-23 CRAN (R 4.3.0)</code></pre>
+<pre><code>           package loadedversion       date         source
+               cli         3.6.1 2023-03-23 CRAN (R 4.3.0)
+         codetools        0.2-19 2023-02-01 CRAN (R 4.3.1)
+            crayon         1.5.2 2022-09-29 CRAN (R 4.3.0)
+              crul         1.4.0 2023-05-17 CRAN (R 4.3.0)
+              curl         5.0.1 2023-06-07 CRAN (R 4.3.0)
+            digest        0.6.31 2022-12-11 CRAN (R 4.3.0)
+             dplyr         1.1.2 2023-04-20 CRAN (R 4.3.0)
+          ellipsis         0.3.2 2021-04-29 CRAN (R 4.3.0)
+          evaluate          0.21 2023-05-05 CRAN (R 4.3.0)
+             fansi         1.0.4 2023-01-22 CRAN (R 4.3.0)
+           fastmap         1.1.1 2023-02-24 CRAN (R 4.3.0)
+ fontBitstreamVera         0.1.1 2017-02-01 CRAN (R 4.3.0)
+    fontLiberation         0.1.0 2016-10-15 CRAN (R 4.3.0)
+        fontquiver         0.2.1 2017-02-01 CRAN (R 4.3.0)
+           gdtools         0.3.3 2023-03-27 CRAN (R 4.3.0)
+          generics         0.1.3 2022-07-05 CRAN (R 4.3.0)
+            gfonts         0.2.0 2023-01-08 CRAN (R 4.3.0)
+              glue         1.6.2 2022-02-24 CRAN (R 4.3.0)
+         htmltools         0.5.5 2023-03-23 CRAN (R 4.3.0)
+       htmlwidgets         1.6.2 2023-03-17 CRAN (R 4.3.0)
+          httpcode         0.3.0 2020-04-10 CRAN (R 4.3.0)
+            httpuv        1.6.11 2023-05-11 CRAN (R 4.3.0)
+           janitor         2.2.0 2023-02-02 CRAN (R 4.3.0)
+          jsonlite         1.8.7 2022-12-06 CRAN (R 4.3.0)
+             knitr          1.43 2023-05-25 CRAN (R 4.3.0)
+             later         1.3.1 2023-05-02 CRAN (R 4.3.0)
+         lifecycle         1.0.3 2022-10-07 CRAN (R 4.3.0)
+         lubridate         1.9.2 2023-02-10 CRAN (R 4.3.0)
+          magrittr         2.0.3 2022-03-30 CRAN (R 4.3.0)
+              mime          0.12 2021-09-28 CRAN (R 4.3.0)
+    palmerpenguins         0.1.1 2022-08-15 CRAN (R 4.3.0)
+            pillar         1.9.0 2023-03-22 CRAN (R 4.3.0)
+         pkgconfig         2.0.3 2019-09-22 CRAN (R 4.3.0)
+          promises       1.2.0.1 2021-02-11 CRAN (R 4.3.0)
+             purrr         1.0.1 2023-01-10 CRAN (R 4.3.0)
+                R6         2.5.1 2021-08-19 CRAN (R 4.3.0)
+              Rcpp        1.0.10 2023-01-22 CRAN (R 4.3.0)
+              renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
+             rlang         1.1.1 2023-04-28 CRAN (R 4.3.0)
+         rmarkdown          2.22 2023-03-26 CRAN (R 4.3.0)
+        rstudioapi          0.14 2022-08-22 CRAN (R 4.3.0)
+       sessioninfo         1.2.2 2021-12-06 CRAN (R 4.3.0)
+             shiny         1.7.4 2022-12-15 CRAN (R 4.3.0)
+         snakecase        0.11.0 2019-05-25 CRAN (R 4.3.0)
+           stringi        1.7.12 2023-01-11 CRAN (R 4.3.0)
+           stringr         1.5.0 2022-12-02 CRAN (R 4.3.0)
+       systemfonts         1.0.4 2022-02-11 CRAN (R 4.3.0)
+            tibble         3.2.1 2023-03-20 CRAN (R 4.3.0)
+             tidyr         1.3.0 2023-01-24 CRAN (R 4.3.0)
+        tidyselect         1.2.0 2022-10-10 CRAN (R 4.3.0)
+        timechange         0.2.0 2023-01-11 CRAN (R 4.3.0)
+              utf8         1.2.3 2023-01-31 CRAN (R 4.3.0)
+             vctrs         0.6.2 2023-04-19 CRAN (R 4.3.0)
+             withr         2.5.0 2022-03-03 CRAN (R 4.3.0)
+              xfun          0.39 2023-04-20 CRAN (R 4.3.0)
+            xtable         1.8-4 2019-04-21 CRAN (R 4.3.0)
+              yaml         2.3.7 2023-01-23 CRAN (R 4.3.0)</code></pre>
 </div>
 </div>
 </details>

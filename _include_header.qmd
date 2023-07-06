@@ -1,18 +1,3 @@
-<script src="/jquery-3.7.0.min.js"></script>
-<script src="/fold.js"></script>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N1MBV4L3FV"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-N1MBV4L3FV');
-</script>
-<!-- End Google tag -->
-
-
 ```{r renv}
 #| include: false
 if(file.exists("./renv.loc")) { renv:::restore(lockfile = "./renv.loc") }
