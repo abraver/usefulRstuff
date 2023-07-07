@@ -8,6 +8,7 @@ $chunks.each(function () {
   
     // Wrap source code into a group
     if ($(this).hasClass("s")) {
+      console.log("SOURCE");
       if($(this).hasClass("g")) {
           this_input_group = $(this).find("div.sourceCode");
           this_input_group.wrapAll("<div class = 'ab_grouped_source collapse' />");

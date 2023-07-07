@@ -6,6 +6,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/patchwork/index.html",
       "/posts/gghighlight/index.html",
       "/posts/khroma/index.html",
       "/posts/paginate_faceted_graphs/index.html",

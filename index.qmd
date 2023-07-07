@@ -40,6 +40,6 @@ $(document).ready(function() {
 });
 </script>
 
-This is a collection of R packages, bits of code, and other trivia that I find useful.  It was originally written for myself, but hopefully others will find some useful tidbits.
+This is a collection of R packages, bits of code, and other trivia that I find useful.  It was originally written for myself, but hopefully others will find some useful tidbits.  Many of the posts are just digested versions of package vignettes or documentation, emphasizing the pieces that seem most useful.
 
 <br>
