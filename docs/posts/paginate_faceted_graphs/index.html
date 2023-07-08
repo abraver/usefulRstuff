@@ -69,7 +69,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -151,7 +154,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 
 </header><script src="../../jquery-3.7.0.min.js"></script><script src="../../fold.js"></script><script src="../../move_session_info.js"></script><!-- begin content --><p>When you have a plot with just a few facets, it’s easy to fit them all on a single page. But what if you have a whole bunch of facets that you want to visualize? For example, the <code>USArrests</code> dataset has data from all 50 US states.</p>
 <p>If we just use the usual <code>facet_wrap</code> or <code>facet_grid</code> from <code>ggplot2</code>, you end up with one massive, smooshed-together image:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_7629856e428d0ba52e1e44bec0171e77">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_52fccedd5623c1b3af8e4446d2e025eb">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">plot_1</span> <span class="op">&lt;-</span> <span class="va">USArrests</span> <span class="op">|&gt;</span>  <span class="co"># dataset on US arrests</span></span>
@@ -163,11 +166,14 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <span></span>
 <span><span class="va">plot_1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p>The <a href="https://ggforce.data-imaginist.com"><code>ggforce</code></a> library, among its many useful functions, includes <code>facet_wrap_paginate</code> and <code>facet_grid_paginate</code>. These work like <code>facet_wrap</code> and <code>facet_grid</code>, but take an additional <code>page</code> argument. Here we specify that we want 4 rows and 5 columns per page, so for 50 states there will be 2 full pages plus one page with the remaining 10 states:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_2137d9855792246909d8694e6dda8368">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_d8421f0354f96113226db1d1dd04e278">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggforce.data-imaginist.com">ggforce</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">plot_2</span> <span class="op">&lt;-</span> <span class="va">plot_1</span>  <span class="op">+</span></span>
@@ -176,11 +182,14 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <span></span>
 <span><span class="va">plot_2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Note that we had to specify which page we wanted to print. We can then easily put this into a loop to generate all the necessary pages. The helpful <code><a href="https://ggforce.data-imaginist.com/reference/n_pages.html">n_pages()</a></code> will count the pages needed, which we can then use in a loop. This gives us 3 separate plots.</p>
-<div class="cell fold o g" data-hash="index_cache/html/unnamed-chunk-6_cae73444ef25c05875797e7e67ffaaa7">
+<div class="cell fold o g" data-hash="index_cache/html/unnamed-chunk-6_cd188727526c8f5e7b9cb54296cabe60">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">plot_pages</span> <span class="op">&lt;-</span> <span class="va">plot_2</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggforce.data-imaginist.com/reference/n_pages.html">n_pages</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -191,18 +200,27 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <span>  <span class="op">)</span>  </span>
 <span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-6-1.png" class="lightbox" data-gallery="these"><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
 </div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-6-2.png" class="lightbox" data-gallery="these"><img src="index_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
 </div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-6-3.png" class="lightbox" data-gallery="these"><img src="index_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p><br></p>
 <p>That’s better, but for inclusion in a longer document or for sharing the plot, you may want all three pages in a single PDF. This can be accomplished by calling <code><a href="https://rdrr.io/r/grDevices/pdf.html">pdf()</a></code> before the loop and <code><a href="https://rdrr.io/r/grDevices/dev.html">dev.off()</a></code> after.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-7_d57d2f1782ddeb69e8c6d299bf0030ef">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-7_3653771f1a0701bd9183eff1a4073de1">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span><span class="op">(</span><span class="st">'many_plots.pdf'</span>, width <span class="op">=</span> <span class="fl">11</span>, height <span class="op">=</span> <span class="fl">8.5</span><span class="op">)</span> <span class="co">#start building pdf</span></span>
 <span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">plot_pages</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span> <span class="co"># don't forget this</span></span>
@@ -218,7 +236,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <div id="footer-session-info">
 <details><summary>
 Session info and package versions
-</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-9_de0920923a50d9fc4b8f8f5638ba6d62">
+</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-9_e9175bd67460e15c5615e5268fb63de0">
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
 </div>
@@ -232,7 +250,7 @@ Session info and package versions
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/Chicago
- date     2023-07-06
+ date     2023-07-08
  pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -289,6 +307,7 @@ Session info and package versions
           promises       1.2.0.1 2021-02-11 CRAN (R 4.3.0)
              purrr         1.0.1 2023-01-10 CRAN (R 4.3.0)
                 R6         2.5.1 2021-08-19 CRAN (R 4.3.0)
+              ragg         1.2.5 2023-01-12 CRAN (R 4.3.0)
               Rcpp        1.0.10 2023-01-22 CRAN (R 4.3.0)
              readr         2.1.4 2023-02-10 CRAN (R 4.3.0)
               renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
@@ -302,15 +321,16 @@ Session info and package versions
            stringi        1.7.12 2023-01-11 CRAN (R 4.3.0)
            stringr         1.5.0 2022-12-02 CRAN (R 4.3.0)
        systemfonts         1.0.4 2022-02-11 CRAN (R 4.3.0)
+       textshaping         0.3.6 2021-10-13 CRAN (R 4.3.0)
             tibble         3.2.1 2023-03-20 CRAN (R 4.3.0)
              tidyr         1.3.0 2023-01-24 CRAN (R 4.3.0)
         tidyselect         1.2.0 2022-10-10 CRAN (R 4.3.0)
          tidyverse         2.0.0 2023-02-22 CRAN (R 4.3.0)
         timechange         0.2.0 2023-01-11 CRAN (R 4.3.0)
             tweenr         2.0.2 2022-09-06 CRAN (R 4.3.0)
-              tzdb         0.4.0 2023-05-12 CRAN (R 4.3.0)
+              tzdb         0.3.0 2023-05-12 CRAN (R 4.3.0)
               utf8         1.2.3 2023-01-31 CRAN (R 4.3.0)
-             vctrs         0.6.3 2023-06-14 CRAN (R 4.3.0)
+             vctrs         0.6.2 2023-06-14 CRAN (R 4.3.0)
              withr         2.5.0 2022-03-03 CRAN (R 4.3.0)
               xfun          0.39 2023-04-20 CRAN (R 4.3.0)
             xtable         1.8-4 2019-04-21 CRAN (R 4.3.0)
@@ -623,7 +643,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-
+<script>var lightboxQuarto = GLightbox({"loop":true,"descPosition":"bottom","selector":".lightbox","openEffect":"fade","closeEffect":"fade"});</script>
 
 
 </body></html>

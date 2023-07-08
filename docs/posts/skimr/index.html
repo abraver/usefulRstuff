@@ -151,18 +151,18 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
   </div>
   
 
-</header><script src="../../jquery-3.7.0.min.js"></script><script src="../../fold.js"></script><script src="../../move_session_info.js"></script><!-- begin content --><div class="cell" data-hash="index_cache/html/setup_35c9f28aa4156881c25fa9145a93a022">
+</header><script src="../../jquery-3.7.0.min.js"></script><script src="../../fold.js"></script><script src="../../move_session_info.js"></script><!-- begin content --><div class="cell" data-hash="index_cache/html/setup_668d215c957f387f8bc5bbdc3236a799">
 <details><summary>Setup</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><a href="https://docs.ropensci.org/skimr/"><code>skimr::skim()</code></a> provides handy summary statistics for <code>df</code>s and related objects, including little sparkline-style histograms right in the output.</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_bf7f8971d68dcea67380bdd06b161f3e">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_5e7697a29cb535fcf6edbae43be12029">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/skimr/">skimr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html">penguins</a></span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_7931a155cb9b01188ca75d3cfcd0a969">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_b8c5321ba0da1f7afbae6c8c65f08ff6">
 <div class="cell-output cell-output-stdout">
 <pre><code>── Data Summary ────────────────────────
                            Values                  
@@ -202,12 +202,12 @@ Group variables            None
 </div>
 </div>
 <p>It also handles grouped data nicely:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_39a9f1055e1663fdeb4dc2ca574f3c52">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_65b37e679154a5729468d70c333e4342">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html">penguins</a></span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">species</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-5_0b5492828af46b97f45abe61476414ff">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-5_aedac71a0fd58d6ae7a4627363f365cc">
 <div class="cell-output cell-output-stdout">
 <pre><code>── Data Summary ────────────────────────
                            Values                      
@@ -273,12 +273,12 @@ Group variables            species
 </div>
 </div>
 <p>And finally, since the output of <code><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim()</a></code> has class <code>data.frame</code>, you can include it in a pipeline, e.g.&nbsp;to filter by one of the summary statistics:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-6_adef7a1e9d98085a823b48d7ed9a5609">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-6_e1bef466cf2932c3d1096b6eb254e0a2">
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html">penguins</a></span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">numeric.sd</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fold o" data-hash="index_cache/html/unnamed-chunk-7_47bb1e2e6fee9540f39801440095347d">
+<div class="cell fold o" data-hash="index_cache/html/unnamed-chunk-7_3d55fc2f927181f7edd3f350d1472830">
 <div class="cell-output cell-output-stdout">
 <pre><code>── Data Summary ────────────────────────
                            Values                  
@@ -304,12 +304,12 @@ Group variables            None
 4 4750   6300   ▃▇▆▃▂</code></pre>
 </div>
 </div>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_f1546204d46a843b5de3bde5fcb1d377">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_56d73a9cf26d2497dcc3aadc6d6648b9">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html">penguins</a></span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">factor.n_unique</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fold o" data-hash="index_cache/html/unnamed-chunk-9_b15a73615ecf6a8a8da4120f4ec27c95">
+<div class="cell fold o" data-hash="index_cache/html/unnamed-chunk-9_6e20e48d84dd47aaea8a78507cf02945">
 <div class="cell-output cell-output-stdout">
 <pre><code>── Data Summary ────────────────────────
                            Values                  
@@ -335,7 +335,7 @@ Group variables            None
 </div>
 <p><br></p>
 <p>To refer to the summary statistic columns, be sure to preface the column name with the variable type, e.g.&nbsp;<code>factor.</code> or <code>numeric.</code> as appropriate. For a list of variable types and the default summary statistics for each:</p>
-<div class="cell o fold" data-hash="index_cache/html/unnamed-chunk-10_4d8dcc5b5f3a20ff66de1e97b78f89cc">
+<div class="cell o fold" data-hash="index_cache/html/unnamed-chunk-10_2295d76350c609d2ce9a97acba07961f">
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/get_default_skimmers.html">get_default_skimmer_names</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$AsIs
@@ -384,7 +384,7 @@ $ts
 <div id="footer-session-info">
 <details><summary>
 Session info and package versions
-</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-12_1e0d69a2a74a630248a01cacc01aa1cc">
+</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-12_c93db6b99817bdd368eabe3043b3795c">
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
 </div>
@@ -398,7 +398,7 @@ Session info and package versions
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/Chicago
- date     2023-07-06
+ date     2023-07-08
  pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -441,6 +441,7 @@ Session info and package versions
           promises       1.2.0.1 2021-02-11 CRAN (R 4.3.0)
              purrr         1.0.1 2023-01-10 CRAN (R 4.3.0)
                 R6         2.5.1 2021-08-19 CRAN (R 4.3.0)
+              ragg         1.2.5 2023-01-12 CRAN (R 4.3.0)
               Rcpp        1.0.10 2023-01-22 CRAN (R 4.3.0)
               renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
               repr         1.1.6 2023-01-26 CRAN (R 4.3.0)
@@ -453,6 +454,7 @@ Session info and package versions
            stringi        1.7.12 2023-01-11 CRAN (R 4.3.0)
            stringr         1.5.0 2022-12-02 CRAN (R 4.3.0)
        systemfonts         1.0.4 2022-02-11 CRAN (R 4.3.0)
+       textshaping         0.3.6 2021-10-13 CRAN (R 4.3.0)
             tibble         3.2.1 2023-03-20 CRAN (R 4.3.0)
              tidyr         1.3.0 2023-01-24 CRAN (R 4.3.0)
         tidyselect         1.2.0 2022-10-10 CRAN (R 4.3.0)

@@ -188,7 +188,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <script src="../../fold.js"></script>
 <script src="../../move_session_info.js"></script>
 <!-- begin content -->
-<div class="cell" data-hash="index_cache/html/setup_bc5001da98b7296b9ceacbd9285ac791">
+<div class="cell" data-hash="index_cache/html/setup_561f5ca5d1bb2174e51a7e91856a278a">
 <details>
 <summary>Setup</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -200,13 +200,13 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <section id="clean-column-names" class="level3">
 <h3 class="anchored" data-anchor-id="clean-column-names">Clean column names</h3>
 <p>Let’s create a <code>df</code> with some poorly-chosen column names:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_30d372928b3f73125da2597151a23351">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_4b268de502f4d61e6fe4840f101fd1f3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>test_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">6</span>))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(test_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"firstName"</span>, <span class="st">"ábc@!*"</span>, <span class="st">"% successful (2009)"</span>,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"REPEAT VALUE"</span>, <span class="st">"REPEAT VALUE"</span>, <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>clean_names()</code> does just as the name implies:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_216e882d4f6a068d35e4a97ad855376e">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_01dfd91172ede1f4b036438e856e10e2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>test_df <span class="sc">|&gt;</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -245,7 +245,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </div>
 </div>
 <p>The <code>case</code> argument to <code>clean_names()</code> specifies what case you’d like output names to be in. You can specify any case style that’s available in <code>snakecase::to_any_case()</code>, including “screaming_snake” if you want to be perverse:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_0476a974f2b13cd2107c026956699ed5">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_0901269dc1d76bb31830a57a10ed9dad">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>test_df <span class="sc">|&gt;</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>(<span class="at">case =</span> <span class="st">"screaming_snake"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -287,7 +287,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <section id="check-if-dfs-are-row-bind-able" class="level3">
 <h3 class="anchored" data-anchor-id="check-if-dfs-are-row-bind-able">Check if <code>df</code>s are row-bind-able</h3>
 <p>Also useful is <code>compare_df_cols</code> which summarizes whether the specified <code>df</code>s can be row-bound (i.e., have columns of the same names/types):</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-5_4c37a288047afee4c788cb83c32de09c">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-5_ede269b16af52d466efc28d9702b1c80">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">A=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">b =</span> <span class="fu">c</span>(<span class="st">"big"</span>, <span class="st">"small"</span>))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">b =</span> <span class="fu">c</span>(<span class="st">"medium"</span>, <span class="st">"small"</span>, <span class="st">"big"</span>), <span class="at">c =</span> <span class="dv">0</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>) <span class="co"># here, column b is a factor</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> df1 <span class="sc">|&gt;</span> </span>
@@ -336,7 +336,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </div>
 </div>
 <p>If you just want a simple <code>TRUE</code>/<code>FALSE</code> value telling you whether the <code>df</code>s match, you can use <code>compare_df_cols_same()</code>:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-6_bf392710a988fa766067b9ee165f4aff">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-6_d2bc0a894872c25e0db91148541183ad">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(<span class="fu">compare_df_cols_same</span>(df1, df2, df3, <span class="at">verbose =</span> <span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> logi FALSE</code></pre>
@@ -347,7 +347,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <section id="examining-data-and-crosstabs" class="level2">
 <h2 class="anchored" data-anchor-id="examining-data-and-crosstabs">Examining data and crosstabs</h2>
 <p><code>janitor</code>’s version of tables are called <code>tabyls</code>. You can easily generate crosstabs:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-7_52897fdb6a5b3c7b0a273a763154b6eb">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-7_3875943f08e53eb5f5176706e55d6af2">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>palmerpenguins<span class="sc">::</span>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(species, island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -386,7 +386,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </div>
 </div>
 <p>There are lots of ways to pretty up the output via <code>adorn_*</code> commands, giving things like column or row percentages, optionally with <code>n</code>s in parentheses:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_17b663b09b702842c27fa0ef8cae3858">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_8d7b093a294300624a97b0e692249696">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>palmerpenguins<span class="sc">::</span>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(species, island) <span class="sc">|&gt;</span> </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_totals</span>(<span class="st">"col"</span>)  <span class="sc">|&gt;</span> </span>
@@ -433,7 +433,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </div>
 </div>
 <p>You can also use the <code>adorn_*</code> functions on regular ol’ <code>df</code>s:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_0f36ee2029ccf65aa7e1af92b5db09b2">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_4a45886879978ed991b803787e5b8ff4">
 <div class="sourceCode cell-code" id="annotated-cell-9"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a>palmerpenguins<span class="sc">::</span>penguins <span class="sc">|&gt;</span> </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1">1</button><span id="annotated-cell-9-2" class="code-annotation-target"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">sample_n</span>(<span class="dv">10</span>) <span class="sc">|&gt;</span></span>
 <span id="annotated-cell-9-3"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>year) <span class="sc">|&gt;</span> </span>
@@ -442,7 +442,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="2" data-code-annotation="1">Choose 10 random rows so this doesn’t print forever</span>
+<span data-code-lines="2" data-code-annotation="1" data-code-cell="annotated-cell-9">Choose 10 random rows so this doesn’t print forever</span>
 </dd>
 </dl>
 </div>
@@ -473,100 +473,100 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <tr class="odd">
 <td style="text-align: left;">Chinstrap</td>
 <td style="text-align: left;">Dream</td>
-<td style="text-align: right;">49.0</td>
-<td style="text-align: right;">19.6</td>
-<td style="text-align: right;">212</td>
-<td style="text-align: right;">4300</td>
-<td style="text-align: left;">male</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Chinstrap</td>
-<td style="text-align: left;">Dream</td>
-<td style="text-align: right;">51.4</td>
-<td style="text-align: right;">19.0</td>
-<td style="text-align: right;">201</td>
-<td style="text-align: right;">3950</td>
-<td style="text-align: left;">male</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Biscoe</td>
-<td style="text-align: right;">34.5</td>
-<td style="text-align: right;">18.1</td>
-<td style="text-align: right;">187</td>
-<td style="text-align: right;">2900</td>
+<td style="text-align: right;">45.7</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">195</td>
+<td style="text-align: right;">3650</td>
 <td style="text-align: left;">female</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Adelie</td>
 <td style="text-align: left;">Torgersen</td>
-<td style="text-align: right;">39.6</td>
-<td style="text-align: right;">17.2</td>
-<td style="text-align: right;">196</td>
-<td style="text-align: right;">3550</td>
+<td style="text-align: right;">35.9</td>
+<td style="text-align: right;">16.6</td>
+<td style="text-align: right;">190</td>
+<td style="text-align: right;">3050</td>
 <td style="text-align: left;">female</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Biscoe</td>
-<td style="text-align: right;">37.8</td>
-<td style="text-align: right;">18.3</td>
-<td style="text-align: right;">174</td>
-<td style="text-align: right;">3400</td>
+<td style="text-align: left;">Chinstrap</td>
+<td style="text-align: left;">Dream</td>
+<td style="text-align: right;">45.5</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">196</td>
+<td style="text-align: right;">3500</td>
 <td style="text-align: left;">female</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Gentoo</td>
 <td style="text-align: left;">Biscoe</td>
-<td style="text-align: right;">51.1</td>
-<td style="text-align: right;">16.5</td>
-<td style="text-align: right;">225</td>
-<td style="text-align: right;">5250</td>
+<td style="text-align: right;">49.4</td>
+<td style="text-align: right;">15.8</td>
+<td style="text-align: right;">216</td>
+<td style="text-align: right;">4925</td>
 <td style="text-align: left;">male</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Chinstrap</td>
+<td style="text-align: left;">Adelie</td>
 <td style="text-align: left;">Dream</td>
-<td style="text-align: right;">43.5</td>
-<td style="text-align: right;">18.1</td>
-<td style="text-align: right;">202</td>
-<td style="text-align: right;">3400</td>
-<td style="text-align: left;">female</td>
+<td style="text-align: right;">39.7</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">193</td>
+<td style="text-align: right;">4250</td>
+<td style="text-align: left;">male</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Torgersen</td>
-<td style="text-align: right;">35.5</td>
-<td style="text-align: right;">17.5</td>
-<td style="text-align: right;">190</td>
-<td style="text-align: right;">3700</td>
-<td style="text-align: left;">female</td>
+<td style="text-align: left;">Chinstrap</td>
+<td style="text-align: left;">Dream</td>
+<td style="text-align: right;">49.5</td>
+<td style="text-align: right;">19.0</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">3800</td>
+<td style="text-align: left;">male</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Chinstrap</td>
-<td style="text-align: left;">Dream</td>
-<td style="text-align: right;">47.6</td>
-<td style="text-align: right;">18.3</td>
-<td style="text-align: right;">195</td>
-<td style="text-align: right;">3850</td>
+<td style="text-align: left;">Gentoo</td>
+<td style="text-align: left;">Biscoe</td>
+<td style="text-align: right;">46.6</td>
+<td style="text-align: right;">14.2</td>
+<td style="text-align: right;">210</td>
+<td style="text-align: right;">4850</td>
 <td style="text-align: left;">female</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Adelie</td>
-<td style="text-align: left;">Torgersen</td>
-<td style="text-align: right;">36.7</td>
-<td style="text-align: right;">19.3</td>
-<td style="text-align: right;">193</td>
-<td style="text-align: right;">3450</td>
+<td style="text-align: left;">Gentoo</td>
+<td style="text-align: left;">Biscoe</td>
+<td style="text-align: right;">50.5</td>
+<td style="text-align: right;">15.9</td>
+<td style="text-align: right;">222</td>
+<td style="text-align: right;">5550</td>
+<td style="text-align: left;">male</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gentoo</td>
+<td style="text-align: left;">Biscoe</td>
+<td style="text-align: right;">50.0</td>
+<td style="text-align: right;">15.2</td>
+<td style="text-align: right;">218</td>
+<td style="text-align: right;">5700</td>
+<td style="text-align: left;">male</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gentoo</td>
+<td style="text-align: left;">Biscoe</td>
+<td style="text-align: right;">48.2</td>
+<td style="text-align: right;">14.3</td>
+<td style="text-align: right;">210</td>
+<td style="text-align: right;">4600</td>
 <td style="text-align: left;">female</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Total</td>
 <td style="text-align: left;">-</td>
-<td style="text-align: right;">426.7</td>
-<td style="text-align: right;">181.9</td>
-<td style="text-align: right;">1975</td>
-<td style="text-align: right;">37750</td>
+<td style="text-align: right;">461.0</td>
+<td style="text-align: right;">162.9</td>
+<td style="text-align: right;">2050</td>
+<td style="text-align: right;">43875</td>
 <td style="text-align: left;">-</td>
 </tr>
 </tbody>
@@ -581,7 +581,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <summary>
 Session info and package versions
 </summary>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-11_1b544aa21e541faabc8f825df43eb4e8">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-11_d498312526141dc12cb36ca799c2b9ce">
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
 </div>
@@ -595,7 +595,7 @@ Session info and package versions
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/Chicago
- date     2023-07-06
+ date     2023-07-08
  pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -639,6 +639,7 @@ Session info and package versions
           promises       1.2.0.1 2021-02-11 CRAN (R 4.3.0)
              purrr         1.0.1 2023-01-10 CRAN (R 4.3.0)
                 R6         2.5.1 2021-08-19 CRAN (R 4.3.0)
+              ragg         1.2.5 2023-01-12 CRAN (R 4.3.0)
               Rcpp        1.0.10 2023-01-22 CRAN (R 4.3.0)
               renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
              rlang         1.1.1 2023-04-28 CRAN (R 4.3.0)
@@ -650,6 +651,7 @@ Session info and package versions
            stringi        1.7.12 2023-01-11 CRAN (R 4.3.0)
            stringr         1.5.0 2022-12-02 CRAN (R 4.3.0)
        systemfonts         1.0.4 2022-02-11 CRAN (R 4.3.0)
+       textshaping         0.3.6 2021-10-13 CRAN (R 4.3.0)
             tibble         3.2.1 2023-03-20 CRAN (R 4.3.0)
              tidyr         1.3.0 2023-01-24 CRAN (R 4.3.0)
         tidyselect         1.2.0 2022-10-10 CRAN (R 4.3.0)

@@ -15,7 +15,16 @@ website:
     collapse-below: md
   google-analytics: "G-N1MBV4L3FV"
 
-  
+knitr  :
+  opts_chunk:
+    dev: ragg_png # use dev.args: {scaling: 0.5} chunk arg to scale
+
+filters:
+  - lightbox
+lightbox:
+  match: auto
+  effect: fade
+
 format:
   html:
     theme: cosmo

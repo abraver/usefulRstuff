@@ -5,8 +5,6 @@ date: "7/7/23"
 
 categories:
   - visualization
-  
-cache: refresh
 
 toc: true
 ---
@@ -26,6 +24,7 @@ library(ggplot2)
 
 ```{r}
 #| include: false
+#| cache: false
 
 ggplot2::theme_set(asbutils::theme_asb())
 ```
@@ -40,6 +39,7 @@ Let's start with 4 simple plots, and look at various ways of composing them. (Th
 #| layout-ncol: 2
 #| warning: false
 #| code-fold: true
+#| lightbox: {group: boop}
 
 p1 <- ggplot(palmerpenguins::penguins) +
   geom_point(aes(bill_length_mm, bill_depth_mm,
@@ -71,7 +71,10 @@ The simplest operation provided by `patchwork` is the `+` operator. Adding two p
 
 ```{r}
 #| warning: false
-#| fig-width: 10
+#| fig-asp: 0.5
+#| out-width: 100%
+#| dev.args: {scaling: 0.75}
+#| cache: false
 
 library(patchwork)
 p1 + p2
@@ -81,8 +84,7 @@ p1 + p2
 
 ```{r}
 #| warning: false
-#| fig-width: 10
-#| fig-height: 10
+#| dev.args: {scaling: 0.5}
 
 library(patchwork)
 p1 + p2 + p3 + p4
@@ -93,10 +95,8 @@ You can specify the number of rows or columns in your composed plot with `plot_l
 
 ```{r byrow}
 #| warning: false
-#| fig-width: 10
-#| fig-height: 15
-#| out-width: 4in
-#| fig-link: index_files/figure-html/byrow-1.png
+#| dev.args: {scaling: 0.5}
+#| out-width: 100%
 
 p1 + p2 + p3 + p4 +
   plot_layout(nrow = 3, byrow = FALSE)
@@ -113,6 +113,9 @@ Composing two plots with the `|` operator works a lot like the `+` operator abov
 
 ```{r}
 #| warning: false
+#| dev.args: {scaling: 0.75}
+#| out-width: 100%
+#| fig-asp: .5
 
 p1 | p2
 ```
@@ -121,6 +124,8 @@ p1 | p2
 
 ```{r}
 #| warning: false
+#| fig-asp: 1.5
+#| out-width: 50%
 
 p1 / p2
 ```
@@ -133,6 +138,8 @@ Parentheses can help to disambiguate possible layouts. (All of the operators wor
 
 ```{r}
 #| warning: false
+#| dev.args: {scaling: 0.5}
+#| out-width: 100%
 
 p1 / p2 | p3
 ```
@@ -141,6 +148,8 @@ p1 / p2 | p3
 
 ```{r}
 #| warning: false
+#| dev.args: {scaling: 0.5}
+#| out-width: 100%
 
 p1 / (p2 | p3)
 ```
@@ -152,16 +161,14 @@ p1 / (p2 | p3)
 
 ```{r annotating}
 #| warning: false
-#| fig-width: 10
-#| fig-height: 10
+#| dev.args: {scaling: 0.65}
 #| out-width: 100%
-#| fig-link: index_files/figure-html/annotating-1.png
 
 (p1 | (p2 / p3)) + 
   plot_annotation(title = 'Lots of data about penguins',
     subtitle = 'There\'s never too much info about penguins',
     tag_levels = "A") &
-  theme(plot.title = element_text(hjust = .5, color = "green"),
+  theme(plot.title = element_text(hjust = .5, color = "blue"),
         plot.tag = element_text(size = 20))
 ```
 
@@ -171,15 +178,14 @@ If you want a theme element to apply only to the overall plot, and not the subpl
 
 ```{r theme_argument}
 #| warning: false
-#| fig-width: 10
-#| fig-height: 10
 #| out-width: 100%
-#| fig-link: !expr paste0("index_files/figure-html/", knitr::opts_current$get("label"), "-1.png")
+#| dev.args: {scaling: 0.65}
+
 
 (p1 | (p2 / p3)) + 
   plot_annotation(title = 'Lots of data about penguins',
     subtitle = 'There\'s never too much info about penguins', tag_levels = "A",
-    theme = theme(plot.title = element_text(hjust = .5, color = "green"),
+    theme = theme(plot.title = element_text(hjust = .5, color = "blue"),
         plot.tag = element_text(size = 20)))
 ```
 
@@ -188,12 +194,19 @@ If you want a theme element to apply only to the overall plot, and not the subpl
 
 We saw above that we can modify the layout with `plot_layout(ncol = ...)`.  You can also specify relative `widths` and `heights` for the rows and columns.  For example, you can provide `widths` with a vector of _n_ columns to specify each.
 
+```{r}
+#| code-fold: true
+#| code-summary: "Some plot theme changes for visibility in the following examples"
+p1 <- p1 + theme(legend.position = "none", plot.background = element_rect(color = "black", linewidth = 2, fill = "white"))
+p2 <- p2 + theme(legend.position = "none", plot.background = element_rect(color = "blue", linewidth = 2, fill = "white"))
+p3 <- p3 + theme(legend.position = "none", plot.background = element_rect(color = "green", linewidth = 2, fill = "white"))
+p4 <- p4 + theme(legend.position = "none", plot.background = element_rect(color = "red", linewidth = 2, fill = "white"))
+```
+
 ```{r widths}
 #| warning: false
-#| fig-width: 10
-#| fig-height: 10
-#| out-width: 100%
-#| fig-link: index_files/figure-html/widths-1.png
+#| dev.args: {scaling: 0.5}
+#| out-width: 75%
 
 p1 + p2 + p3 + p4 + 
   plot_layout(widths = c(3, 1), heights = c(2, 1))
@@ -203,10 +216,8 @@ You can also specify quite complicated layouts with `plot_layout(design = ...)`,
 
 ```{r letter_design}
 #| warning: false
-#| fig-width: 10
-#| fig-height: 10
-#| out-width: 100%
-#| fig-link: index_files/figure-html/letter_design-1.png
+#| out-width: 75%
+#| dev.args: {scaling: .5}
 
 layout <- "
 ##BBBB
@@ -216,14 +227,13 @@ AACCDD
 p1 + p2 + p3 + p4 + 
   plot_layout(design = layout)
 ```
+
 Using `wrap_plots`, you can specify which plot is represented by which letter, rather than letting that be handled automatically:
 
 ```{r wrap_plots}
 #| warning: false
-#| fig-width: 10
-#| fig-height: 10
-#| out-width: 100%
-#| fig-link: index_files/figure-html/wrap_plots-1.png
+#| out-width: 75%
+#| dev.args: {scaling: .5}
 
 layout <- '
 A#B
@@ -234,22 +244,14 @@ wrap_plots(D = p1, C = p2, B = p3, design = layout)
 ```
 
 
-The alternative way to specify a layout is with one or more `area()`s, which take arguments for the `t`op, `l`eft, b`ottom,  and `r`ight bounds of a grid.  The grid is specified in rows and columns, with row 1 column 1 being the top left, and numbers increasing as you go down and right.  You can have plots overlap with this type of specification.
-
-```{r}
-#| code-fold: true
-#| code-summary: "Some plot theme changes for visibility in the following examples"
-p1 <- p1 + theme(legend.position = "none", plot.background = element_rect(color = "black", linewidth = 2, fill = "white"))
-p2 <- p2 + theme(legend.position = "none", plot.background = element_rect(color = "blue", linewidth = 2, fill = "white"))
-```
+The alternative way to specify a layout is with one or more `area()`s, which take arguments for the `t`op, `l`eft, `b`ottom,  and `r`ight bounds of a grid.^[Somewhat annoyingly, the argument order here is `tlbr`, rather than `trbl` as in css, which is how my brain works.]  The grid is specified in rows and columns, with row 1 column 1 being the top left, and numbers increasing as you go down and right.  You can have plots overlap with this type of specification.
 
 
 ```{r area}
 #| warning: false
-#| fig-width: 10
-#| fig-height: 10
-#| out-width: 100%
-#| fig-link: index_files/figure-html/area-1.png
+#| out-width: 75%
+#| dev.args: {scaling: .75}
+
 layout <- c(
   area(t = 2, l = 1, b = 5, r = 4), # This will be p1
   area(t = 1, l = 3, b = 3, r = 5) # this will be p2
@@ -263,10 +265,8 @@ It's also possible to specify insets using `inset_element()`.  Here, the positio
 
 ```{r inset}
 #| warning: false
-#| fig-width: 10
-#| fig-height: 10
-#| out-width: 100%
-#| fig-link: index_files/figure-html/inset-1.png
+#| out-width: 75%
+#| dev.args: {scaling: .75}
 
 p1 + inset_element(p2, top = 1, right = 1, bottom = .5,
                    left = .5, align_to = "full")
@@ -278,10 +278,13 @@ p1 + inset_element(p2, top = 1, right = 1, bottom = .5,
 
 ```{r}
 #| code-fold: true
-#| code-summary: "Reset `p1` and `p2` to their original theme"
+#| code-summary: "Reset plots to their original theme"
 
 p1 <- p1 + theme(legend.position = "right", plot.background = element_blank())
 p2 <- p2 + theme(legend.position = "right", plot.background = element_blank())
+p3 <- p3 + theme(legend.position = "right", plot.background = element_blank())
+p4 <- p4 + theme(legend.position = "right", plot.background = element_blank())
+
 ```
 
 `plot_layout(guides = "collect")` will collect all of the legends and put them in the same location.  Legends that are identical between multiple subplots are collapsed, as with plots 1 and 3 below:
@@ -291,20 +294,16 @@ p2 <- p2 + theme(legend.position = "right", plot.background = element_blank())
 #### `guides` = "collect"
 ```{r collect}
 #| warning: false
-#| fig-width: 10
-#| fig-height: 10
-#| out-width: 100%
-#| fig-link: index_files/figure-html/collect-1.png
+#| dev.args: {scaling: .75}
+
 p1 + p2 + p3 + p4 + plot_layout(guides = "collect")
 ```
-#### `guides = "keep"`
+
+#### `guides` = "keep"
 
 ```{r}
 #| warning: false
-#| fig-width: 10
-#| fig-height: 10
-#| out-width: 100%
-#| fig-link: !expr paste0("index_files/figure-html/", knitr::opts_current$get("label"), "-1.png")
+#| dev.args: {scaling: .75}
 
 p1 + p2 + p3 + p4 + plot_layout(guides = "keep")
 ```
@@ -314,10 +313,8 @@ You can influence where the collected legends show up by including `guide_area()
 
 ```{r collect-area}
 #| warning: false
-#| fig-width: 10
-#| fig-height: 10
-#| out-width: 100%
-#| fig-link: index_files/figure-html/collect-1.png
+#| dev.args: {scaling: .75}
+
 guide_area() + p1 + p2 + p3 + plot_layout(guides = "collect")
 ```
 
@@ -341,18 +338,18 @@ Plots can be nested at multiple levels.  Compare the following plots: in the fir
 #### Nesting `p1` and `p2`
 ```{r nesting}
 #| warning: false
-#| fig-width: 10
+#| dev.args: {scaling: .5}
 #| out-width: 100%
-#| fig-link: !expr paste0("index_files/figure-html/", knitr::opts_current$get("label"), "-1.png")
+#| fig-asp: 0.5
 
 wrap_plots(p1 + p2) + p3
 ```
 #### No nesting
 ```{r no_nesting}
 #| warning: false
-#| fig-width: 10
+#| dev.args: {scaling: .5}
 #| out-width: 100%
-#| fig-link: !expr paste0("index_files/figure-html/", knitr::opts_current$get("label"), "-1.png")
+#| fig-asp: 0.5
 
 (p1 + p2) + p3 # Parens are vacuous here
 ```
@@ -363,9 +360,9 @@ If you don't use `wrap_plots()`, the nesting behavior with `+` is a little unint
 
 ```{r}
 #| warning: false
-#| fig-width: 10
+#| dev.args: {scaling: .5}
 #| out-width: 100%
-#| fig-link: !expr paste0("index_files/figure-html/", knitr::opts_current$get("label"), "-1.png")
+#| fig-asp: 0.5
 
 composite <- p1 + p2
 p3 + composite
@@ -375,9 +372,9 @@ So far, so good.  But, what if we change the order of arguments around `+`?  All
 
 ```{r}
 #| warning: false
-#| fig-width: 10
+#| dev.args: {scaling: .5}
+#| fig-asp: 0.5
 #| out-width: 100%
-#| fig-link: !expr paste0("index_files/figure-html/", knitr::opts_current$get("label"), "-1.png")
 
 composite + p3
 ```
@@ -389,9 +386,8 @@ So, `+` will nest a composite on the right, but will not nest a composite on the
 #### `composite - p3`
 ```{r}
 #| warning: false
-#| fig-width: 10
-#| out-width: 100%
-#| fig-link: !expr paste0("index_files/figure-html/", knitr::opts_current$get("label"), "-1.png")
+#| dev.args: {scaling: .5}
+#| fig-asp: 0.5
 
 composite - p3
 ```
@@ -399,10 +395,9 @@ composite - p3
 
 ```{r}
 #| warning: false
-#| fig-width: 10
-#| fig-height: 10
+#| dev.args: {scaling: .5}
+#| fig-asp: 0.5
 #| out-width: 100%
-#| fig-link: !expr paste0("index_files/figure-html/", knitr::opts_current$get("label"), "-1.png")
 
 p3 - composite
 ```

@@ -1,7 +1,9 @@
 [
   {
     "listing": "/hidden.html",
-    "items": []
+    "items": [
+      "/posts/figure_working/index.html"
+    ]
   },
   {
     "listing": "/index.html",

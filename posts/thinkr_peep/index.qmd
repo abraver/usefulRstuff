@@ -42,11 +42,11 @@ palmerpenguins::penguins |>
   summarize(across(where(is.numeric), \(x) mean(x, na.rm = TRUE)))
 ```
 
-And you can include arguments to functions inside `peep()` with dot syntax:
+And you can include arguments to functions inside `peep()` with dot syntax if you're using the `magrittr` pipe `%>%` (at least for the line directly above the `peep`):^[You can't use the base pipe's placeholder, `_`, here, since it does not work in nested functions.]
 
 ```{r}
 palmerpenguins::penguins %>% 
-  peep(head(., n = 7)) |> 
+  peep(head(n = 7, x = .)) |> 
   group_by(species) |> 
   summarize(across(where(is.numeric), \(x) mean(x, na.rm = TRUE)))
 ```

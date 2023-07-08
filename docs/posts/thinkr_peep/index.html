@@ -176,7 +176,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <script src="../../fold.js"></script>
 <script src="../../move_session_info.js"></script>
 <!-- begin content -->
-<div class="cell" data-hash="index_cache/html/setup_3d128d30258acd457e6aab6cf60de21a">
+<div class="cell" data-hash="index_cache/html/setup_73122296f41c7d9b946d97e5e7fc4f4a">
 <details>
 <summary>Setup</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -184,7 +184,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </details>
 </div>
 <p>Insert <code>thinkr::peep(head)</code> into a <code>df</code> pipeline to print a few rows at a particular intermediate stage in the pipeline. Here it prints a few lines of the <code>df</code> before it gets summarized:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_f53720937ec52262e8f6e687bff1cada">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_dbf7fe24710b7544b20d38c058d195ad">
 <div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>palmerpenguins<span class="sc">::</span>penguins <span class="sc">|&gt;</span> </span>
 <span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">peep</span>(head) <span class="sc">|&gt;</span></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
@@ -193,7 +193,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="3" data-code-cell="annotated-cell-2">How convenient that the base R pipe looks like a penguin.</span>
+<span data-code-lines="3" data-code-cell="annotated-cell-2" data-code-annotation="1">How convenient that the base R pipe looks like a penguin.</span>
 </dd>
 </dl>
 </div>
@@ -261,7 +261,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </div>
 </div>
 <p>You can use multiple functions, like <code>head</code> and <code>tail</code> to see two views of the intermediate step; <code>verbose = TRUE</code> prints the functions used for these peeps:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_960ed7bec4aef10d66e227f2f95a779c">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_c77972840911b9cdb7e0f3570d5ce4dd">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>palmerpenguins<span class="sc">::</span>penguins <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">peep</span>(head, tail, <span class="at">verbose =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span> </span>
@@ -347,10 +347,10 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-<p>And you can include arguments to functions inside <code>peep()</code> with dot syntax:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_eee2facdc69258f1d1cbff3bc982229c">
+<p>And you can include arguments to functions inside <code>peep()</code> with dot syntax if you’re using the <code>magrittr</code> pipe <code>%&gt;%</code> (at least for the line directly above the <code>peep</code>):<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_5516ed69206d6ef01bcda46443171b23">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>palmerpenguins<span class="sc">::</span>penguins <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">peep</span>(<span class="fu">head</span>(., <span class="at">n =</span> <span class="dv">7</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">peep</span>(<span class="fu">head</span>(<span class="at">n =</span> <span class="dv">7</span>, <span class="at">x =</span> .)) <span class="sc">|&gt;</span> </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span> </span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), \(x) <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -423,7 +423,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <summary>
 Session info and package versions
 </summary>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-6_033bb19118c34c3bfd99cbeccafa1a30">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-6_bfcf79e61653a815874581a08af012ba">
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
 </div>
@@ -437,7 +437,7 @@ Session info and package versions
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/Chicago
- date     2023-07-06
+ date     2023-07-08
  pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -478,7 +478,7 @@ Session info and package versions
        htmlwidgets         1.6.2 2023-03-17 CRAN (R 4.3.0)
           httpcode         0.3.0 2020-04-10 CRAN (R 4.3.0)
             httpuv        1.6.11 2023-05-11 CRAN (R 4.3.0)
-          jsonlite         1.8.7 2022-12-06 CRAN (R 4.3.0)
+          jsonlite         1.8.4 2022-12-06 CRAN (R 4.3.0)
              knitr          1.43 2023-05-25 CRAN (R 4.3.0)
              later         1.3.1 2023-05-02 CRAN (R 4.3.0)
           lazyeval         0.2.2 2019-03-15 CRAN (R 4.3.0)
@@ -509,7 +509,7 @@ Session info and package versions
            remotes         2.4.2 2021-11-30 CRAN (R 4.3.0)
               renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
              rlang         1.1.1 2023-04-28 CRAN (R 4.3.0)
-         rmarkdown          2.22 2023-03-26 CRAN (R 4.3.0)
+         rmarkdown          2.21 2023-03-26 CRAN (R 4.3.0)
         rstudioapi          0.14 2022-08-22 CRAN (R 4.3.0)
                rvg         0.3.2 2023-01-07 CRAN (R 4.3.0)
             scales         1.2.1 2022-08-20 CRAN (R 4.3.0)
@@ -544,7 +544,13 @@ Session info and package versions
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>You can’t use the base pipe’s placeholder, <code>_</code>, here, since it does not work in nested functions.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

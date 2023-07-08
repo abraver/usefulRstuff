@@ -14,6 +14,7 @@ categories:
 ```{r}
 #| echo: false
 #| include: false
+#| cache: false
 
 library(tidyverse)
 library(ggforce)
@@ -26,6 +27,7 @@ If we just use the usual `facet_wrap` or `facet_grid` from `ggplot2`, you end up
 
 ```{r}
 #| message: false
+#| dev.args: {scaling: 0.75}
 
 library(tidyverse)
 
@@ -42,6 +44,8 @@ plot_1
 The [`ggforce`](https://ggforce.data-imaginist.com) library, among its many useful functions, includes `facet_wrap_paginate` and `facet_grid_paginate`. These work like `facet_wrap` and `facet_grid`, but take an additional `page` argument. Here we specify that we want 4 rows and 5 columns per page, so for 50 states there will be 2 full pages plus one page with the remaining 10 states:
 
 ```{r}
+#| dev.args: {scaling: 0.75}
+
 library(ggforce)
 
 plot_2 <- plot_1  +
@@ -63,6 +67,8 @@ ggplot2::theme_set(asbutils::theme_asb())
 
 ```{r}
 #| classes: .fold .o .g
+#| dev.args: {scaling: 0.75}
+#| lightbox: {group: these}
 
 plot_pages <- plot_2 |> 
   n_pages()

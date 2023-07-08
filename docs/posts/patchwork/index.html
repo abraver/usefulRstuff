@@ -69,7 +69,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -167,7 +170,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
   </div>
   
 
-</header><script src="../../jquery-3.7.0.min.js"></script><script src="../../fold.js"></script><script src="../../move_session_info.js"></script><!-- begin content --><div class="cell" data-hash="index_cache/html/setup_855996bbb7865aff0e8ac6b5fd86a646">
+</header><script src="../../jquery-3.7.0.min.js"></script><script src="../../fold.js"></script><script src="../../move_session_info.js"></script><!-- begin content --><div class="cell" data-hash="index_cache/html/setup_cb31195c19eac84c71d9aa9101dafdf1">
 <details><summary>Setup</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
@@ -196,21 +199,25 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Plot 4"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p1</span>; <span class="va">p2</span>; <span class="va">p3</span>; <span class="va">p4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell quarto-layout-panel" data-hash="index_cache/html/unnamed-chunk-3_567ea21efe0d8889bda33e43eabbe2e4">
+</details><div class="cell quarto-layout-panel" data-hash="index_cache/html/unnamed-chunk-3_92c72a4e16d6b31a75d1d8348ae7e9cc">
 <div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center" style="flex-basis: 50.0%;justify-content: center;">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-3-1.png" class="lightbox" data-gallery="boop"><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
 </div>
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="index_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center" style="flex-basis: 50.0%;justify-content: center;">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-3-2.png" class="lightbox" data-gallery="boop"><img src="index_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
 </div>
 </div>
 <div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="index_files/figure-html/unnamed-chunk-3-3.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center" style="flex-basis: 50.0%;justify-content: center;">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-3-3.png" class="lightbox" data-gallery="boop"><img src="index_files/figure-html/unnamed-chunk-3-3.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
 </div>
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="index_files/figure-html/unnamed-chunk-3-4.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center" style="flex-basis: 50.0%;justify-content: center;">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-3-4.png" class="lightbox" data-gallery="boop"><img src="index_files/figure-html/unnamed-chunk-3-4.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
 </div>
 </div>
 </div>
@@ -223,32 +230,38 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_2b7411e5f997326f552d8aab58c1a486">
+<div class="cell" data-fig.asp="0.5">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="960"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-5_a5fbd0dd624b159abc57b6328d29c529">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-5_517c6e6d78c6b0c66fe0845021695c84">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="960"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-19"><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
 </div>
 </div>
 <p>You can specify the number of rows or columns in your composed plot with <code>plot_layout(nrow=..., ncol=...)</code>. Setting <code>byrow</code> to false fills by column, rather than by row (so the left column below has plots 1, 2, and 3). (Click image to embiggen.)</p>
-<div class="cell" data-hash="index_cache/html/byrow_a1c8c574ab492d7f96c358b1b98f8c59">
+<div class="cell" data-hash="index_cache/html/byrow_05b63ac03f57d43372c2b4847f85a4b1">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">3</span>, byrow <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/byrow-1.png"><img src="index_files/figure-html/byrow-1.png" class="img-fluid figure-img" style="width:4in"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/byrow-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="index_files/figure-html/byrow-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
 </figure>
 </div>
 </div>
@@ -263,18 +276,24 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-6_b5e8ff6d257dbcf7500961cd3aa1ab83">
+<div class="cell" data-fig.asp="0.5" data-hash="index_cache/html/unnamed-chunk-6_ecb26e188dd7450091e48f617e83624d">
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">|</span> <span class="va">p2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-20"><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-7_984eeb051a1a1e7cb75f0b966fc9e2bc">
+<div class="cell" data-fig.asp="1.5" data-hash="index_cache/html/unnamed-chunk-7_6f152f2ebcf2d06547bdde96507b542d">
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">/</span> <span class="va">p2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-21"><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" style="width:50.0%"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -288,18 +307,24 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_7731ffa8157a7bc59c0af0193aecf76e">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_41b714f3ec722196210cf86e7d1ef3ab">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">/</span> <span class="va">p2</span> <span class="op">|</span> <span class="va">p3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-22"><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_3b312e57b3f9cc2dedc1acd093c98a56">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_397b193eeeb3cf38a70dcb65f0e2d330">
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">/</span> <span class="op">(</span><span class="va">p2</span> <span class="op">|</span> <span class="va">p3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-9-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-23"><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -307,50 +332,57 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </div>
 </section><section id="annotating-the-composed-plot" class="level2"><h2 class="anchored" data-anchor-id="annotating-the-composed-plot">Annotating the composed plot</h2>
 <p><code><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation()</a></code> will annotate the combined, composed plot. The <code>title</code> and <code>subtitle</code>, arguments work as you would expect. The <code>tag_levels</code> argument lets you specify one of <code>c('a', 'A', '1', 'i', 'I')</code> for various sub-plot numbering:</p>
-<div class="cell" data-hash="index_cache/html/annotating_1e9d1008d92e39a62ceeb2bc99683de3">
+<div class="cell" data-hash="index_cache/html/annotating_51f0e5e0ccb06344fb3048f2bdf50da1">
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">p1</span> <span class="op">|</span> <span class="op">(</span><span class="va">p2</span> <span class="op">/</span> <span class="va">p3</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">'Lots of data about penguins'</span>,</span>
 <span>    subtitle <span class="op">=</span> <span class="st">'There\'s never too much info about penguins'</span>,</span>
 <span>    tag_levels <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span> <span class="op">&amp;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">.5</span>, color <span class="op">=</span> <span class="st">"green"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">.5</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span>,</span>
 <span>        plot.tag <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/annotating-1.png"><img src="index_files/figure-html/annotating-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/annotating-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="index_files/figure-html/annotating-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>(The <code>&amp;</code> operator applies the theme specification to all subplots within the composed plot (and overall things like the main title/subtitle); the <code>*</code> operator applies the theme specifications to all subplots in the current <a href="#nesting">nesting</a>. level.)</p>
 <p>If you want a theme element to apply only to the overall plot, and not the subplots, use the <code>theme</code> argument to <code><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation()</a></code> rather than <code>&amp; theme(...)</code>.</p>
-<div class="cell" data-hash="index_cache/html/theme_argument_89ddce87bbfe9a38ea7ebe4bcf1446d8">
+<div class="cell" data-hash="index_cache/html/theme_argument_f00fe4daf9a4d2ff6676afc69f7db47f">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">p1</span> <span class="op">|</span> <span class="op">(</span><span class="va">p2</span> <span class="op">/</span> <span class="va">p3</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">'Lots of data about penguins'</span>,</span>
 <span>    subtitle <span class="op">=</span> <span class="st">'There\'s never too much info about penguins'</span>, tag_levels <span class="op">=</span> <span class="st">"A"</span>,</span>
-<span>    theme <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">.5</span>, color <span class="op">=</span> <span class="st">"green"</span><span class="op">)</span>,</span>
+<span>    theme <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">.5</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span>,</span>
 <span>        plot.tag <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/annotating-1.png"><img src="index_files/figure-html/theme_argument-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/theme_argument-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="index_files/figure-html/theme_argument-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
 </figure>
 </div>
 </div>
 </div>
 </section><section id="more-complicated-layouts" class="level2"><h2 class="anchored" data-anchor-id="more-complicated-layouts">More complicated layouts</h2>
 <p>We saw above that we can modify the layout with <code>plot_layout(ncol = ...)</code>. You can also specify relative <code>widths</code> and <code>heights</code> for the rows and columns. For example, you can provide <code>widths</code> with a vector of <em>n</em> columns to specify each.</p>
-<div class="cell" data-hash="index_cache/html/widths_c25f2da0824ae7f00c3e9e5a51b8a724">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span> <span class="op">+</span> </span>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-10_c306e3a4cb0c5d9a4dce647a6ec90aa4">
+<details><summary>Some plot theme changes for visibility in the following examples</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>, plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>, plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">p3</span> <span class="op">&lt;-</span> <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>, plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"green"</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">p4</span> <span class="op">&lt;-</span> <span class="va">p4</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>, plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"red"</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-hash="index_cache/html/widths_40d8ca9841e3f9ca1ae27e15a083dff2">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">)</span>, heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/widths-1.png"><img src="index_files/figure-html/widths-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/widths-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="index_files/figure-html/widths-1.png" class="img-fluid figure-img" style="width:75.0%"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>You can also specify quite complicated layouts with <code>plot_layout(design = ...)</code>, in two formats. The simplest is to use a textual representation, as below. Letters represent plots (in the order in which they appear), with <code>#</code>s representing empty spaces. You must specify a perfect rectangular shape.</p>
-<div class="cell" data-hash="index_cache/html/letter_design_f4767ea6f1a395dc3d9c1a2a4af0566c">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">layout</span> <span class="op">&lt;-</span> <span class="st">"</span></span>
+<div class="cell" data-hash="index_cache/html/letter_design_1637f49d0bbb97acd203e009a7bec9f1">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">layout</span> <span class="op">&lt;-</span> <span class="st">"</span></span>
 <span><span class="st">##BBBB</span></span>
 <span><span class="st">AACCDD</span></span>
 <span><span class="st">##CCDD</span></span>
@@ -359,14 +391,14 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>design <span class="op">=</span> <span class="va">layout</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/letter_design-1.png"><img src="index_files/figure-html/letter_design-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/letter_design-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="index_files/figure-html/letter_design-1.png" class="img-fluid figure-img" style="width:75.0%"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Using <code>wrap_plots</code>, you can specify which plot is represented by which letter, rather than letting that be handled automatically:</p>
-<div class="cell" data-hash="index_cache/html/wrap_plots_3c292054b502f01dd9a7b527bf8165f3">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">layout</span> <span class="op">&lt;-</span> <span class="st">'</span></span>
+<div class="cell" data-hash="index_cache/html/wrap_plots_5875dfc5c750f7863250bed79bc37ebe">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">layout</span> <span class="op">&lt;-</span> <span class="st">'</span></span>
 <span><span class="st">A#B</span></span>
 <span><span class="st">#C#</span></span>
 <span><span class="st">D#E</span></span>
@@ -374,18 +406,13 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots</a></span><span class="op">(</span>D <span class="op">=</span> <span class="va">p1</span>, C <span class="op">=</span> <span class="va">p2</span>, B <span class="op">=</span> <span class="va">p3</span>, design <span class="op">=</span> <span class="va">layout</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/wrap_plots-1.png"><img src="index_files/figure-html/wrap_plots-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/wrap_plots-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="index_files/figure-html/wrap_plots-1.png" class="img-fluid figure-img" style="width:75.0%"></a></p>
 </figure>
 </div>
 </div>
 </div>
-<p>The alternative way to specify a layout is with one or more <code><a href="https://patchwork.data-imaginist.com/reference/area.html">area()</a></code>s, which take arguments for the <code>t</code>op, <code>l</code>eft, b<code>ottom,  and</code>r`ight bounds of a grid. The grid is specified in rows and columns, with row 1 column 1 being the top left, and numbers increasing as you go down and right. You can have plots overlap with this type of specification.</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-10_acc8679a14253bbb01d4500ce9f670a5">
-<details><summary>Some plot theme changes for visibility in the following examples</summary><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>, plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>, plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell" data-hash="index_cache/html/area_714062fb89ff995544af8370d25cc0b6">
+<p>The alternative way to specify a layout is with one or more <code><a href="https://patchwork.data-imaginist.com/reference/area.html">area()</a></code>s, which take arguments for the <code>t</code>op, <code>l</code>eft, <code>b</code>ottom, and <code>r</code>ight bounds of a grid.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> The grid is specified in rows and columns, with row 1 column 1 being the top left, and numbers increasing as you go down and right. You can have plots overlap with this type of specification.</p>
+<div class="cell" data-hash="index_cache/html/area_a2f3b50761465ff266b78708e6893047">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">layout</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/area.html">area</a></span><span class="op">(</span>t <span class="op">=</span> <span class="fl">2</span>, l <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="fl">5</span>, r <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, <span class="co"># This will be p1</span></span>
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/area.html">area</a></span><span class="op">(</span>t <span class="op">=</span> <span class="fl">1</span>, l <span class="op">=</span> <span class="fl">3</span>, b <span class="op">=</span> <span class="fl">3</span>, r <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="co"># this will be p2</span></span>
@@ -394,53 +421,55 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>design <span class="op">=</span> <span class="va">layout</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/area-1.png"><img src="index_files/figure-html/area-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/area-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="index_files/figure-html/area-1.png" class="img-fluid figure-img" style="width:75.0%"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <section id="insets" class="level3"><h3 class="anchored" data-anchor-id="insets">Insets</h3>
 <p>It’s also possible to specify insets using <code><a href="https://patchwork.data-imaginist.com/reference/inset_element.html">inset_element()</a></code>. Here, the position arguments should be relative to 1, with (0, 0) being bottom left and (1, 1) being top right. The <code>align_to</code> argument defaults to <code>panel</code>, but accepts values <code>plot</code> or <code>full</code> as well.</p>
-<div class="cell" data-hash="index_cache/html/inset_5687197d6e1f7b7acdfd8fe1e610f749">
+<div class="cell" data-hash="index_cache/html/inset_fc89adb30e37d71598c2f003cf7f0e8a">
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/inset_element.html">inset_element</a></span><span class="op">(</span><span class="va">p2</span>, top <span class="op">=</span> <span class="fl">1</span>, right <span class="op">=</span> <span class="fl">1</span>, bottom <span class="op">=</span> <span class="fl">.5</span>,</span>
 <span>                   left <span class="op">=</span> <span class="fl">.5</span>, align_to <span class="op">=</span> <span class="st">"full"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/inset-1.png"><img src="index_files/figure-html/inset-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/inset-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="index_files/figure-html/inset-1.png" class="img-fluid figure-img" style="width:75.0%"></a></p>
 </figure>
 </div>
 </div>
 </div>
 </section></section><section id="controlling-legends" class="level2"><h2 class="anchored" data-anchor-id="controlling-legends">Controlling legends</h2>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-11_08cf8e43bc5a22427bfe7036c871c3b2">
-<details><summary>Reset <code>p1</code> and <code>p2</code> to their original theme</summary><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span>, plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span>, plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-11_4952d7ca1b5c43836b4644e6d4ac30fc">
+<details><summary>Reset plots to their original theme</summary><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span>, plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span>, plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">p3</span> <span class="op">&lt;-</span> <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span>, plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">p4</span> <span class="op">&lt;-</span> <span class="va">p4</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span>, plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><code>plot_layout(guides = "collect")</code> will collect all of the legends and put them in the same location. Legends that are identical between multiple subplots are collapsed, as with plots 1 and 3 below:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true"><code>guides</code> = “collect”</a></li>
-<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false"><code>guides = "keep"</code></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false"><code>guides</code> = “keep”</a></li>
 </ul>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<div class="cell" data-hash="index_cache/html/collect_948d93e9833fa6c88fcbbad101b91002">
+<div class="cell" data-hash="index_cache/html/collect_4834e1d868337837b957181223eb720f">
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>guides <span class="op">=</span> <span class="st">"collect"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/collect-1.png"><img src="index_files/figure-html/collect-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/collect-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-24"><img src="index_files/figure-html/collect-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-12_357bf6371acaf5e658de1dfb4cfc19ae">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-12_84e54800ac1bd2255babeeaa765312cc">
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="va">p4</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>guides <span class="op">=</span> <span class="st">"keep"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/collect-1.png"><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-12-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-25"><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -449,17 +478,17 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </div>
 </div>
 <p>You can influence where the collected legends show up by including <code><a href="https://patchwork.data-imaginist.com/reference/guide_area.html">guide_area()</a></code> in your layout specification:</p>
-<div class="cell" data-hash="index_cache/html/collect-area_a1b363e11d3bb330444e65b737b42807">
+<div class="cell" data-hash="index_cache/html/collect-area_162e1fe901609b6799a237e4ce6d6635">
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/guide_area.html">guide_area</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>guides <span class="op">=</span> <span class="st">"collect"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/collect-1.png"><img src="index_files/figure-html/collect-area-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/collect-area-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="index_files/figure-html/collect-area-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
 </div>
 </section><section id="nesting" class="level2"><h2 class="anchored" data-anchor-id="nesting">Nesting</h2>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-13_6da96bdba6cc105b602a2a128f8bb0e1">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-13_98bed90f96aa74c5d6227f71bc827c90">
 <details><summary>Some plot theme changes for visibility in the following examples</summary><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>, plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>, plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">p3</span> <span class="op">&lt;-</span> <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>, plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"green"</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">)</span></span>
@@ -474,22 +503,22 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </ul>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
-<div class="cell" data-hash="index_cache/html/nesting_3074659e93f8dc4a6e2f7ad74c7609d6">
+<div class="cell" data-fig.asp="0.5" data-hash="index_cache/html/nesting_d23e9ffd8039d5b02e46fc02e0661b97">
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span><span class="op">)</span> <span class="op">+</span> <span class="va">p3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-13-1.png"><img src="index_files/figure-html/nesting-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/nesting-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-26"><img src="index_files/figure-html/nesting-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
-<div class="cell" data-hash="index_cache/html/no_nesting_4ed7e1c3605035e4cb3a68cd5c659330">
+<div class="cell" data-fig.asp="0.5" data-hash="index_cache/html/no_nesting_4b2cadfa87a49c2ef74db78c1be224ec">
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span><span class="op">)</span> <span class="op">+</span> <span class="va">p3</span> <span class="co"># Parens are vacuous here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/nesting-1.png"><img src="index_files/figure-html/no_nesting-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/no_nesting-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-27"><img src="index_files/figure-html/no_nesting-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
 </figure>
 </div>
 </div>
@@ -498,22 +527,22 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </div>
 </div>
 <p>If you don’t use <code><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots()</a></code>, the nesting behavior with <code>+</code> is a little unintuitive. With a single plot on the left of <code>+</code> and a composite plot on the right, you get the expected nesting, with the composite plot taking up <em>half</em> of the whole plot:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-14_6e332b64589ea5266f0b56fa99f60bbe">
+<div class="cell" data-fig.asp="0.5" data-hash="index_cache/html/unnamed-chunk-14_9b36fb61ffd4f9845ad4819046d37700">
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">composite</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span>
 <span><span class="va">p3</span> <span class="op">+</span> <span class="va">composite</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/no_nesting-1.png"><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-14-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>So far, so good. But, what if we change the order of arguments around <code>+</code>? All of a sudden, the plot is divided into 3 equal panels!</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-15_26b9d249e3e17ed239c516a487b46bbc">
+<div class="cell" data-fig.asp="0.5" data-hash="index_cache/html/unnamed-chunk-15_fcba2d1b1f57e9c9febf7606f3ba5764">
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">composite</span> <span class="op">+</span> <span class="va">p3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-14-1.png"><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-15-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
 </figure>
 </div>
 </div>
@@ -526,22 +555,22 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </ul>
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-16_451e996e8b08bfb54df279f6dceee640">
+<div class="cell" data-fig.asp="0.5" data-hash="index_cache/html/unnamed-chunk-16_46e018c91dc22d4505f278831e996da5">
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">composite</span> <span class="op">-</span> <span class="va">p3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-15-1.png"><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-16-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-28"><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-17_00f15a8858ca4b69a149c009eae04e72">
+<div class="cell" data-fig.asp="0.5" data-hash="index_cache/html/unnamed-chunk-17_0317240887e17ff21a001d01da33a8c9">
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p3</span> <span class="op">-</span> <span class="va">composite</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-16-1.png"><img src="index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-17-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-29"><img src="index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" style="width:100.0%"></a></p>
 </figure>
 </div>
 </div>
@@ -550,7 +579,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </div>
 </div>
 </section><section id="alignment-across-multiple-slides" class="level2"><h2 class="anchored" data-anchor-id="alignment-across-multiple-slides">Alignment across multiple slides</h2>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-18_efd219672b58ae1abba939bdc2c0df6b">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-18_a4c9c0e92abc4483d36adfc13f651ba1">
 <details><summary>Some plot theme changes for visibility in the following examples</summary><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span>, plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span>, plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">p3</span> <span class="op">&lt;-</span> <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span>, plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -558,19 +587,25 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </details>
 </div>
 <p>When including plots in a slideshow, you often get an annoying jerking sensation as you move from one slide to the next:</p>
-<div class="cell" data-animation.hook="gifski" data-hash="index_cache/html/unnamed-chunk-19_ac1313ade7739d6a717c6bd97f07464c">
+<div class="cell" data-animation.hook="gifski" data-hash="index_cache/html/unnamed-chunk-19_0d69ac5c31d3aaff0ab1ba7d1a2a3b11">
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-19-.gif" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-19-.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="index_files/figure-html/unnamed-chunk-19-.gif" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p>You can generate aligned plots <code>align_patches</code>. Notice here how the axis labels are aligned with each other across multiple slides.</p>
-<div class="cell" data-animation.hook="gifski" data-hash="index_cache/html/unnamed-chunk-20_bff7a3cbc0ba0b550b4218cafa888f9a">
+<div class="cell" data-animation.hook="gifski" data-hash="index_cache/html/unnamed-chunk-20_287d0dfaf568f5e59247caac72d9c40c">
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">plots_aligned</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/multipage_align.html">align_patches</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, <span class="va">p3</span>, <span class="va">p4</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">p</span> <span class="kw">in</span> <span class="va">plots_aligned</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-20-.gif" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-20-.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="index_files/figure-html/unnamed-chunk-20-.gif" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p>See <a href="https://patchwork.data-imaginist.com/articles/guides/multipage.html">the relevant documentation</a> for more details.</p>
@@ -578,7 +613,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <div id="footer-session-info">
 <details><summary>
 Session info and package versions
-</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-22_7102259d08c4012ed961cef723d946a5">
+</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-22_fb543f977d89c37cd242c024ad7be101">
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
 </div>
@@ -592,7 +627,7 @@ Session info and package versions
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/Chicago
- date     2023-07-07
+ date     2023-07-08
  pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -631,7 +666,7 @@ Session info and package versions
        htmlwidgets         1.6.2 2023-03-17 CRAN (R 4.3.0)
           httpcode         0.3.0 2020-04-10 CRAN (R 4.3.0)
             httpuv        1.6.11 2023-05-11 CRAN (R 4.3.0)
-          jsonlite         1.8.7 2023-06-29 CRAN (R 4.3.0)
+          jsonlite         1.8.4 2022-12-06 CRAN (R 4.3.0)
              knitr          1.43 2023-05-25 CRAN (R 4.3.0)
           labeling         0.4.2 2020-10-20 CRAN (R 4.3.0)
              later         1.3.1 2023-05-02 CRAN (R 4.3.0)
@@ -645,20 +680,22 @@ Session info and package versions
          pkgconfig         2.0.3 2019-09-22 CRAN (R 4.3.0)
           promises       1.2.0.1 2021-02-11 CRAN (R 4.3.0)
                 R6         2.5.1 2021-08-19 CRAN (R 4.3.0)
+              ragg         1.2.5 2023-01-12 CRAN (R 4.3.0)
               Rcpp        1.0.10 2023-01-22 CRAN (R 4.3.0)
               renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
              rlang         1.1.1 2023-04-28 CRAN (R 4.3.0)
-         rmarkdown          2.22 2023-06-01 CRAN (R 4.3.0)
+         rmarkdown          2.21 2023-03-26 CRAN (R 4.3.0)
         rstudioapi          0.14 2022-08-22 CRAN (R 4.3.0)
           Rttf2pt1        1.3.12 2023-01-22 CRAN (R 4.3.0)
             scales         1.2.1 2022-08-20 CRAN (R 4.3.0)
        sessioninfo         1.2.2 2021-12-06 CRAN (R 4.3.0)
              shiny         1.7.4 2022-12-15 CRAN (R 4.3.0)
        systemfonts         1.0.4 2022-02-11 CRAN (R 4.3.0)
+       textshaping         0.3.6 2021-10-13 CRAN (R 4.3.0)
             tibble         3.2.1 2023-03-20 CRAN (R 4.3.0)
         tidyselect         1.2.0 2022-10-10 CRAN (R 4.3.0)
               utf8         1.2.3 2023-01-31 CRAN (R 4.3.0)
-             vctrs         0.6.3 2023-06-14 CRAN (R 4.3.0)
+             vctrs         0.6.2 2023-04-19 CRAN (R 4.3.0)
              withr         2.5.0 2022-03-03 CRAN (R 4.3.0)
               xfun          0.39 2023-04-20 CRAN (R 4.3.0)
             xtable         1.8-4 2019-04-21 CRAN (R 4.3.0)
@@ -669,7 +706,10 @@ Session info and package versions
 </div>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+<ol>
+<li id="fn1"><p>Somewhat annoyingly, the argument order here is <code>tlbr</code>, rather than <code>trbl</code> as in css, which is how my brain works.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -968,7 +1008,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-
+<script>var lightboxQuarto = GLightbox({"openEffect":"fade","closeEffect":"fade","descPosition":"bottom","selector":".lightbox","loop":true});</script>
 
 
 </body></html>

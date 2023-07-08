@@ -69,7 +69,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -97,7 +100,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </script><link href="../../site_libs/roboto-condensed-0.3.3/css/roboto-condensed.css" rel="stylesheet">
 <link rel="stylesheet" href="../../styles.css">
 </head>
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-md navbar-dark "><div class="navbar-container container-fluid">
@@ -124,9 +127,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
     </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">
@@ -154,7 +155,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 
 </header><script src="../../jquery-3.7.0.min.js"></script><script src="../../fold.js"></script><script src="../../move_session_info.js"></script><!-- begin content --><p>What’s the difference between two <code>df</code>s?</p>
 <p><code><a href="https://rdrr.io/pkg/diffobj/man/diffPrint.html">diffobj::diffPrint()</a></code> gives a handy visual way to check differences:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_f637eadf0e2e683b17e3d825c2bb25cc">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_62006b2cd577cc25e72eced83baed27e">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/brodieG/diffobj">diffobj</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, ncol<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
@@ -185,8 +186,9 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </div>
 <details><summary>
 (In RStudio, this is shown in a colorful manner in the Viewer)
-</summary><img src="diffobj-rstudio.jpg" class="img-fluid" width="400"></details><p>This also works for other types of objects, such as character vectors:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_03d0dc9d3a9e315c1be192acc7920490">
+</summary><a href="diffobj-rstudio.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="diffobj-rstudio.jpg" class="img-fluid" width="400"></a>
+</details><p>This also works for other types of objects, such as character vectors:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_2085abed92f9c498c1f6c99e40223a04">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/diffobj/man/diffPrint.html">diffPrint</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"B"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt; letters[1:3]     &gt; c("a", "B", "..
@@ -199,7 +201,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <div id="footer-session-info">
 <details><summary>
 Session info and package versions
-</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-5_fe6c786aaee706612df17c5cb43ebc51">
+</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-5_21b31f662589a1115e67bd4254f280f5">
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
 </div>
@@ -213,7 +215,7 @@ Session info and package versions
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/Chicago
- date     2023-07-06
+ date     2023-07-08
  pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -244,7 +246,7 @@ Session info and package versions
        htmlwidgets         1.6.2 2023-03-17 CRAN (R 4.3.0)
           httpcode         0.3.0 2020-04-10 CRAN (R 4.3.0)
             httpuv        1.6.11 2023-05-11 CRAN (R 4.3.0)
-          jsonlite         1.8.7 2022-12-06 CRAN (R 4.3.0)
+          jsonlite         1.8.4 2022-12-06 CRAN (R 4.3.0)
              knitr          1.43 2023-05-25 CRAN (R 4.3.0)
              later         1.3.1 2023-05-02 CRAN (R 4.3.0)
          lifecycle         1.0.3 2022-10-07 CRAN (R 4.3.0)
@@ -254,14 +256,16 @@ Session info and package versions
          pkgconfig         2.0.3 2019-09-22 CRAN (R 4.3.0)
           promises       1.2.0.1 2021-02-11 CRAN (R 4.3.0)
                 R6         2.5.1 2021-08-19 CRAN (R 4.3.0)
+              ragg         1.2.5 2023-01-12 CRAN (R 4.3.0)
               Rcpp        1.0.10 2023-01-22 CRAN (R 4.3.0)
               renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
              rlang         1.1.1 2023-04-28 CRAN (R 4.3.0)
-         rmarkdown          2.22 2023-03-26 CRAN (R 4.3.0)
+         rmarkdown          2.21 2023-03-26 CRAN (R 4.3.0)
         rstudioapi          0.14 2022-08-22 CRAN (R 4.3.0)
        sessioninfo         1.2.2 2021-12-06 CRAN (R 4.3.0)
              shiny         1.7.4 2022-12-15 CRAN (R 4.3.0)
        systemfonts         1.0.4 2022-02-11 CRAN (R 4.3.0)
+       textshaping         0.3.6 2021-10-13 CRAN (R 4.3.0)
             tibble         3.2.1 2023-03-20 CRAN (R 4.3.0)
         tidyselect         1.2.0 2022-10-10 CRAN (R 4.3.0)
               utf8         1.2.3 2023-01-31 CRAN (R 4.3.0)
@@ -575,7 +579,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"fade","selector":".lightbox","loop":true,"closeEffect":"fade"});</script>
 
 
 </body></html>
