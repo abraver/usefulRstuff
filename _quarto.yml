@@ -1,6 +1,10 @@
 project:
   type: website
   output-dir: docs
+  
+author:
+  name: "Aaron Braver"
+  url: "https://www.aaronbraver.com"
 
 execute:
   freeze: true
@@ -8,12 +12,19 @@ execute:
     
 website:
   title: "Useful R Stuff"
+  site-url: https://abraver.github.io/usefulRstuff
   navbar:
     left:
       - href: http://www.aaronbraver.com
         text: Aaron Braver
+    right: 
+      - icon: rss
+        text: RSS
+        href: index.xml
     collapse-below: md
   google-analytics: "G-N1MBV4L3FV"
+  twitter-card: true
+  open-graph: true
 
 knitr  :
   opts_chunk:

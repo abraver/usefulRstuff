@@ -11,6 +11,7 @@ listing:
     - "posts/"
   exclude:
     categories: "hidden"
+  feed: true
 ---
 {{< include /_include_header.qmd >}}
 
