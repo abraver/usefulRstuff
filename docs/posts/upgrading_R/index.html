@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Aaron Braver">
 <meta name="dcterms.date" content="2023-06-30">
 <title>Useful R Stuff - Upgrading R without losing all your packages</title>
 <style>
@@ -96,6 +97,12 @@ gtag('js', new Date());
 gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </script><link href="../../site_libs/roboto-condensed-0.3.3/css/roboto-condensed.css" rel="stylesheet">
 <link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Useful R Stuff - Upgrading R without losing all your packages">
+<meta property="og:description" content="">
+<meta property="og:site-name" content="Useful R Stuff">
+<meta name="twitter:title" content="Useful R Stuff - Upgrading R without losing all your packages">
+<meta name="twitter:description" content="">
+<meta name="twitter:card" content="summary">
 </head>
 <body class="nav-fixed fullcontent">
 
@@ -117,7 +124,14 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
  <span class="menu-text">Aaron Braver</span></a>
   </li>  
 </ul>
-<div class="quarto-navbar-tools ms-auto">
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../index.xml" rel="" target=""><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text">RSS</span></a>
+  </li>  
+</ul>
+<div class="quarto-navbar-tools">
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -138,6 +152,12 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p><a href="https://www.aaronbraver.com">Aaron Braver</a> </p>
+          </div>
+  </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
@@ -153,21 +173,10 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </header><script src="../../jquery-3.7.0.min.js"></script><script src="../../fold.js"></script><script src="../../move_session_info.js"></script><!-- begin content --><p>If you upgrade R to a new major or minor release (e.g.&nbsp;4.0 or 4.1, but not 4.1.1), your library of installed packages doesn’t come along for the ride.</p>
 <section id="before-you-upgrade" class="level2"><h2 class="anchored" data-anchor-id="before-you-upgrade">Before you upgrade</h2>
 <p><em>Before</em> you upgrade, you should make a list of all of your installed packages—this is easy with <code>sessioninfo::package_info("installed")</code>. If you’ve got packages installed from multiple sources (like CRAN and also Github), it’s best to save these as separate lists to facilitate automated reinstallation of these grouped by source:</p>
-<div class="cell" data-messages="false" data-hash="index_cache/html/unnamed-chunk-2_7ec31f620afef15343686dc17f9d1d9c">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.2     ✔ readr     2.1.4
-✔ forcats   1.0.0     ✔ stringr   1.5.0
-✔ ggplot2   3.4.2     ✔ tibble    3.2.1
-✔ lubridate 1.9.2     ✔ tidyr     1.3.0
-✔ purrr     1.0.1     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Figure out what's installed</span></span>
+<div class="cell" data-messages="false" data-hash="index_cache/html/unnamed-chunk-2_fadae0ccd48b4d71a521e30a2eace8dc">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Figure out what's installed</span></span>
 <span><span class="va">installed_packages</span> <span class="op">&lt;-</span> <span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/package_info.html">package_info</a></span><span class="op">(</span><span class="st">"installed"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="st">"where_from"</span> <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">source</span>, <span class="st">"CRAN"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"CRAN"</span>,</span>
@@ -192,8 +201,8 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </div>
 </section><section id="after-you-upgrade" class="level2"><h2 class="anchored" data-anchor-id="after-you-upgrade">After you upgrade</h2>
 <p>Then, after you upgrade R, you can re-install the packages from these lists:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_d70f0a5367ab8e9d2e15c9233da4a0da">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Install manually some things we'll need since they won't be installed anymore</span></span>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_6bc8088647c912836deab03c6182fd9d">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Install manually some things we'll need since they won't be installed anymore</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"remotes"</span>, <span class="st">"dplyr"</span>, <span class="st">"stringr"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">file_location</span> <span class="op">&lt;-</span> <span class="st">"~/Desktop/tmp/"</span> <span class="co"># Change as needed</span></span>
@@ -213,7 +222,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <div id="footer-session-info">
 <details><summary>
 Session info and package versions
-</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-5_fe6c786aaee706612df17c5cb43ebc51">
+</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-5_21b31f662589a1115e67bd4254f280f5">
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
 </div>
@@ -227,7 +236,7 @@ Session info and package versions
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/Chicago
- date     2023-07-06
+ date     2023-07-08
  pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -265,7 +274,7 @@ Session info and package versions
        htmlwidgets         1.6.2 2023-03-17 CRAN (R 4.3.0)
           httpcode         0.3.0 2020-04-10 CRAN (R 4.3.0)
             httpuv        1.6.11 2023-05-11 CRAN (R 4.3.0)
-          jsonlite         1.8.4 2023-06-29 CRAN (R 4.3.0)
+          jsonlite         1.8.7 2023-06-29 CRAN (R 4.3.0)
              knitr          1.43 2023-05-25 CRAN (R 4.3.0)
              later         1.3.1 2023-05-02 CRAN (R 4.3.0)
          lifecycle         1.0.3 2022-10-07 CRAN (R 4.3.0)
@@ -278,11 +287,12 @@ Session info and package versions
           promises       1.2.0.1 2021-02-11 CRAN (R 4.3.0)
              purrr         1.0.1 2023-01-10 CRAN (R 4.3.0)
                 R6         2.5.1 2021-08-19 CRAN (R 4.3.0)
+              ragg         1.2.5 2023-01-12 CRAN (R 4.3.0)
               Rcpp        1.0.10 2023-01-22 CRAN (R 4.3.0)
              readr         2.1.4 2023-02-10 CRAN (R 4.3.0)
               renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
              rlang         1.1.1 2023-04-28 CRAN (R 4.3.0)
-         rmarkdown          2.21 2023-06-01 CRAN (R 4.3.0)
+         rmarkdown          2.22 2023-06-01 CRAN (R 4.3.0)
         rstudioapi          0.14 2022-08-22 CRAN (R 4.3.0)
             scales         1.2.1 2022-08-20 CRAN (R 4.3.0)
        sessioninfo         1.2.2 2021-12-06 CRAN (R 4.3.0)
@@ -290,6 +300,7 @@ Session info and package versions
            stringi        1.7.12 2023-01-11 CRAN (R 4.3.0)
            stringr         1.5.0 2022-12-02 CRAN (R 4.3.0)
        systemfonts         1.0.4 2022-02-11 CRAN (R 4.3.0)
+       textshaping         0.3.6 2021-10-13 CRAN (R 4.3.0)
             tibble         3.2.1 2023-03-20 CRAN (R 4.3.0)
              tidyr         1.3.0 2023-01-24 CRAN (R 4.3.0)
         tidyselect         1.2.0 2022-10-10 CRAN (R 4.3.0)

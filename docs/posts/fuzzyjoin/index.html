@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Aaron Braver">
 <meta name="dcterms.date" content="2023-06-26">
 
 <title>Useful R Stuff - fuzzyjoin: Join dfs with inexact matching</title>
@@ -107,6 +108,12 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Useful R Stuff - fuzzyjoin: Join dfs with inexact matching">
+<meta property="og:description" content="">
+<meta property="og:site-name" content="Useful R Stuff">
+<meta name="twitter:title" content="Useful R Stuff - fuzzyjoin: Join dfs with inexact matching">
+<meta name="twitter:description" content="">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed">
@@ -131,7 +138,14 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
  <span class="menu-text">Aaron Braver</span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools ms-auto">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.xml" rel="" target=""><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text">RSS</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -168,6 +182,12 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p><a href="https://www.aaronbraver.com">Aaron Braver</a> </p>
+          </div>
+  </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
@@ -186,7 +206,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <script src="../../fold.js"></script>
 <script src="../../move_session_info.js"></script>
 <!-- begin content -->
-<div class="cell" data-hash="index_cache/html/setup_0783afa8f9deef83b579ef81990a317f">
+<div class="cell" data-hash="index_cache/html/setup_b776bcb1cc19d5561a7dbf474281a81b">
 <details>
 <summary>Setup</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -196,14 +216,14 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <h2 class="anchored" data-anchor-id="join-dfs-by-string-distance">Join <code>df</code>s by string distance</h2>
 <p>Sometimes you want to join <code>df</code>s on fuzzy criteria. That’s where <code>fuzzyjoin</code> comes in. Consider this example lifted partially from the documentation:</p>
 <p>Set up a <code>df</code> with some typos. We’ll join this to <code>ggplot2::diamonds</code> by <code>cut</code>, which has levels: Fair, Good, Very Good, Premium, Ideal.</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_28cdbe6a2dafe501568228182540a205">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_0af71fa9b420dec8807e2ba3567b5d7e">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dataframe with some typos</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">approximate_name =</span> <span class="fu">c</span>(<span class="st">"Idea"</span>, <span class="st">"Premiums"</span>, <span class="st">"Premioom"</span>,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"VeryGood"</span>, <span class="st">"VeryGood"</span>, <span class="st">"Faiir"</span>),</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">type =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>A regular inner join finds no matches, due to the typos:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_cd3f059c9de50ba77ee14ee711fb5cff">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_4e8ec02490363290b93237a7d653ee23">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inner_join</span>(diamonds, d, <span class="at">by =</span> <span class="fu">c</span>(<span class="at">cut =</span> <span class="st">"approximate_name"</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -211,7 +231,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </div>
 </div>
 <p><code>stringdist_inner_join()</code> however will match strings based on any of the methods available in the <code>stringdist</code> package (e.g.&nbsp;Levenshtein distance, Jaccard distance, etc).</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_0e616991bc65ee22fcbb0177587f38a9">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_53a0cca2ba3c10637187bd7bb5b669ac">
 <div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>fuzzyjoin<span class="sc">::</span><span class="fu">stringdist_inner_join</span>(diamonds, d,</span>
 <span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">by =</span> <span class="fu">c</span>(<span class="at">cut =</span> <span class="st">"approximate_name"</span>),</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-3" class="code-annotation-target"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">method =</span> <span class="st">"lv"</span>,</span>
@@ -223,11 +243,11 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="3" data-code-annotation="1" data-code-cell="annotated-cell-4">Levenshtein distance</span>
+<span data-code-lines="3" data-code-cell="annotated-cell-4" data-code-annotation="1">Levenshtein distance</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="6" data-code-annotation="2" data-code-cell="annotated-cell-4">Move these columns closer together for easier visual comparison</span>
+<span data-code-lines="6" data-code-cell="annotated-cell-4" data-code-annotation="2">Move these columns closer together for easier visual comparison</span>
 </dd>
 </dl>
 </div>
@@ -426,7 +446,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <section id="join-dfs-by-regex-matches" class="level2">
 <h2 class="anchored" data-anchor-id="join-dfs-by-regex-matches">Join <code>df</code>s by regex matches</h2>
 <p>Also extremely useful are the <code>regex_*_join</code> functions, which join based on whether there is a regex match between columns. (This example also from <a href="http://varianceexplained.org/fuzzyjoin/reference/regex_join.html">the documentation</a>)</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-5_82c6c05d1386b02f1f6c5dd48a6aa3d0">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-5_1f3814ce097b6e221d1f7a66ba105b1f">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">regex_name =</span> <span class="fu">c</span>(<span class="st">"^Idea"</span>, <span class="st">"mium"</span>, <span class="st">"Good"</span>), <span class="at">type =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>fuzzyjoin<span class="sc">::</span><span class="fu">regex_inner_join</span>(diamonds, d, <span class="at">by =</span> <span class="fu">c</span>(<span class="at">cut =</span> <span class="st">"regex_name"</span>)) <span class="sc">|&gt;</span> </span>
@@ -559,7 +579,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <section id="join-dfs-by-absolute-difference-between-columns" class="level2">
 <h2 class="anchored" data-anchor-id="join-dfs-by-absolute-difference-between-columns">Join <code>df</code>s by absolute difference between columns</h2>
 <p>Say you want to join by two columns so long as they are equal within a certain degree of tolerance. Here we join so long as <code>sepal_lengths$Sepal.Length</code> is within 0.5 of the <code>iris$Sepal.Length</code>:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-6_b7c0382a2fa5b9052509534bf141d91a">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-6_57a90a80767692b396b047736462f014">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sepal_lengths <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Sepal.Length =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>), <span class="at">Type =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>fuzzyjoin<span class="sc">::</span><span class="fu">difference_inner_join</span>(iris, sepal_lengths,</span>
@@ -667,7 +687,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <summary>
 Session info and package versions
 </summary>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_f024e3a727a7adcd30659d9acb365817">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_d940852e96ac00760d6bf757ff970562">
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
 </div>
@@ -681,7 +701,7 @@ Session info and package versions
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/Chicago
- date     2023-07-06
+ date     2023-07-08
  pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -717,7 +737,7 @@ Session info and package versions
        htmlwidgets         1.6.2 2023-03-17 CRAN (R 4.3.0)
           httpcode         0.3.0 2020-04-10 CRAN (R 4.3.0)
             httpuv        1.6.11 2023-05-11 CRAN (R 4.3.0)
-          jsonlite         1.8.4 2022-12-06 CRAN (R 4.3.0)
+          jsonlite         1.8.7 2022-12-06 CRAN (R 4.3.0)
              knitr          1.43 2023-05-25 CRAN (R 4.3.0)
              later         1.3.1 2023-05-02 CRAN (R 4.3.0)
          lifecycle         1.0.3 2022-10-07 CRAN (R 4.3.0)
@@ -730,11 +750,12 @@ Session info and package versions
           promises       1.2.0.1 2021-02-11 CRAN (R 4.3.0)
              purrr         1.0.1 2023-01-10 CRAN (R 4.3.0)
                 R6         2.5.1 2021-08-19 CRAN (R 4.3.0)
+              ragg         1.2.5 2023-01-12 CRAN (R 4.3.0)
               Rcpp        1.0.10 2023-01-22 CRAN (R 4.3.0)
              readr         2.1.4 2023-02-10 CRAN (R 4.3.0)
               renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
              rlang         1.1.1 2023-04-28 CRAN (R 4.3.0)
-         rmarkdown          2.21 2023-03-26 CRAN (R 4.3.0)
+         rmarkdown          2.22 2023-03-26 CRAN (R 4.3.0)
         rstudioapi          0.14 2022-08-22 CRAN (R 4.3.0)
             scales         1.2.1 2022-08-20 CRAN (R 4.3.0)
        sessioninfo         1.2.2 2021-12-06 CRAN (R 4.3.0)
@@ -743,14 +764,15 @@ Session info and package versions
            stringi        1.7.12 2023-01-11 CRAN (R 4.3.0)
            stringr         1.5.0 2022-12-02 CRAN (R 4.3.0)
        systemfonts         1.0.4 2022-02-11 CRAN (R 4.3.0)
+       textshaping         0.3.6 2021-10-13 CRAN (R 4.3.0)
             tibble         3.2.1 2023-03-20 CRAN (R 4.3.0)
              tidyr         1.3.0 2023-01-24 CRAN (R 4.3.0)
         tidyselect         1.2.0 2022-10-10 CRAN (R 4.3.0)
          tidyverse         2.0.0 2023-02-22 CRAN (R 4.3.0)
         timechange         0.2.0 2023-01-11 CRAN (R 4.3.0)
-              tzdb         0.3.0 2022-03-28 CRAN (R 4.3.0)
+              tzdb         0.4.0 2022-03-28 CRAN (R 4.3.0)
               utf8         1.2.3 2023-01-31 CRAN (R 4.3.0)
-             vctrs         0.6.2 2023-04-19 CRAN (R 4.3.0)
+             vctrs         0.6.3 2023-04-19 CRAN (R 4.3.0)
              withr         2.5.0 2022-03-03 CRAN (R 4.3.0)
               xfun          0.39 2023-04-20 CRAN (R 4.3.0)
             xtable         1.8-4 2019-04-21 CRAN (R 4.3.0)

@@ -1,19 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>www.aaronbraver.com/usefulRstuff/index.html</loc>
-    <lastmod>2023-07-09T02:32:18.465Z</lastmod>
+    <loc>https://abraver.github.io/usefulRstuff/index.html</loc>
+    <lastmod>2023-07-09T03:22:45.597Z</lastmod>
   </url>
   <url>
-    <loc>www.aaronbraver.com/usefulRstuff/posts/patchwork/index.html</loc>
-    <lastmod>2023-07-09T02:32:33.667Z</lastmod>
+    <loc>https://abraver.github.io/usefulRstuff/posts/skimr/index.html</loc>
+    <lastmod>2023-07-09T03:21:45.749Z</lastmod>
+  </url>
+  <url>
+    <loc>https://abraver.github.io/usefulRstuff/posts/thinkr_peep/index.html</loc>
+    <lastmod>2023-07-09T03:21:43.310Z</lastmod>
   </url>
   <url>
     <loc>https://abraver.github.io/usefulRstuff/posts/patchwork/index.html</loc>
-    <lastmod>2023-07-09T02:59:16.635Z</lastmod>
+    <lastmod>2023-07-09T03:21:50.238Z</lastmod>
   </url>
   <url>
-    <loc>https://abraver.github.io/usefulRstuff/index.html</loc>
-    <lastmod>2023-07-09T02:59:02.828Z</lastmod>
+    <loc>https://abraver.github.io/usefulRstuff/posts/figure_working/index.html</loc>
+    <lastmod>2023-07-09T03:21:55.462Z</lastmod>
+  </url>
+  <url>
+    <loc>https://abraver.github.io/usefulRstuff/posts/fuzzyjoin/index.html</loc>
+    <lastmod>2023-07-09T03:22:00.108Z</lastmod>
+  </url>
+  <url>
+    <loc>https://abraver.github.io/usefulRstuff/posts/gghighlight/index.html</loc>
+    <lastmod>2023-07-09T03:22:13.149Z</lastmod>
+  </url>
+  <url>
+    <loc>https://abraver.github.io/usefulRstuff/posts/ggiraph/index.html</loc>
+    <lastmod>2023-07-09T03:22:18.835Z</lastmod>
+  </url>
+  <url>
+    <loc>https://abraver.github.io/usefulRstuff/posts/paginate_faceted_graphs/index.html</loc>
+    <lastmod>2023-07-09T03:22:22.587Z</lastmod>
+  </url>
+  <url>
+    <loc>https://abraver.github.io/usefulRstuff/posts/janitor/index.html</loc>
+    <lastmod>2023-07-09T03:22:24.552Z</lastmod>
+  </url>
+  <url>
+    <loc>https://abraver.github.io/usefulRstuff/posts/khroma/index.html</loc>
+    <lastmod>2023-07-09T03:22:30.995Z</lastmod>
+  </url>
+  <url>
+    <loc>https://abraver.github.io/usefulRstuff/posts/diffobj/index.html</loc>
+    <lastmod>2023-07-09T03:22:33.423Z</lastmod>
+  </url>
+  <url>
+    <loc>https://abraver.github.io/usefulRstuff/posts/upgrading_R/index.html</loc>
+    <lastmod>2023-07-09T03:22:41.947Z</lastmod>
+  </url>
+  <url>
+    <loc>https://abraver.github.io/usefulRstuff/posts/glimpse/index.html</loc>
+    <lastmod>2023-07-09T03:22:44.139Z</lastmod>
   </url>
 </urlset>

@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Aaron Braver">
 <meta name="dcterms.date" content="2023-07-04">
 <title>Useful R Stuff - khroma and colorblindr: Tools for colorblind-friendly plots</title>
 <style>
@@ -99,6 +100,18 @@ gtag('js', new Date());
 gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </script><link href="../../site_libs/roboto-condensed-0.3.3/css/roboto-condensed.css" rel="stylesheet">
 <link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Useful R Stuff - khroma and colorblindr: Tools for colorblind-friendly plots">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://abraver.github.io/usefulRstuff/posts/khroma/index_files/figure-html/unnamed-chunk-5-1.png">
+<meta property="og:site-name" content="Useful R Stuff">
+<meta property="og:image:height" content="384">
+<meta property="og:image:width" content="1344">
+<meta name="twitter:title" content="Useful R Stuff - khroma and colorblindr: Tools for colorblind-friendly plots">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://abraver.github.io/usefulRstuff/posts/khroma/index_files/figure-html/unnamed-chunk-5-1.png">
+<meta name="twitter:image-height" content="384">
+<meta name="twitter:image-width" content="1344">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="nav-fixed">
 
@@ -120,7 +133,14 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
  <span class="menu-text">Aaron Braver</span></a>
   </li>  
 </ul>
-<div class="quarto-navbar-tools ms-auto">
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../index.xml" rel="" target=""><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text">RSS</span></a>
+  </li>  
+</ul>
+<div class="quarto-navbar-tools">
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -149,6 +169,12 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p><a href="https://www.aaronbraver.com">Aaron Braver</a> </p>
+          </div>
+  </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
@@ -161,7 +187,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
   </div>
   
 
-</header><script src="../../jquery-3.7.0.min.js"></script><script src="../../fold.js"></script><script src="../../move_session_info.js"></script><!-- begin content --><div class="cell" data-hash="index_cache/html/setup_cc312b8346f2b59542d7a9670dbdfc79">
+</header><script src="../../jquery-3.7.0.min.js"></script><script src="../../fold.js"></script><script src="../../move_session_info.js"></script><!-- begin content --><div class="cell" data-hash="index_cache/html/setup_595abedba9a11dd4a6248900d6ba183e">
 <details><summary>Load packages</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -169,7 +195,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <section id="khroma---colorblind-friendly-palettes" class="level2"><h2 class="anchored" data-anchor-id="khroma---colorblind-friendly-palettes">
 <code>khroma</code> - colorblind-friendly palettes</h2>
 <p><a href="https://packages.tesselle.org/khroma/"><code>khroma</code></a> contains a number of color schemes that are colorblind-friendly, divided into diverging, qualitative, and sequential types:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_3adbc409cea67a29418254c965a838ae">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_958e08d567d21135652c2e5163db29a5">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">khroma</span><span class="fu">::</span><span class="fu"><a href="https://packages.tesselle.org/khroma/reference/info.html">info</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>palettes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">palette</span>, collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -203,7 +229,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </div>
 </div>
 <p>The <code>color</code> function takes a palette name and returns a function, which in turn returns a palette of specified size:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_7301990091cc19f8ec8c2d11685356a7">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_abf3629c2d138aa659e4cb76f7359099">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://packages.tesselle.org/khroma/">khroma</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">bright_fun</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://packages.tesselle.org/khroma/reference/colour.html">color</a></span><span class="op">(</span><span class="st">"bright"</span><span class="op">)</span></span>
@@ -216,7 +242,7 @@ attr(,"missing")
 </div>
 </div>
 <p>And you can preview these palettes with <code><a href="https://packages.tesselle.org/khroma/reference/plot.html">plot_scheme()</a></code>:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-5_e4808e6352dca05b95092484d5bb5cc4">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-5_f7aa5e8e80c121240bbbd0165394e4d9">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://packages.tesselle.org/khroma/reference/plot.html">plot_scheme</a></span><span class="op">(</span><span class="fu">bright_fun</span><span class="op">(</span><span class="fl">7</span><span class="op">)</span>, names <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>            colours <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># NB: `colours` must be spelled British-ly</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -227,7 +253,7 @@ attr(,"missing")
 </div>
 </div>
 <p>Further, you can preview the palette as viewed by several types of colorblindness:</p>
-<div class="cell fold o" data-hash="index_cache/html/unnamed-chunk-6_dbbc5a8a1962cb1f784183a5b9d17278">
+<div class="cell fold o" data-hash="index_cache/html/unnamed-chunk-6_ac3a79bf41c5580710d0d4beb5a34fc7">
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://packages.tesselle.org/khroma/reference/plot.html">plot_scheme_colorblind</a></span><span class="op">(</span><span class="fu">bright_fun</span><span class="op">(</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -238,7 +264,7 @@ attr(,"missing")
 </div>
 <p><br></p>
 <p>Each of the schemes have built-in <code>ggplot</code> scales in the form <code>scale_color_{palettename}</code> and <code>scale_fill_{palettename}</code>:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-7_42c126d44a0cdf79ad438c0ae6ea766e">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-7_cc902cc69122d7120e2d52bbb0e65c46">
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">plot</span> <span class="op">&lt;-</span> <span class="va">midwest</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">percbelowpoverty</span> <span class="op">&lt;</span> <span class="fl">30</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">percollege</span>, y <span class="op">=</span> <span class="va">percbelowpoverty</span>, color <span class="op">=</span> <span class="va">state</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -248,7 +274,7 @@ attr(,"missing")
 <span><span class="va">plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><figcaption class="figure-caption">Percent of population with a college degree vs.&nbsp;percent of population below the poverty line, by state. Data from <code><a href="https://ggplot2.tidyverse.org/reference/midwest.html">ggplot2::midwest</a></code></figcaption><p><a href="index_files/figure-html/unnamed-chunk-7-1.png" class="lightbox" title="Percent of population with a college degree vs.&nbsp;percent of population below the poverty line, by state. Data from ggplot2::midwest" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" alt="Percent of population with a college degree vs. percent of population below the poverty line, by state.  Data from `ggplot2::midwest`" width="672"></a></p>
+<figure class="figure"><figcaption class="figure-caption">Percent of population with a college degree vs.&nbsp;percent of population below the poverty line, by state. Data from <code><a href="https://ggplot2.tidyverse.org/reference/midwest.html">ggplot2::midwest</a></code></figcaption><p><a href="index_files/figure-html/unnamed-chunk-7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Percent of population with a college degree vs.&nbsp;percent of population below the poverty line, by state. Data from ggplot2::midwest"><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" alt="Percent of population with a college degree vs. percent of population below the poverty line, by state.  Data from `ggplot2::midwest`" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -257,7 +283,7 @@ attr(,"missing")
 </section><section id="colorblindr---preview-your-plots-with-colorblind-simulation" class="level2"><h2 class="anchored" data-anchor-id="colorblindr---preview-your-plots-with-colorblind-simulation">
 <code>colorblindr</code> - Preview your plots with colorblind simulation</h2>
 <p><code><a href="https://rdrr.io/pkg/colorblindr/man/cvd_grid.html">colorblindr::cvd_grid</a></code> will simulate how your plots will look to people with various types of colorblindness:</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_8e48cc977eae229c38c426cda3c29f42">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_8a6e19f28ff070ca7f87e78965630a3d">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># remotes::install_github("clauswilke/colorblindr")</span></span>
 <span></span>
 <span><span class="va">plot</span> <span class="op">&lt;-</span> <span class="va">msleep</span> <span class="op">|&gt;</span> </span>
@@ -271,13 +297,13 @@ attr(,"missing")
 <span><span class="fu">colorblindr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/colorblindr/man/cvd_grid.html">cvd_grid</a></span><span class="op">(</span><span class="va">plot</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><figcaption class="figure-caption">Density of hours of REM sleep, for carnivores, omnivores, herbivores, and insectivores. Data from the mammal sleep dataset (<code>ggplot::msleep</code>).</figcaption><p><a href="index_files/figure-html/unnamed-chunk-8-1.png" class="lightbox" title="Density of hours of REM sleep, for carnivores, omnivores, herbivores, and insectivores. Data from the mammal sleep dataset (ggplot::msleep)." data-gallery="quarto-lightbox-gallery-4"><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="960"></a></p>
+<figure class="figure"><figcaption class="figure-caption">Density of hours of REM sleep, for carnivores, omnivores, herbivores, and insectivores. Data from the mammal sleep dataset (<code>ggplot::msleep</code>).</figcaption><p><a href="index_files/figure-html/unnamed-chunk-8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Density of hours of REM sleep, for carnivores, omnivores, herbivores, and insectivores. Data from the mammal sleep dataset (ggplot::msleep)."><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="960"></a></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><figcaption class="figure-caption">The same plot in various simulations of colorblindness</figcaption><p><a href="index_files/figure-html/unnamed-chunk-8-2.png" class="lightbox" title="The same plot in various simulations of colorblindness" data-gallery="quarto-lightbox-gallery-5"><img src="index_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid figure-img" width="960"></a></p>
+<figure class="figure"><figcaption class="figure-caption">The same plot in various simulations of colorblindness</figcaption><p><a href="index_files/figure-html/unnamed-chunk-8-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="The same plot in various simulations of colorblindness"><img src="index_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid figure-img" width="960"></a></p>
 </figure>
 </div>
 </div>
@@ -286,7 +312,7 @@ attr(,"missing")
 <div id="footer-session-info">
 <details><summary>
 Session info and package versions
-</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-10_b5a09fb713ddf9d1d38bf5d33c2e104d">
+</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-10_f95d2683f6418068e78022ec6f59d533">
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
 </div>
@@ -300,7 +326,7 @@ Session info and package versions
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/Chicago
- date     2023-07-06
+ date     2023-07-08
  pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -340,7 +366,7 @@ Session info and package versions
        htmlwidgets         1.6.2 2023-03-17 CRAN (R 4.3.0)
           httpcode         0.3.0 2020-04-10 CRAN (R 4.3.0)
             httpuv        1.6.11 2023-05-11 CRAN (R 4.3.0)
-          jsonlite         1.8.4 2023-06-29 CRAN (R 4.3.0)
+          jsonlite         1.8.7 2023-06-29 CRAN (R 4.3.0)
             khroma        1.10.0 2023-04-17 CRAN (R 4.3.0)
              knitr          1.43 2023-05-25 CRAN (R 4.3.0)
           labeling         0.4.2 2020-10-20 CRAN (R 4.3.0)
@@ -353,16 +379,18 @@ Session info and package versions
          pkgconfig         2.0.3 2019-09-22 CRAN (R 4.3.0)
           promises       1.2.0.1 2021-02-11 CRAN (R 4.3.0)
                 R6         2.5.1 2021-08-19 CRAN (R 4.3.0)
+              ragg         1.2.5 2023-01-12 CRAN (R 4.3.0)
               Rcpp        1.0.10 2023-01-22 CRAN (R 4.3.0)
               renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
              rlang         1.1.1 2023-04-28 CRAN (R 4.3.0)
-         rmarkdown          2.21 2023-06-01 CRAN (R 4.3.0)
+         rmarkdown          2.22 2023-06-01 CRAN (R 4.3.0)
         rstudioapi          0.14 2022-08-22 CRAN (R 4.3.0)
           Rttf2pt1        1.3.12 2023-01-22 CRAN (R 4.3.0)
             scales         1.2.1 2022-08-20 CRAN (R 4.3.0)
        sessioninfo         1.2.2 2021-12-06 CRAN (R 4.3.0)
              shiny         1.7.4 2022-12-15 CRAN (R 4.3.0)
        systemfonts         1.0.4 2022-02-11 CRAN (R 4.3.0)
+       textshaping         0.3.6 2021-10-13 CRAN (R 4.3.0)
             tibble         3.2.1 2023-03-20 CRAN (R 4.3.0)
         tidyselect         1.2.0 2022-10-10 CRAN (R 4.3.0)
               utf8         1.2.3 2023-01-31 CRAN (R 4.3.0)
@@ -676,7 +704,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"loop":true,"selector":".lightbox","descPosition":"bottom","closeEffect":"fade","openEffect":"fade"});</script>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"fade","loop":true,"selector":".lightbox","openEffect":"fade","descPosition":"bottom"});</script>
 
 
 </body></html>

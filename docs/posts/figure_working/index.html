@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Aaron Braver">
 <meta name="dcterms.date" content="2023-07-08">
 <title>Useful R Stuff - Figure stuff</title>
 <style>
@@ -99,6 +100,16 @@ gtag('js', new Date());
 gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </script><link href="../../site_libs/roboto-condensed-0.3.3/css/roboto-condensed.css" rel="stylesheet">
 <link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Useful R Stuff - Figure stuff">
+<meta property="og:image" content="https://abraver.github.io/usefulRstuff/posts/figure_working/index_files/figure-html/foo-1.png">
+<meta property="og:site-name" content="Useful R Stuff">
+<meta property="og:image:height" content="100">
+<meta property="og:image:width" content="200">
+<meta name="twitter:title" content="Useful R Stuff - Figure stuff">
+<meta name="twitter:image" content="https://abraver.github.io/usefulRstuff/posts/figure_working/index_files/figure-html/foo-1.png">
+<meta name="twitter:image-height" content="100">
+<meta name="twitter:image-width" content="200">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="nav-fixed fullcontent">
 
@@ -120,7 +131,14 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
  <span class="menu-text">Aaron Braver</span></a>
   </li>  
 </ul>
-<div class="quarto-navbar-tools ms-auto">
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../index.xml" rel="" target=""><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text">RSS</span></a>
+  </li>  
+</ul>
+<div class="quarto-navbar-tools">
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -140,6 +158,12 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p><a href="https://www.aaronbraver.com">Aaron Braver</a> </p>
+          </div>
+  </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
@@ -152,13 +176,13 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
   </div>
   
 
-</header><script src="../../jquery-3.7.0.min.js"></script><script src="../../fold.js"></script><script src="../../move_session_info.js"></script><!-- begin content --><div class="cell" data-hash="index_cache/html/setup_42c70f0cdd963f040d11d90c88c38762">
+</header><script src="../../jquery-3.7.0.min.js"></script><script src="../../fold.js"></script><script src="../../move_session_info.js"></script><!-- begin content --><div class="cell" data-hash="index_cache/html/setup_b6945a494fac4b7d0c994478a415826b">
 <details><summary>Setup</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu">asbutils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/asbutils/man/theme_asb.html">theme_asb</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-hash="index_cache/html/foo_5293310ebf57b292fb4280af9adee014">
+<div class="cell" data-hash="index_cache/html/foo_08826dd1ba1cb2fc5e63cc3988512417">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
 <span><span class="va">mpg</span> <span class="op">|&gt;</span> </span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cty</span>, y <span class="op">=</span> <span class="va">hwy</span>, color <span class="op">=</span> <span class="va">manufacturer</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -185,7 +209,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <div id="footer-session-info">
 <details><summary>
 Session info and package versions
-</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-3_5e0df7d897d66e0615314831fde82282">
+</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-3_a2fc6b2d7bf5b73a995dfbd8615c282f">
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
 </div>
@@ -253,6 +277,7 @@ Session info and package versions
           promises       1.2.0.1 2021-02-11 CRAN (R 4.3.0)
              purrr         1.0.1 2023-01-10 CRAN (R 4.3.0)
                 R6         2.5.1 2021-08-19 CRAN (R 4.3.0)
+              ragg         1.2.5 2023-01-12 CRAN (R 4.3.0)
               Rcpp        1.0.10 2023-01-22 CRAN (R 4.3.0)
              readr         2.1.4 2023-02-10 CRAN (R 4.3.0)
               renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
@@ -266,6 +291,7 @@ Session info and package versions
            stringi        1.7.12 2023-01-11 CRAN (R 4.3.0)
            stringr         1.5.0 2022-12-02 CRAN (R 4.3.0)
        systemfonts         1.0.4 2022-02-11 CRAN (R 4.3.0)
+       textshaping         0.3.6 2021-10-13 CRAN (R 4.3.0)
             tibble         3.2.1 2023-03-20 CRAN (R 4.3.0)
              tidyr         1.3.0 2023-01-24 CRAN (R 4.3.0)
         tidyselect         1.2.0 2022-10-10 CRAN (R 4.3.0)
@@ -584,7 +610,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"fade","loop":true,"closeEffect":"fade","descPosition":"bottom"});</script>
+<script>var lightboxQuarto = GLightbox({"loop":true,"descPosition":"bottom","closeEffect":"fade","openEffect":"fade","selector":".lightbox"});</script>
 
 
 </body></html>
