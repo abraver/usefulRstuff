@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://abraver.github.io/usefulRstuff/index.html</loc>
-    <lastmod>2023-07-09T03:22:45.597Z</lastmod>
+    <lastmod>2023-07-11T00:03:51.923Z</lastmod>
   </url>
   <url>
     <loc>https://abraver.github.io/usefulRstuff/posts/skimr/index.html</loc>
@@ -55,5 +55,13 @@
   <url>
     <loc>https://abraver.github.io/usefulRstuff/posts/glimpse/index.html</loc>
     <lastmod>2023-07-09T03:22:44.139Z</lastmod>
+  </url>
+  <url>
+    <loc>https://abraver.github.io/usefulRstuff/posts/lobstr/index.html</loc>
+    <lastmod>2023-07-11T00:03:50.519Z</lastmod>
+  </url>
+  <url>
+    <loc>https://abraver.github.io/usefulRstuff/hidden.html</loc>
+    <lastmod>2023-07-11T00:03:50.861Z</lastmod>
   </url>
 </urlset>

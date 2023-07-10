@@ -1,0 +1,169 @@
+---
+title: "View the structure of deeply nested objects or complex function calls with `lobstr` and `listviewer`"
+
+date: "7/10/23"
+
+categories:
+  - misc
+
+toc: true
+---
+
+{{< include /_include_header.qmd >}}
+
+
+```{css}
+#| echo: false
+
+.scroll::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.scroll::-webkit-scrollbar:vertical {
+    width: 12px;
+}
+
+
+.scroll::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white; /* should match background, can't be transparent */
+    background-color: rgba(0, 0, 0, .5);
+}
+```
+
+<!-- begin content -->
+
+When working with deeply nested structures (either objects or function calls), sometimes it's helpful to visualize what you're working with. The `lobstr` package provides functions for viewing these structures in an easy-to-read way---I find it more intuitive to parse than `str()`.
+
+If you're using RStudio you can, of course, use the viewer with `View()`, but that works best for purely rectangular data with no hierarchical structure.
+
+## Tree structure for (nested) dataframes
+
+### `lobstr::tree()`
+
+`lobstr::tree()` provides a tree structure for data structures, and is particularly useful when you have nested structures.
+
+We'll start with the a subset of the `mpg` data provided in `ggplot2`. We nest by `cyl`, and then call `tree()`, resulting in a handy representation of the structure (scroll to see full output).
+
+
+```{r}
+library(tidyverse)
+library(lobstr)
+
+mpg_subset <-  mpg |> 
+  select(class, cyl, manufacturer, hwy, cty)
+
+mpg_subset |>
+  nest(.by = cyl) |> 
+  lobstr::tree()
+
+```
+
+This works for multiply-nested objects as well---here we nest the `mpg` dataset by `cyl` and by `class`:
+
+```{r}
+mpg_subset |> 
+  nest(.by = c(cyl, class)) |> 
+  nest(.by = class) |> 
+  head(2) |> 
+  tree()
+
+```
+
+If the output is a bit overwhelming with all of the values being printed, you can specify the `val_printer` argument---here we give it an empty anonymous function so that no values are printed.  This helps to see the structure a little bit more clearly:
+
+```{r}
+mpg_subset |> 
+  nest(.by = c(cyl, class)) |> 
+  nest(.by = class) |> 
+  head(2) |> 
+  tree(val_printer = \(x) "" )
+```
+
+
+`tree` is also handy for list-columns that have complex objects like models:
+
+```{r}
+mpg_subset |> 
+  nest(.by = class) |> 
+  head(2) |> # Get a subset of the data so output is manageable
+  mutate(data = map(data, \(x) lm(cty ~ manufacturer, data = x))) |> 
+  tree()
+```
+
+### `listviewer`
+
+If you're looking for a more GUI-type visualization of nested `df`s, consider `listviewer::reactjson()`:
+
+```{css}
+#| echo: false
+
+.reactjson.html-widget {
+font-size: 14px;
+}
+```
+
+
+```{r}
+#| warning: false
+
+mpg_subset |> 
+  nest(.by = c(cyl, class)) |> 
+  nest(.by = class, .key = "class_data") |> 
+  listviewer::reactjson(collapsed = 4) # collapse after 4 levels deep
+```
+
+<br>
+
+`reactjson` gives essentially the same view as `tree`: each column of the `df` is its own node.  You can, though, get a more row-wise view which I sometimes find more intuitive by first converting to JSON---here each level of `class` is its own node:
+
+```{r}
+#| warning: false
+
+mpg_subset |> 
+  nest(.by = c(cyl, class)) |> 
+  nest(.by = class, .key = "class_data") |> 
+  jsonlite::toJSON() |> 
+  listviewer::reactjson(collapsed = 4) # collapse after 4 levels deep
+```
+<br>
+
+The `listviewer` package also provides an alternative JSON viewer, `jsonedit()`:
+
+::: { .fold .o }
+```{r}
+#| warning: false
+
+mpg_subset |> 
+  nest(.by = c(cyl, class)) |> 
+  nest(.by = class, .key = "class_data") |> 
+  jsonlite::toJSON() |> # convert df to JSON
+  listviewer::jsonedit()
+```
+:::
+
+<br>
+
+(A quick note: `toJSON()` only converts a limited selection of objects; it can't, for example, convert an `lm` model to visualize like we did with the `midwest_data` data above.)
+
+## Abstract syntax trees for complex function calls
+
+`lobstr` also provides the function `ast()` which gives a visual representation of complex function calls, letting you see the order in which the functions are being evaluated.  Here we see that our unnamed function calls `+` on `x` and `y`.
+
+```{r}
+ast(function(x = 1, y = 2) { x + y } )
+```
+This is particularly useful when using pipes, where the linear order of the code is actually the reverse of what it would be without piping.  Here, for example, we can see that `mutate` is applying to a `group`ed df, which itself was `filter`ed.
+
+```{r}
+mpg |> 
+  filter(manufacturer == "honda") |> 
+  group_by(cyl) |> 
+  mutate(mean_hwy = mean(hwy)) |> 
+  ast()
+```
+
+
+<!-- End content -->
+
+{{< include /_include_footer.qmd >}}

@@ -8,6 +8,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/lobstr/index.html",
       "/posts/patchwork/index.html",
       "/posts/gghighlight/index.html",
       "/posts/khroma/index.html",

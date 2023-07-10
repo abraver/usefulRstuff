@@ -10,7 +10,921 @@
 <atom:link href="https://abraver.github.io/usefulRstuff/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.3.361</generator>
-<lastBuildDate>Fri, 07 Jul 2023 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 10 Jul 2023 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>View the structure of deeply nested objects or complex function calls with lobstr and listviewer
+</title>
+  <dc:creator>Aaron Braver</dc:creator>
+  <link>https://abraver.github.io/usefulRstuff/posts/lobstr/index.html</link>
+  <description><![CDATA[ <script src="../../jquery-3.7.0.min.js"></script><script src="../../fold.js"></script><script src="../../move_session_info.js"></script><div class="cell" data-hash="index_cache/html/unnamed-chunk-2_8d15c2dbbec57d32db3fa8103cbc00c1">
+<style type="text/css">
+.scroll::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.scroll::-webkit-scrollbar:vertical {
+    width: 12px;
+}
+
+
+.scroll::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white; /* should match background, can't be transparent */
+    background-color: rgba(0, 0, 0, .5);
+}
+</style>
+</div>
+<!-- begin content -->
+<p>When working with deeply nested structures (either objects or function calls), sometimes it’s helpful to visualize what you’re working with. The <code>lobstr</code> package provides functions for viewing these structures in an easy-to-read way—I find it more intuitive to parse than <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code>.</p>
+<p>If you’re using RStudio you can, of course, use the viewer with <code><a href="https://rdrr.io/r/utils/View.html">View()</a></code>, but that works best for purely rectangular data with no hierarchical structure.</p>
+<section id="tree-structure-for-nested-dataframes" class="level2"><h2 class="anchored" data-anchor-id="tree-structure-for-nested-dataframes">Tree structure for (nested) dataframes</h2>
+<section id="lobstrtree" class="level3"><h3 class="anchored" data-anchor-id="lobstrtree"><code>lobstr::tree()</code></h3>
+<p><code><a href="https://lobstr.r-lib.org/reference/tree.html">lobstr::tree()</a></code> provides a tree structure for data structures, and is particularly useful when you have nested structures.</p>
+<p>We’ll start with the a subset of the <code>mpg</code> data provided in <code>ggplot2</code>. We nest by <code>cyl</code>, and then call <code><a href="https://lobstr.r-lib.org/reference/tree.html">tree()</a></code>, resulting in a handy representation of the structure (scroll to see full output).</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_6c2e414378f10c7f1a084ac3a8cbff5a">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://lobstr.r-lib.org/">lobstr</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mpg_subset</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mpg</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">class</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cyl</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">manufacturer</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">hwy</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cty</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mpg_subset</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>.by <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cyl</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">lobstr</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://lobstr.r-lib.org/reference/tree.html">tree</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>S3&lt;tbl_df/tbl/data.frame&gt;
+├─cyl&lt;int [4]&gt;: 4, 6, 8, 5
+└─data: &lt;list&gt;
+  ├─S3&lt;tbl_df/tbl/data.frame&gt;
+  │ ├─class&lt;chr [81]&gt;: "compact", "compact", "compact", "compact", "compact", "compact", "compact", "compact", "midsize", "midsize", ...
+  │ ├─manufacturer&lt;chr [81]&gt;: "audi", "audi", "audi", "audi", "audi", "audi", "audi", "audi", "chevrolet", "chevrolet", ...
+  │ ├─hwy&lt;int [81]&gt;: 29, 29, 31, 30, 26, 25, 28, 27, 27, 30, ...
+  │ └─cty&lt;int [81]&gt;: 18, 21, 20, 21, 18, 16, 20, 19, 19, 22, ...
+  ├─S3&lt;tbl_df/tbl/data.frame&gt;
+  │ ├─class&lt;chr [79]&gt;: "compact", "compact", "compact", "compact", "compact", "compact", "compact", "midsize", "midsize", "midsize", ...
+  │ ├─manufacturer&lt;chr [79]&gt;: "audi", "audi", "audi", "audi", "audi", "audi", "audi", "audi", "audi", "chevrolet", ...
+  │ ├─hwy&lt;int [79]&gt;: 26, 26, 27, 25, 25, 25, 25, 24, 25, 26, ...
+  │ └─cty&lt;int [79]&gt;: 16, 18, 18, 15, 17, 17, 15, 15, 17, 18, ...
+  ├─S3&lt;tbl_df/tbl/data.frame&gt;
+  │ ├─class&lt;chr [70]&gt;: "midsize", "suv", "suv", "suv", "suv", "suv", "2seater", "2seater", "2seater", "2seater", ...
+  │ ├─manufacturer&lt;chr [70]&gt;: "audi", "chevrolet", "chevrolet", "chevrolet", "chevrolet", "chevrolet", "chevrolet", "chevrolet", "chevrolet", "chevrolet", ...
+  │ ├─hwy&lt;int [70]&gt;: 23, 20, 15, 20, 17, 17, 26, 23, 26, 25, ...
+  │ └─cty&lt;int [70]&gt;: 16, 14, 11, 14, 13, 12, 16, 15, 16, 15, ...
+  └─S3&lt;tbl_df/tbl/data.frame&gt;
+    ├─class&lt;chr [4]&gt;: "compact", "compact", "subcompact", "subcompact"
+    ├─manufacturer&lt;chr [4]&gt;: "volkswagen", "volkswagen", "volkswagen", "volkswagen"
+    ├─hwy&lt;int [4]&gt;: 29, 29, 28, 29
+    └─cty&lt;int [4]&gt;: 21, 21, 20, 20</code></pre>
+</div>
+</div>
+<p>This works for multiply-nested objects as well—here we nest the <code>mpg</code> dataset by <code>cyl</code> and by <code>class</code>:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_441cbff49aba681cb1a1c5db6e1961d9">
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mpg_subset</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>.by <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cyl</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">class</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>.by <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">class</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://lobstr.r-lib.org/reference/tree.html">tree</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>S3&lt;tbl_df/tbl/data.frame&gt;
+├─class&lt;chr [2]&gt;: "compact", "midsize"
+└─data: &lt;list&gt;
+  ├─S3&lt;tbl_df/tbl/data.frame&gt;
+  │ ├─cyl&lt;int [3]&gt;: 4, 6, 5
+  │ └─data: &lt;list&gt;
+  │   ├─S3&lt;tbl_df/tbl/data.frame&gt;
+  │   │ ├─manufacturer&lt;chr [32]&gt;: "audi", "audi", "audi", "audi", "audi", "audi", "audi", "audi", "nissan", "nissan", ...
+  │   │ ├─hwy&lt;int [32]&gt;: 29, 29, 31, 30, 26, 25, 28, 27, 29, 27, ...
+  │   │ └─cty&lt;int [32]&gt;: 18, 21, 20, 21, 18, 16, 20, 19, 21, 19, ...
+  │   ├─S3&lt;tbl_df/tbl/data.frame&gt;
+  │   │ ├─manufacturer&lt;chr [13]&gt;: "audi", "audi", "audi", "audi", "audi", "audi", "audi", "toyota", "toyota", "toyota", ...
+  │   │ ├─hwy&lt;int [13]&gt;: 26, 26, 27, 25, 25, 25, 25, 26, 26, 27, ...
+  │   │ └─cty&lt;int [13]&gt;: 16, 18, 18, 15, 17, 17, 15, 18, 18, 18, ...
+  │   └─S3&lt;tbl_df/tbl/data.frame&gt;
+  │     ├─manufacturer&lt;chr [2]&gt;: "volkswagen", "volkswagen"
+  │     ├─hwy&lt;int [2]&gt;: 29, 29
+  │     └─cty&lt;int [2]&gt;: 21, 21
+  └─S3&lt;tbl_df/tbl/data.frame&gt;
+    ├─cyl&lt;int [3]&gt;: 6, 8, 4
+    └─data: &lt;list&gt;
+      ├─S3&lt;tbl_df/tbl/data.frame&gt;
+      │ ├─manufacturer&lt;chr [23]&gt;: "audi", "audi", "chevrolet", "chevrolet", "chevrolet", "hyundai", "hyundai", "hyundai", "nissan", "nissan", ...
+      │ ├─hwy&lt;int [23]&gt;: 24, 25, 26, 29, 26, 26, 26, 28, 27, 26, ...
+      │ └─cty&lt;int [23]&gt;: 15, 17, 18, 18, 17, 18, 18, 19, 19, 19, ...
+      ├─S3&lt;tbl_df/tbl/data.frame&gt;
+      │ ├─manufacturer&lt;chr [2]&gt;: "audi", "pontiac"
+      │ ├─hwy&lt;int [2]&gt;: 23, 25
+      │ └─cty&lt;int [2]&gt;: 16, 16
+      └─S3&lt;tbl_df/tbl/data.frame&gt;
+        ├─manufacturer&lt;chr [16]&gt;: "chevrolet", "chevrolet", "hyundai", "hyundai", "hyundai", "hyundai", "nissan", "nissan", "toyota", "toyota", ...
+        ├─hwy&lt;int [16]&gt;: 27, 30, 26, 27, 30, 31, 31, 32, 29, 27, ...
+        └─cty&lt;int [16]&gt;: 19, 22, 18, 18, 21, 21, 23, 23, 21, 21, ...</code></pre>
+</div>
+</div>
+<p>If the output is a bit overwhelming with all of the values being printed, you can specify the <code>val_printer</code> argument—here we give it an empty anonymous function so that no values are printed. This helps to see the structure a little bit more clearly:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-5_e1d3c9ff4026f154350a1fb4d129b71d">
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mpg_subset</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>.by <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cyl</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">class</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>.by <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">class</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://lobstr.r-lib.org/reference/tree.html">tree</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>val_printer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> \<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>S3&lt;tbl_df/tbl/data.frame&gt;
+├─class&lt;chr [2]&gt;: 
+└─data: &lt;list&gt;
+  ├─S3&lt;tbl_df/tbl/data.frame&gt;
+  │ ├─cyl&lt;int [3]&gt;: 
+  │ └─data: &lt;list&gt;
+  │   ├─S3&lt;tbl_df/tbl/data.frame&gt;
+  │   │ ├─manufacturer&lt;chr [32]&gt;: 
+  │   │ ├─hwy&lt;int [32]&gt;: 
+  │   │ └─cty&lt;int [32]&gt;: 
+  │   ├─S3&lt;tbl_df/tbl/data.frame&gt;
+  │   │ ├─manufacturer&lt;chr [13]&gt;: 
+  │   │ ├─hwy&lt;int [13]&gt;: 
+  │   │ └─cty&lt;int [13]&gt;: 
+  │   └─S3&lt;tbl_df/tbl/data.frame&gt;
+  │     ├─manufacturer&lt;chr [2]&gt;: 
+  │     ├─hwy&lt;int [2]&gt;: 
+  │     └─cty&lt;int [2]&gt;: 
+  └─S3&lt;tbl_df/tbl/data.frame&gt;
+    ├─cyl&lt;int [3]&gt;: 
+    └─data: &lt;list&gt;
+      ├─S3&lt;tbl_df/tbl/data.frame&gt;
+      │ ├─manufacturer&lt;chr [23]&gt;: 
+      │ ├─hwy&lt;int [23]&gt;: 
+      │ └─cty&lt;int [23]&gt;: 
+      ├─S3&lt;tbl_df/tbl/data.frame&gt;
+      │ ├─manufacturer&lt;chr [2]&gt;: 
+      │ ├─hwy&lt;int [2]&gt;: 
+      │ └─cty&lt;int [2]&gt;: 
+      └─S3&lt;tbl_df/tbl/data.frame&gt;
+        ├─manufacturer&lt;chr [16]&gt;: 
+        ├─hwy&lt;int [16]&gt;: 
+        └─cty&lt;int [16]&gt;: </code></pre>
+</div>
+</div>
+<p><code>tree</code> is also handy for list-columns that have complex objects like models:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-6_820d10137a6a6e90bf12d36db2f43680">
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mpg_subset</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>.by <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">class</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Get a subset of the data so output is manageable</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">data</span>, \<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cty</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">manufacturer</span>, data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://lobstr.r-lib.org/reference/tree.html">tree</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>S3&lt;tbl_df/tbl/data.frame&gt;
+├─class&lt;chr [2]&gt;: "compact", "midsize"
+└─data: &lt;list&gt;
+  ├─S3&lt;lm&gt;
+  │ ├─coefficients&lt;dbl [5]&gt;: 17.9333333333333, 2.06666666666666, 1.81666666666667, 4.31666666666667, 2.85238095238095
+  │ ├─residuals&lt;dbl [47]&gt;: 0.066666666666665, 3.06666666666667, 2.06666666666666, 3.06666666666667, -1.93333333333334, 0.0666666666666665, 0.0666666666666665, 0.0666666666666665, -1.93333333333333, 2.06666666666667, ...
+  │ ├─effects&lt;dbl [47]&gt;: -137.988281957008, -0.184506241605778, -0.803194840135016, 8.56434361157096, 7.67570324864425, -0.0407824196725389, -0.0407824196725389, -0.0407824196725389, -2.04078241967254, 1.95921758032746, ...
+  │ ├─rank: 5
+  │ ├─fitted.values&lt;dbl [47]&gt;: 17.9333333333333, 17.9333333333333, 17.9333333333333, 17.9333333333333, 17.9333333333333, 17.9333333333333, 17.9333333333333, 17.9333333333333, 17.9333333333333, 17.9333333333333, ...
+  │ ├─assign&lt;int [5]&gt;: 0, 1, 1, 1, 1
+  │ ├─qr: S3&lt;qr&gt;
+  │ │ ├─qr&lt;dbl [235]&gt;: -6.85565460040104, 0.145864991497895, 0.145864991497895, 0.145864991497895, 0.145864991497895, 0.145864991497895, 0.145864991497895, 0.145864991497895, 0.145864991497895, 0.145864991497895, ...
+  │ │ ├─qraux&lt;dbl [5]&gt;: 1.14586499149789, 1.02683653004132, 1.03957282449068, 1.08213154946517, 1.13553443533542
+  │ │ ├─pivot&lt;int [5]&gt;: 1, 2, 3, 4, 5
+  │ │ ├─tol: 1e-07
+  │ │ └─rank: 5
+  │ ├─df.residual: 42
+  │ ├─contrasts: &lt;list&gt;
+  │ │ └─manufacturer: "contr.treatment"
+  │ ├─xlevels: &lt;list&gt;
+  │ │ └─manufacturer&lt;chr [5]&gt;: "audi", "nissan", "subaru", "toyota", "volkswagen"
+  │ ├─call: &lt;language&gt; lm(formula = cty ~ manufacturer, data = x)
+  │ ├─terms: S3&lt;terms/formula&gt; cty ~ manufacturer
+  │ └─model: S3&lt;data.frame&gt;
+  │   ├─cty&lt;int [47]&gt;: 18, 21, 20, 21, 16, 18, 18, 18, 16, 20, ...
+  │   └─manufacturer&lt;chr [47]&gt;: "audi", "audi", "audi", "audi", "audi", "audi", "audi", "audi", "audi", "audi", ...
+  └─S3&lt;lm&gt;
+    ├─coefficients&lt;dbl [7]&gt;: 16, 2.80000000000001, 3.00000000000001, 4.00000000000001, 1.00000000000001, 3.85714285714287, 2.57142857142858
+    ├─residuals&lt;dbl [41]&gt;: -1.00000000000003, 1.00000000000001, 1.05208052500074e-14, 0.200000000000008, 3.2, -0.800000000000004, -0.8, -1.8, -1, -1, ...
+    ├─effects&lt;dbl [41]&gt;: -120.097622892338, 0.10476454436544, 0.736955526660781, 3.98035930389303, -3.23748103044015, 4.17435145669764, 3.72635402044873, -1.27026155514514, -0.923635942390468, -0.923635942390468, ...
+    ├─rank: 7
+    ├─fitted.values&lt;dbl [41]&gt;: 16, 16, 16, 18.8, 18.8, 18.8, 18.8, 18.8, 19, 19, ...
+    ├─assign&lt;int [7]&gt;: 0, 1, 1, 1, 1, 1, 1
+    ├─qr: S3&lt;qr&gt;
+    │ ├─qr&lt;dbl [287]&gt;: -6.40312423743285, 0.156173761888606, 0.156173761888606, 0.156173761888606, 0.156173761888606, 0.156173761888606, 0.156173761888606, 0.156173761888606, 0.156173761888606, 0.156173761888606, ...
+    │ ├─qraux&lt;dbl [7]&gt;: 1.15617376188861, 1.0503406378574, 1.06742880959931, 1.02124277862812, 1.02296110820256, 1.03939209519442, 1.09021806425183
+    │ ├─pivot&lt;int [7]&gt;: 1, 2, 3, 4, 5, 6, 7
+    │ ├─tol: 1e-07
+    │ └─rank: 7
+    ├─df.residual: 34
+    ├─contrasts: &lt;list&gt;
+    │ └─manufacturer: "contr.treatment"
+    ├─xlevels: &lt;list&gt;
+    │ └─manufacturer&lt;chr [7]&gt;: "audi", "chevrolet", "hyundai", "nissan", "pontiac", "toyota", "volkswagen"
+    ├─call: &lt;language&gt; lm(formula = cty ~ manufacturer, data = x)
+    ├─terms: S3&lt;terms/formula&gt; cty ~ manufacturer
+    └─model: S3&lt;data.frame&gt;
+      ├─cty&lt;int [41]&gt;: 15, 17, 16, 19, 22, 18, 18, 17, 18, 18, ...
+      └─manufacturer&lt;chr [41]&gt;: "audi", "audi", "audi", "chevrolet", "chevrolet", "chevrolet", "chevrolet", "chevrolet", "hyundai", "hyundai", ...</code></pre>
+</div>
+</div>
+</section><section id="listviewer" class="level3"><h3 class="anchored" data-anchor-id="listviewer"><code>listviewer</code></h3>
+<p>If you’re looking for a more GUI-type visualization of nested <code>df</code>s, consider <code><a href="https://rdrr.io/pkg/listviewer/man/reactjson.html">listviewer::reactjson()</a></code>:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-7_67e794ab0254f1818fe07e82e2eca75b">
+<style type="text/css">
+.reactjson.html-widget {
+font-size: 14px;
+}
+</style>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_47a75b51dc603622e741aee6a7c86819">
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mpg_subset</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>.by <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cyl</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">class</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>.by <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">class</span>, .key <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"class_data"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">listviewer</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/listviewer/man/reactjson.html">reactjson</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>collapsed <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># collapse after 4 levels deep</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="reactjson html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b5ad9e0573facd6db7af" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-b5ad9e0573facd6db7af">{"x":{"data":{"class":["compact","midsize","suv","2seater","minivan","pickup","subcompact"],"class_data":[{"cyl":[4,6,5],"data":[{"manufacturer":["audi","audi","audi","audi","audi","audi","audi","audi","nissan","nissan","subaru","subaru","subaru","subaru","toyota","toyota","toyota","toyota","toyota","toyota","toyota","toyota","toyota","volkswagen","volkswagen","volkswagen","volkswagen","volkswagen","volkswagen","volkswagen","volkswagen","volkswagen"],"hwy":[29,29,31,30,26,25,28,27,29,27,25,27,25,27,27,29,31,31,30,33,35,37,35,29,26,29,29,44,29,26,29,29],"cty":[18,21,20,21,18,16,20,19,21,19,20,20,19,20,21,21,21,22,24,24,26,28,26,21,19,21,22,33,21,19,22,21]},{"manufacturer":["audi","audi","audi","audi","audi","audi","audi","toyota","toyota","toyota","volkswagen","volkswagen","volkswagen"],"hwy":[26,26,27,25,25,25,25,26,26,27,24,23,24],"cty":[16,18,18,15,17,17,15,18,18,18,17,16,17]},{"manufacturer":["volkswagen","volkswagen"],"hwy":[29,29],"cty":[21,21]}]},{"cyl":[6,8,4],"data":[{"manufacturer":["audi","audi","chevrolet","chevrolet","chevrolet","hyundai","hyundai","hyundai","nissan","nissan","nissan","nissan","nissan","pontiac","pontiac","pontiac","pontiac","toyota","toyota","toyota","volkswagen","volkswagen","volkswagen"],"hwy":[24,25,26,29,26,26,26,28,27,26,26,25,25,26,26,27,28,26,26,28,26,26,26],"cty":[15,17,18,18,17,18,18,19,19,19,18,19,19,18,16,17,18,18,18,19,16,18,17]},{"manufacturer":["audi","pontiac"],"hwy":[23,25],"cty":[16,16]},{"manufacturer":["chevrolet","chevrolet","hyundai","hyundai","hyundai","hyundai","nissan","nissan","toyota","toyota","toyota","toyota","volkswagen","volkswagen","volkswagen","volkswagen"],"hwy":[27,30,26,27,30,31,31,32,29,27,31,31,29,29,28,29],"cty":[19,22,18,18,21,21,23,23,21,21,21,21,21,18,19,21]}]},{"cyl":[8,6,4],"data":[{"manufacturer":["chevrolet","chevrolet","chevrolet","chevrolet","chevrolet","chevrolet","chevrolet","chevrolet","chevrolet","dodge","dodge","dodge","dodge","dodge","dodge","ford","ford","ford","ford","ford","jeep","jeep","jeep","jeep","jeep","land rover","land rover","land rover","land rover","lincoln","lincoln","lincoln","mercury","mercury","nissan","toyota","toyota","toyota"],"hwy":[20,15,20,17,17,19,14,15,17,17,12,17,16,18,15,17,17,18,19,17,17,12,19,18,14,15,18,18,15,17,16,18,19,17,18,17,15,18],"cty":[14,11,14,13,12,14,11,11,14,13,9,13,11,13,11,11,11,12,13,13,14,9,14,13,11,11,12,12,11,11,11,12,13,13,12,14,11,13]},{"manufacturer":["dodge","ford","ford","ford","ford","jeep","jeep","jeep","mercury","mercury","nissan","nissan","nissan","toyota","toyota","toyota"],"hwy":[17,17,19,17,19,22,19,20,17,19,17,17,20,19,17,20],"cty":[13,14,15,14,13,17,15,15,14,13,14,15,14,15,15,16]},{"manufacturer":["subaru","subaru","subaru","subaru","subaru","subaru","toyota","toyota"],"hwy":[25,24,27,25,26,23,20,20],"cty":[18,18,20,19,20,18,15,16]}]},{"cyl":[8],"data":[{"manufacturer":["chevrolet","chevrolet","chevrolet","chevrolet","chevrolet"],"hwy":[26,23,26,25,24],"cty":[16,15,16,15,15]}]},{"cyl":[4,6],"data":[{"manufacturer":["dodge"],"hwy":[24],"cty":[18]},{"manufacturer":["dodge","dodge","dodge","dodge","dodge","dodge","dodge","dodge","dodge","dodge"],"hwy":[24,22,22,24,24,17,22,21,23,23],"cty":[17,16,16,17,17,11,15,15,16,16]}]},{"cyl":[6,8,4],"data":[{"manufacturer":["dodge","dodge","dodge","dodge","ford","ford","toyota","toyota","toyota","toyota"],"hwy":[19,18,17,17,17,17,17,19,18,20],"cty":[15,14,13,14,14,14,15,15,15,16]},{"manufacturer":["dodge","dodge","dodge","dodge","dodge","dodge","dodge","dodge","dodge","dodge","dodge","dodge","dodge","dodge","dodge","ford","ford","ford","ford","ford"],"hwy":[19,19,12,17,15,16,12,17,17,16,12,15,16,17,15,16,16,17,15,17],"cty":[14,14,9,11,11,12,9,13,13,12,9,11,11,13,11,13,13,13,11,13]},{"manufacturer":["toyota","toyota","toyota"],"hwy":[20,20,22],"cty":[15,16,17]}]},{"cyl":[6,8,4,5],"data":[{"manufacturer":["ford","ford","ford","ford","hyundai","hyundai","hyundai"],"hwy":[26,25,26,24,24,24,24],"cty":[18,18,17,16,17,16,17]},{"manufacturer":["ford","ford","ford","ford","ford"],"hwy":[21,22,23,22,20],"cty":[15,15,15,15,14]},{"manufacturer":["honda","honda","honda","honda","honda","honda","honda","honda","honda","hyundai","hyundai","hyundai","hyundai","subaru","subaru","subaru","subaru","volkswagen","volkswagen","volkswagen","volkswagen"],"hwy":[33,32,32,29,32,34,36,36,29,26,29,28,27,26,26,26,26,44,41,29,26],"cty":[28,24,25,23,24,26,25,24,21,19,19,20,20,21,19,19,19,35,29,21,19]},{"manufacturer":["volkswagen","volkswagen"],"hwy":[28,29],"cty":[20,20]}]}]},"name":"root","theme":"rjv-default","iconStyle":"circle","indentWidth":4,"collapsed":4,"collapseStringsAfterLength":false,"groupArraysAfterLength":100,"enableClipboard":true,"displayObjectSize":true,"displayDataTypes":true,"onEdit":true,"onAdd":true,"onDelete":true,"onSelect":true,"sortKeys":false},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+<p><code>reactjson</code> gives essentially the same view as <code>tree</code>: each column of the <code>df</code> is its own node. You can, though, get a more row-wise view which I sometimes find more intuitive by first converting to JSON—here each level of <code>class</code> is its own node:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_e396b7f1d66079bf77b315f5fe69cfc1">
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mpg_subset</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>.by <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cyl</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">class</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>.by <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">class</span>, .key <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"class_data"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">jsonlite</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html">toJSON</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">listviewer</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/listviewer/man/reactjson.html">reactjson</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>collapsed <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># collapse after 4 levels deep</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="reactjson html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-394dde6841a184436040" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-394dde6841a184436040">{"x":{"data":[{"class":"compact","class_data":[{"cyl":4,"data":[{"manufacturer":"audi","hwy":29,"cty":18},{"manufacturer":"audi","hwy":29,"cty":21},{"manufacturer":"audi","hwy":31,"cty":20},{"manufacturer":"audi","hwy":30,"cty":21},{"manufacturer":"audi","hwy":26,"cty":18},{"manufacturer":"audi","hwy":25,"cty":16},{"manufacturer":"audi","hwy":28,"cty":20},{"manufacturer":"audi","hwy":27,"cty":19},{"manufacturer":"nissan","hwy":29,"cty":21},{"manufacturer":"nissan","hwy":27,"cty":19},{"manufacturer":"subaru","hwy":25,"cty":20},{"manufacturer":"subaru","hwy":27,"cty":20},{"manufacturer":"subaru","hwy":25,"cty":19},{"manufacturer":"subaru","hwy":27,"cty":20},{"manufacturer":"toyota","hwy":27,"cty":21},{"manufacturer":"toyota","hwy":29,"cty":21},{"manufacturer":"toyota","hwy":31,"cty":21},{"manufacturer":"toyota","hwy":31,"cty":22},{"manufacturer":"toyota","hwy":30,"cty":24},{"manufacturer":"toyota","hwy":33,"cty":24},{"manufacturer":"toyota","hwy":35,"cty":26},{"manufacturer":"toyota","hwy":37,"cty":28},{"manufacturer":"toyota","hwy":35,"cty":26},{"manufacturer":"volkswagen","hwy":29,"cty":21},{"manufacturer":"volkswagen","hwy":26,"cty":19},{"manufacturer":"volkswagen","hwy":29,"cty":21},{"manufacturer":"volkswagen","hwy":29,"cty":22},{"manufacturer":"volkswagen","hwy":44,"cty":33},{"manufacturer":"volkswagen","hwy":29,"cty":21},{"manufacturer":"volkswagen","hwy":26,"cty":19},{"manufacturer":"volkswagen","hwy":29,"cty":22},{"manufacturer":"volkswagen","hwy":29,"cty":21}]},{"cyl":6,"data":[{"manufacturer":"audi","hwy":26,"cty":16},{"manufacturer":"audi","hwy":26,"cty":18},{"manufacturer":"audi","hwy":27,"cty":18},{"manufacturer":"audi","hwy":25,"cty":15},{"manufacturer":"audi","hwy":25,"cty":17},{"manufacturer":"audi","hwy":25,"cty":17},{"manufacturer":"audi","hwy":25,"cty":15},{"manufacturer":"toyota","hwy":26,"cty":18},{"manufacturer":"toyota","hwy":26,"cty":18},{"manufacturer":"toyota","hwy":27,"cty":18},{"manufacturer":"volkswagen","hwy":24,"cty":17},{"manufacturer":"volkswagen","hwy":23,"cty":16},{"manufacturer":"volkswagen","hwy":24,"cty":17}]},{"cyl":5,"data":[{"manufacturer":"volkswagen","hwy":29,"cty":21},{"manufacturer":"volkswagen","hwy":29,"cty":21}]}]},{"class":"midsize","class_data":[{"cyl":6,"data":[{"manufacturer":"audi","hwy":24,"cty":15},{"manufacturer":"audi","hwy":25,"cty":17},{"manufacturer":"chevrolet","hwy":26,"cty":18},{"manufacturer":"chevrolet","hwy":29,"cty":18},{"manufacturer":"chevrolet","hwy":26,"cty":17},{"manufacturer":"hyundai","hwy":26,"cty":18},{"manufacturer":"hyundai","hwy":26,"cty":18},{"manufacturer":"hyundai","hwy":28,"cty":19},{"manufacturer":"nissan","hwy":27,"cty":19},{"manufacturer":"nissan","hwy":26,"cty":19},{"manufacturer":"nissan","hwy":26,"cty":18},{"manufacturer":"nissan","hwy":25,"cty":19},{"manufacturer":"nissan","hwy":25,"cty":19},{"manufacturer":"pontiac","hwy":26,"cty":18},{"manufacturer":"pontiac","hwy":26,"cty":16},{"manufacturer":"pontiac","hwy":27,"cty":17},{"manufacturer":"pontiac","hwy":28,"cty":18},{"manufacturer":"toyota","hwy":26,"cty":18},{"manufacturer":"toyota","hwy":26,"cty":18},{"manufacturer":"toyota","hwy":28,"cty":19},{"manufacturer":"volkswagen","hwy":26,"cty":16},{"manufacturer":"volkswagen","hwy":26,"cty":18},{"manufacturer":"volkswagen","hwy":26,"cty":17}]},{"cyl":8,"data":[{"manufacturer":"audi","hwy":23,"cty":16},{"manufacturer":"pontiac","hwy":25,"cty":16}]},{"cyl":4,"data":[{"manufacturer":"chevrolet","hwy":27,"cty":19},{"manufacturer":"chevrolet","hwy":30,"cty":22},{"manufacturer":"hyundai","hwy":26,"cty":18},{"manufacturer":"hyundai","hwy":27,"cty":18},{"manufacturer":"hyundai","hwy":30,"cty":21},{"manufacturer":"hyundai","hwy":31,"cty":21},{"manufacturer":"nissan","hwy":31,"cty":23},{"manufacturer":"nissan","hwy":32,"cty":23},{"manufacturer":"toyota","hwy":29,"cty":21},{"manufacturer":"toyota","hwy":27,"cty":21},{"manufacturer":"toyota","hwy":31,"cty":21},{"manufacturer":"toyota","hwy":31,"cty":21},{"manufacturer":"volkswagen","hwy":29,"cty":21},{"manufacturer":"volkswagen","hwy":29,"cty":18},{"manufacturer":"volkswagen","hwy":28,"cty":19},{"manufacturer":"volkswagen","hwy":29,"cty":21}]}]},{"class":"suv","class_data":[{"cyl":8,"data":[{"manufacturer":"chevrolet","hwy":20,"cty":14},{"manufacturer":"chevrolet","hwy":15,"cty":11},{"manufacturer":"chevrolet","hwy":20,"cty":14},{"manufacturer":"chevrolet","hwy":17,"cty":13},{"manufacturer":"chevrolet","hwy":17,"cty":12},{"manufacturer":"chevrolet","hwy":19,"cty":14},{"manufacturer":"chevrolet","hwy":14,"cty":11},{"manufacturer":"chevrolet","hwy":15,"cty":11},{"manufacturer":"chevrolet","hwy":17,"cty":14},{"manufacturer":"dodge","hwy":17,"cty":13},{"manufacturer":"dodge","hwy":12,"cty":9},{"manufacturer":"dodge","hwy":17,"cty":13},{"manufacturer":"dodge","hwy":16,"cty":11},{"manufacturer":"dodge","hwy":18,"cty":13},{"manufacturer":"dodge","hwy":15,"cty":11},{"manufacturer":"ford","hwy":17,"cty":11},{"manufacturer":"ford","hwy":17,"cty":11},{"manufacturer":"ford","hwy":18,"cty":12},{"manufacturer":"ford","hwy":19,"cty":13},{"manufacturer":"ford","hwy":17,"cty":13},{"manufacturer":"jeep","hwy":17,"cty":14},{"manufacturer":"jeep","hwy":12,"cty":9},{"manufacturer":"jeep","hwy":19,"cty":14},{"manufacturer":"jeep","hwy":18,"cty":13},{"manufacturer":"jeep","hwy":14,"cty":11},{"manufacturer":"land rover","hwy":15,"cty":11},{"manufacturer":"land rover","hwy":18,"cty":12},{"manufacturer":"land rover","hwy":18,"cty":12},{"manufacturer":"land rover","hwy":15,"cty":11},{"manufacturer":"lincoln","hwy":17,"cty":11},{"manufacturer":"lincoln","hwy":16,"cty":11},{"manufacturer":"lincoln","hwy":18,"cty":12},{"manufacturer":"mercury","hwy":19,"cty":13},{"manufacturer":"mercury","hwy":17,"cty":13},{"manufacturer":"nissan","hwy":18,"cty":12},{"manufacturer":"toyota","hwy":17,"cty":14},{"manufacturer":"toyota","hwy":15,"cty":11},{"manufacturer":"toyota","hwy":18,"cty":13}]},{"cyl":6,"data":[{"manufacturer":"dodge","hwy":17,"cty":13},{"manufacturer":"ford","hwy":17,"cty":14},{"manufacturer":"ford","hwy":19,"cty":15},{"manufacturer":"ford","hwy":17,"cty":14},{"manufacturer":"ford","hwy":19,"cty":13},{"manufacturer":"jeep","hwy":22,"cty":17},{"manufacturer":"jeep","hwy":19,"cty":15},{"manufacturer":"jeep","hwy":20,"cty":15},{"manufacturer":"mercury","hwy":17,"cty":14},{"manufacturer":"mercury","hwy":19,"cty":13},{"manufacturer":"nissan","hwy":17,"cty":14},{"manufacturer":"nissan","hwy":17,"cty":15},{"manufacturer":"nissan","hwy":20,"cty":14},{"manufacturer":"toyota","hwy":19,"cty":15},{"manufacturer":"toyota","hwy":17,"cty":15},{"manufacturer":"toyota","hwy":20,"cty":16}]},{"cyl":4,"data":[{"manufacturer":"subaru","hwy":25,"cty":18},{"manufacturer":"subaru","hwy":24,"cty":18},{"manufacturer":"subaru","hwy":27,"cty":20},{"manufacturer":"subaru","hwy":25,"cty":19},{"manufacturer":"subaru","hwy":26,"cty":20},{"manufacturer":"subaru","hwy":23,"cty":18},{"manufacturer":"toyota","hwy":20,"cty":15},{"manufacturer":"toyota","hwy":20,"cty":16}]}]},{"class":"2seater","class_data":[{"cyl":8,"data":[{"manufacturer":"chevrolet","hwy":26,"cty":16},{"manufacturer":"chevrolet","hwy":23,"cty":15},{"manufacturer":"chevrolet","hwy":26,"cty":16},{"manufacturer":"chevrolet","hwy":25,"cty":15},{"manufacturer":"chevrolet","hwy":24,"cty":15}]}]},{"class":"minivan","class_data":[{"cyl":4,"data":[{"manufacturer":"dodge","hwy":24,"cty":18}]},{"cyl":6,"data":[{"manufacturer":"dodge","hwy":24,"cty":17},{"manufacturer":"dodge","hwy":22,"cty":16},{"manufacturer":"dodge","hwy":22,"cty":16},{"manufacturer":"dodge","hwy":24,"cty":17},{"manufacturer":"dodge","hwy":24,"cty":17},{"manufacturer":"dodge","hwy":17,"cty":11},{"manufacturer":"dodge","hwy":22,"cty":15},{"manufacturer":"dodge","hwy":21,"cty":15},{"manufacturer":"dodge","hwy":23,"cty":16},{"manufacturer":"dodge","hwy":23,"cty":16}]}]},{"class":"pickup","class_data":[{"cyl":6,"data":[{"manufacturer":"dodge","hwy":19,"cty":15},{"manufacturer":"dodge","hwy":18,"cty":14},{"manufacturer":"dodge","hwy":17,"cty":13},{"manufacturer":"dodge","hwy":17,"cty":14},{"manufacturer":"ford","hwy":17,"cty":14},{"manufacturer":"ford","hwy":17,"cty":14},{"manufacturer":"toyota","hwy":17,"cty":15},{"manufacturer":"toyota","hwy":19,"cty":15},{"manufacturer":"toyota","hwy":18,"cty":15},{"manufacturer":"toyota","hwy":20,"cty":16}]},{"cyl":8,"data":[{"manufacturer":"dodge","hwy":19,"cty":14},{"manufacturer":"dodge","hwy":19,"cty":14},{"manufacturer":"dodge","hwy":12,"cty":9},{"manufacturer":"dodge","hwy":17,"cty":11},{"manufacturer":"dodge","hwy":15,"cty":11},{"manufacturer":"dodge","hwy":16,"cty":12},{"manufacturer":"dodge","hwy":12,"cty":9},{"manufacturer":"dodge","hwy":17,"cty":13},{"manufacturer":"dodge","hwy":17,"cty":13},{"manufacturer":"dodge","hwy":16,"cty":12},{"manufacturer":"dodge","hwy":12,"cty":9},{"manufacturer":"dodge","hwy":15,"cty":11},{"manufacturer":"dodge","hwy":16,"cty":11},{"manufacturer":"dodge","hwy":17,"cty":13},{"manufacturer":"dodge","hwy":15,"cty":11},{"manufacturer":"ford","hwy":16,"cty":13},{"manufacturer":"ford","hwy":16,"cty":13},{"manufacturer":"ford","hwy":17,"cty":13},{"manufacturer":"ford","hwy":15,"cty":11},{"manufacturer":"ford","hwy":17,"cty":13}]},{"cyl":4,"data":[{"manufacturer":"toyota","hwy":20,"cty":15},{"manufacturer":"toyota","hwy":20,"cty":16},{"manufacturer":"toyota","hwy":22,"cty":17}]}]},{"class":"subcompact","class_data":[{"cyl":6,"data":[{"manufacturer":"ford","hwy":26,"cty":18},{"manufacturer":"ford","hwy":25,"cty":18},{"manufacturer":"ford","hwy":26,"cty":17},{"manufacturer":"ford","hwy":24,"cty":16},{"manufacturer":"hyundai","hwy":24,"cty":17},{"manufacturer":"hyundai","hwy":24,"cty":16},{"manufacturer":"hyundai","hwy":24,"cty":17}]},{"cyl":8,"data":[{"manufacturer":"ford","hwy":21,"cty":15},{"manufacturer":"ford","hwy":22,"cty":15},{"manufacturer":"ford","hwy":23,"cty":15},{"manufacturer":"ford","hwy":22,"cty":15},{"manufacturer":"ford","hwy":20,"cty":14}]},{"cyl":4,"data":[{"manufacturer":"honda","hwy":33,"cty":28},{"manufacturer":"honda","hwy":32,"cty":24},{"manufacturer":"honda","hwy":32,"cty":25},{"manufacturer":"honda","hwy":29,"cty":23},{"manufacturer":"honda","hwy":32,"cty":24},{"manufacturer":"honda","hwy":34,"cty":26},{"manufacturer":"honda","hwy":36,"cty":25},{"manufacturer":"honda","hwy":36,"cty":24},{"manufacturer":"honda","hwy":29,"cty":21},{"manufacturer":"hyundai","hwy":26,"cty":19},{"manufacturer":"hyundai","hwy":29,"cty":19},{"manufacturer":"hyundai","hwy":28,"cty":20},{"manufacturer":"hyundai","hwy":27,"cty":20},{"manufacturer":"subaru","hwy":26,"cty":21},{"manufacturer":"subaru","hwy":26,"cty":19},{"manufacturer":"subaru","hwy":26,"cty":19},{"manufacturer":"subaru","hwy":26,"cty":19},{"manufacturer":"volkswagen","hwy":44,"cty":35},{"manufacturer":"volkswagen","hwy":41,"cty":29},{"manufacturer":"volkswagen","hwy":29,"cty":21},{"manufacturer":"volkswagen","hwy":26,"cty":19}]},{"cyl":5,"data":[{"manufacturer":"volkswagen","hwy":28,"cty":20},{"manufacturer":"volkswagen","hwy":29,"cty":20}]}]}],"name":"root","theme":"rjv-default","iconStyle":"circle","indentWidth":4,"collapsed":4,"collapseStringsAfterLength":false,"groupArraysAfterLength":100,"enableClipboard":true,"displayObjectSize":true,"displayDataTypes":true,"onEdit":true,"onAdd":true,"onDelete":true,"onSelect":true,"sortKeys":false},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+<p>The <code>listviewer</code> package also provides an alternative JSON viewer, <code>jsonedit()</code>:</p>
+<div class="fold o">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-10_6af6ef5264c8d65c1d542ba700120654">
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mpg_subset</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>.by <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cyl</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">class</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>.by <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">class</span>, .key <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"class_data"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">jsonlite</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html">toJSON</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># convert df to JSON</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">listviewer</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/listviewer/man/jsonedit.html">jsonedit</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div class="jsonedit html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b5ad9e0573facd6db7af" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-b5ad9e0573facd6db7af">{"x":{"data":[{"class":"compact","class_data":[{"cyl":4,"data":[{"manufacturer":"audi","hwy":29,"cty":18},{"manufacturer":"audi","hwy":29,"cty":21},{"manufacturer":"audi","hwy":31,"cty":20},{"manufacturer":"audi","hwy":30,"cty":21},{"manufacturer":"audi","hwy":26,"cty":18},{"manufacturer":"audi","hwy":25,"cty":16},{"manufacturer":"audi","hwy":28,"cty":20},{"manufacturer":"audi","hwy":27,"cty":19},{"manufacturer":"nissan","hwy":29,"cty":21},{"manufacturer":"nissan","hwy":27,"cty":19},{"manufacturer":"subaru","hwy":25,"cty":20},{"manufacturer":"subaru","hwy":27,"cty":20},{"manufacturer":"subaru","hwy":25,"cty":19},{"manufacturer":"subaru","hwy":27,"cty":20},{"manufacturer":"toyota","hwy":27,"cty":21},{"manufacturer":"toyota","hwy":29,"cty":21},{"manufacturer":"toyota","hwy":31,"cty":21},{"manufacturer":"toyota","hwy":31,"cty":22},{"manufacturer":"toyota","hwy":30,"cty":24},{"manufacturer":"toyota","hwy":33,"cty":24},{"manufacturer":"toyota","hwy":35,"cty":26},{"manufacturer":"toyota","hwy":37,"cty":28},{"manufacturer":"toyota","hwy":35,"cty":26},{"manufacturer":"volkswagen","hwy":29,"cty":21},{"manufacturer":"volkswagen","hwy":26,"cty":19},{"manufacturer":"volkswagen","hwy":29,"cty":21},{"manufacturer":"volkswagen","hwy":29,"cty":22},{"manufacturer":"volkswagen","hwy":44,"cty":33},{"manufacturer":"volkswagen","hwy":29,"cty":21},{"manufacturer":"volkswagen","hwy":26,"cty":19},{"manufacturer":"volkswagen","hwy":29,"cty":22},{"manufacturer":"volkswagen","hwy":29,"cty":21}]},{"cyl":6,"data":[{"manufacturer":"audi","hwy":26,"cty":16},{"manufacturer":"audi","hwy":26,"cty":18},{"manufacturer":"audi","hwy":27,"cty":18},{"manufacturer":"audi","hwy":25,"cty":15},{"manufacturer":"audi","hwy":25,"cty":17},{"manufacturer":"audi","hwy":25,"cty":17},{"manufacturer":"audi","hwy":25,"cty":15},{"manufacturer":"toyota","hwy":26,"cty":18},{"manufacturer":"toyota","hwy":26,"cty":18},{"manufacturer":"toyota","hwy":27,"cty":18},{"manufacturer":"volkswagen","hwy":24,"cty":17},{"manufacturer":"volkswagen","hwy":23,"cty":16},{"manufacturer":"volkswagen","hwy":24,"cty":17}]},{"cyl":5,"data":[{"manufacturer":"volkswagen","hwy":29,"cty":21},{"manufacturer":"volkswagen","hwy":29,"cty":21}]}]},{"class":"midsize","class_data":[{"cyl":6,"data":[{"manufacturer":"audi","hwy":24,"cty":15},{"manufacturer":"audi","hwy":25,"cty":17},{"manufacturer":"chevrolet","hwy":26,"cty":18},{"manufacturer":"chevrolet","hwy":29,"cty":18},{"manufacturer":"chevrolet","hwy":26,"cty":17},{"manufacturer":"hyundai","hwy":26,"cty":18},{"manufacturer":"hyundai","hwy":26,"cty":18},{"manufacturer":"hyundai","hwy":28,"cty":19},{"manufacturer":"nissan","hwy":27,"cty":19},{"manufacturer":"nissan","hwy":26,"cty":19},{"manufacturer":"nissan","hwy":26,"cty":18},{"manufacturer":"nissan","hwy":25,"cty":19},{"manufacturer":"nissan","hwy":25,"cty":19},{"manufacturer":"pontiac","hwy":26,"cty":18},{"manufacturer":"pontiac","hwy":26,"cty":16},{"manufacturer":"pontiac","hwy":27,"cty":17},{"manufacturer":"pontiac","hwy":28,"cty":18},{"manufacturer":"toyota","hwy":26,"cty":18},{"manufacturer":"toyota","hwy":26,"cty":18},{"manufacturer":"toyota","hwy":28,"cty":19},{"manufacturer":"volkswagen","hwy":26,"cty":16},{"manufacturer":"volkswagen","hwy":26,"cty":18},{"manufacturer":"volkswagen","hwy":26,"cty":17}]},{"cyl":8,"data":[{"manufacturer":"audi","hwy":23,"cty":16},{"manufacturer":"pontiac","hwy":25,"cty":16}]},{"cyl":4,"data":[{"manufacturer":"chevrolet","hwy":27,"cty":19},{"manufacturer":"chevrolet","hwy":30,"cty":22},{"manufacturer":"hyundai","hwy":26,"cty":18},{"manufacturer":"hyundai","hwy":27,"cty":18},{"manufacturer":"hyundai","hwy":30,"cty":21},{"manufacturer":"hyundai","hwy":31,"cty":21},{"manufacturer":"nissan","hwy":31,"cty":23},{"manufacturer":"nissan","hwy":32,"cty":23},{"manufacturer":"toyota","hwy":29,"cty":21},{"manufacturer":"toyota","hwy":27,"cty":21},{"manufacturer":"toyota","hwy":31,"cty":21},{"manufacturer":"toyota","hwy":31,"cty":21},{"manufacturer":"volkswagen","hwy":29,"cty":21},{"manufacturer":"volkswagen","hwy":29,"cty":18},{"manufacturer":"volkswagen","hwy":28,"cty":19},{"manufacturer":"volkswagen","hwy":29,"cty":21}]}]},{"class":"suv","class_data":[{"cyl":8,"data":[{"manufacturer":"chevrolet","hwy":20,"cty":14},{"manufacturer":"chevrolet","hwy":15,"cty":11},{"manufacturer":"chevrolet","hwy":20,"cty":14},{"manufacturer":"chevrolet","hwy":17,"cty":13},{"manufacturer":"chevrolet","hwy":17,"cty":12},{"manufacturer":"chevrolet","hwy":19,"cty":14},{"manufacturer":"chevrolet","hwy":14,"cty":11},{"manufacturer":"chevrolet","hwy":15,"cty":11},{"manufacturer":"chevrolet","hwy":17,"cty":14},{"manufacturer":"dodge","hwy":17,"cty":13},{"manufacturer":"dodge","hwy":12,"cty":9},{"manufacturer":"dodge","hwy":17,"cty":13},{"manufacturer":"dodge","hwy":16,"cty":11},{"manufacturer":"dodge","hwy":18,"cty":13},{"manufacturer":"dodge","hwy":15,"cty":11},{"manufacturer":"ford","hwy":17,"cty":11},{"manufacturer":"ford","hwy":17,"cty":11},{"manufacturer":"ford","hwy":18,"cty":12},{"manufacturer":"ford","hwy":19,"cty":13},{"manufacturer":"ford","hwy":17,"cty":13},{"manufacturer":"jeep","hwy":17,"cty":14},{"manufacturer":"jeep","hwy":12,"cty":9},{"manufacturer":"jeep","hwy":19,"cty":14},{"manufacturer":"jeep","hwy":18,"cty":13},{"manufacturer":"jeep","hwy":14,"cty":11},{"manufacturer":"land rover","hwy":15,"cty":11},{"manufacturer":"land rover","hwy":18,"cty":12},{"manufacturer":"land rover","hwy":18,"cty":12},{"manufacturer":"land rover","hwy":15,"cty":11},{"manufacturer":"lincoln","hwy":17,"cty":11},{"manufacturer":"lincoln","hwy":16,"cty":11},{"manufacturer":"lincoln","hwy":18,"cty":12},{"manufacturer":"mercury","hwy":19,"cty":13},{"manufacturer":"mercury","hwy":17,"cty":13},{"manufacturer":"nissan","hwy":18,"cty":12},{"manufacturer":"toyota","hwy":17,"cty":14},{"manufacturer":"toyota","hwy":15,"cty":11},{"manufacturer":"toyota","hwy":18,"cty":13}]},{"cyl":6,"data":[{"manufacturer":"dodge","hwy":17,"cty":13},{"manufacturer":"ford","hwy":17,"cty":14},{"manufacturer":"ford","hwy":19,"cty":15},{"manufacturer":"ford","hwy":17,"cty":14},{"manufacturer":"ford","hwy":19,"cty":13},{"manufacturer":"jeep","hwy":22,"cty":17},{"manufacturer":"jeep","hwy":19,"cty":15},{"manufacturer":"jeep","hwy":20,"cty":15},{"manufacturer":"mercury","hwy":17,"cty":14},{"manufacturer":"mercury","hwy":19,"cty":13},{"manufacturer":"nissan","hwy":17,"cty":14},{"manufacturer":"nissan","hwy":17,"cty":15},{"manufacturer":"nissan","hwy":20,"cty":14},{"manufacturer":"toyota","hwy":19,"cty":15},{"manufacturer":"toyota","hwy":17,"cty":15},{"manufacturer":"toyota","hwy":20,"cty":16}]},{"cyl":4,"data":[{"manufacturer":"subaru","hwy":25,"cty":18},{"manufacturer":"subaru","hwy":24,"cty":18},{"manufacturer":"subaru","hwy":27,"cty":20},{"manufacturer":"subaru","hwy":25,"cty":19},{"manufacturer":"subaru","hwy":26,"cty":20},{"manufacturer":"subaru","hwy":23,"cty":18},{"manufacturer":"toyota","hwy":20,"cty":15},{"manufacturer":"toyota","hwy":20,"cty":16}]}]},{"class":"2seater","class_data":[{"cyl":8,"data":[{"manufacturer":"chevrolet","hwy":26,"cty":16},{"manufacturer":"chevrolet","hwy":23,"cty":15},{"manufacturer":"chevrolet","hwy":26,"cty":16},{"manufacturer":"chevrolet","hwy":25,"cty":15},{"manufacturer":"chevrolet","hwy":24,"cty":15}]}]},{"class":"minivan","class_data":[{"cyl":4,"data":[{"manufacturer":"dodge","hwy":24,"cty":18}]},{"cyl":6,"data":[{"manufacturer":"dodge","hwy":24,"cty":17},{"manufacturer":"dodge","hwy":22,"cty":16},{"manufacturer":"dodge","hwy":22,"cty":16},{"manufacturer":"dodge","hwy":24,"cty":17},{"manufacturer":"dodge","hwy":24,"cty":17},{"manufacturer":"dodge","hwy":17,"cty":11},{"manufacturer":"dodge","hwy":22,"cty":15},{"manufacturer":"dodge","hwy":21,"cty":15},{"manufacturer":"dodge","hwy":23,"cty":16},{"manufacturer":"dodge","hwy":23,"cty":16}]}]},{"class":"pickup","class_data":[{"cyl":6,"data":[{"manufacturer":"dodge","hwy":19,"cty":15},{"manufacturer":"dodge","hwy":18,"cty":14},{"manufacturer":"dodge","hwy":17,"cty":13},{"manufacturer":"dodge","hwy":17,"cty":14},{"manufacturer":"ford","hwy":17,"cty":14},{"manufacturer":"ford","hwy":17,"cty":14},{"manufacturer":"toyota","hwy":17,"cty":15},{"manufacturer":"toyota","hwy":19,"cty":15},{"manufacturer":"toyota","hwy":18,"cty":15},{"manufacturer":"toyota","hwy":20,"cty":16}]},{"cyl":8,"data":[{"manufacturer":"dodge","hwy":19,"cty":14},{"manufacturer":"dodge","hwy":19,"cty":14},{"manufacturer":"dodge","hwy":12,"cty":9},{"manufacturer":"dodge","hwy":17,"cty":11},{"manufacturer":"dodge","hwy":15,"cty":11},{"manufacturer":"dodge","hwy":16,"cty":12},{"manufacturer":"dodge","hwy":12,"cty":9},{"manufacturer":"dodge","hwy":17,"cty":13},{"manufacturer":"dodge","hwy":17,"cty":13},{"manufacturer":"dodge","hwy":16,"cty":12},{"manufacturer":"dodge","hwy":12,"cty":9},{"manufacturer":"dodge","hwy":15,"cty":11},{"manufacturer":"dodge","hwy":16,"cty":11},{"manufacturer":"dodge","hwy":17,"cty":13},{"manufacturer":"dodge","hwy":15,"cty":11},{"manufacturer":"ford","hwy":16,"cty":13},{"manufacturer":"ford","hwy":16,"cty":13},{"manufacturer":"ford","hwy":17,"cty":13},{"manufacturer":"ford","hwy":15,"cty":11},{"manufacturer":"ford","hwy":17,"cty":13}]},{"cyl":4,"data":[{"manufacturer":"toyota","hwy":20,"cty":15},{"manufacturer":"toyota","hwy":20,"cty":16},{"manufacturer":"toyota","hwy":22,"cty":17}]}]},{"class":"subcompact","class_data":[{"cyl":6,"data":[{"manufacturer":"ford","hwy":26,"cty":18},{"manufacturer":"ford","hwy":25,"cty":18},{"manufacturer":"ford","hwy":26,"cty":17},{"manufacturer":"ford","hwy":24,"cty":16},{"manufacturer":"hyundai","hwy":24,"cty":17},{"manufacturer":"hyundai","hwy":24,"cty":16},{"manufacturer":"hyundai","hwy":24,"cty":17}]},{"cyl":8,"data":[{"manufacturer":"ford","hwy":21,"cty":15},{"manufacturer":"ford","hwy":22,"cty":15},{"manufacturer":"ford","hwy":23,"cty":15},{"manufacturer":"ford","hwy":22,"cty":15},{"manufacturer":"ford","hwy":20,"cty":14}]},{"cyl":4,"data":[{"manufacturer":"honda","hwy":33,"cty":28},{"manufacturer":"honda","hwy":32,"cty":24},{"manufacturer":"honda","hwy":32,"cty":25},{"manufacturer":"honda","hwy":29,"cty":23},{"manufacturer":"honda","hwy":32,"cty":24},{"manufacturer":"honda","hwy":34,"cty":26},{"manufacturer":"honda","hwy":36,"cty":25},{"manufacturer":"honda","hwy":36,"cty":24},{"manufacturer":"honda","hwy":29,"cty":21},{"manufacturer":"hyundai","hwy":26,"cty":19},{"manufacturer":"hyundai","hwy":29,"cty":19},{"manufacturer":"hyundai","hwy":28,"cty":20},{"manufacturer":"hyundai","hwy":27,"cty":20},{"manufacturer":"subaru","hwy":26,"cty":21},{"manufacturer":"subaru","hwy":26,"cty":19},{"manufacturer":"subaru","hwy":26,"cty":19},{"manufacturer":"subaru","hwy":26,"cty":19},{"manufacturer":"volkswagen","hwy":44,"cty":35},{"manufacturer":"volkswagen","hwy":41,"cty":29},{"manufacturer":"volkswagen","hwy":29,"cty":21},{"manufacturer":"volkswagen","hwy":26,"cty":19}]},{"cyl":5,"data":[{"manufacturer":"volkswagen","hwy":28,"cty":20},{"manufacturer":"volkswagen","hwy":29,"cty":20}]}]}],"options":{"mode":"tree","modes":["code","form","text","tree","view"]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>(A quick note: <code>toJSON()</code> only converts a limited selection of objects; it can’t, for example, convert an <code>lm</code> model to visualize like we did with the <code>midwest_data</code> data above.)</p>
+</section></section><section id="abstract-syntax-trees-for-complex-function-calls" class="level2"><h2 class="anchored" data-anchor-id="abstract-syntax-trees-for-complex-function-calls">Abstract syntax trees for complex function calls</h2>
+<p><code>lobstr</code> also provides the function <code><a href="https://lobstr.r-lib.org/reference/ast.html">ast()</a></code> which gives a visual representation of complex function calls, letting you see the order in which the functions are being evaluated. Here we see that our unnamed function calls <code>+</code> on <code>x</code> and <code>y</code>.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-11_f0e2b18b303ee26f56d8340a69a06177">
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>█─`function` 
+├─█─x = 1 
+│ └─y = 2 
+├─█─`{` 
+│ └─█─`+` 
+│   ├─x 
+│   └─y 
+└─&lt;inline srcref&gt; </code></pre>
+</div>
+</div>
+<p>This is particularly useful when using pipes, where the linear order of the code is actually the reverse of what it would be without piping. Here, for example, we can see that <code>mutate</code> is applying to a <code>group</code>ed df, which itself was <code>filter</code>ed.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-12_c3ab7263aa3a98298875fd78fc760055">
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mpg</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">manufacturer</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"honda"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">cyl</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>mean_hwy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">hwy</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> </span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://lobstr.r-lib.org/reference/ast.html">ast</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>█─mutate 
+├─█─group_by 
+│ ├─█─filter 
+│ │ ├─mpg 
+│ │ └─█─`==` 
+│ │   ├─manufacturer 
+│ │   └─"honda" 
+│ └─cyl 
+└─mean_hwy = █─mean 
+             └─hwy </code></pre>
+</div>
+</div>
+<!-- End content -->
+<div id="footer-session-info">
+<details><summary>
+Session info and package versions
+</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-14_ffd0d53bc988d71991616b9c9e4ae71c">
+<div class="cell-output cell-output-stdout">
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> setting  value
+ version  R version 4.3.1 (2023-06-16)
+ os       macOS Ventura 13.4.1
+ system   aarch64, darwin20
+ ui       X11
+ language (EN)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       America/Chicago
+ date     2023-07-10
+ pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>─ Packages ───────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     package loadedversion       date         source
+         cli         3.6.1 2023-03-23 CRAN (R 4.3.0)
+   codetools        0.2-19 2023-02-01 CRAN (R 4.3.1)
+  colorspace         2.1-0 2023-01-23 CRAN (R 4.3.0)
+      crayon         1.5.2 2022-09-29 CRAN (R 4.3.0)
+      digest        0.6.31 2022-12-11 CRAN (R 4.3.0)
+       dplyr         1.1.2 2023-04-20 CRAN (R 4.3.0)
+    ellipsis         0.3.2 2021-04-29 CRAN (R 4.3.0)
+    evaluate          0.21 2023-05-05 CRAN (R 4.3.0)
+       fansi         1.0.4 2023-01-22 CRAN (R 4.3.0)
+     fastmap         1.1.1 2023-02-24 CRAN (R 4.3.0)
+     forcats         1.0.0 2023-01-29 CRAN (R 4.3.0)
+    generics         0.1.3 2022-07-05 CRAN (R 4.3.0)
+     ggplot2         3.4.2 2023-04-03 CRAN (R 4.3.0)
+        glue         1.6.2 2022-02-24 CRAN (R 4.3.0)
+      gtable         0.3.3 2023-03-21 CRAN (R 4.3.0)
+         hms         1.1.3 2023-03-21 CRAN (R 4.3.0)
+   htmltools         0.5.5 2023-03-23 CRAN (R 4.3.0)
+ htmlwidgets         1.6.2 2023-03-17 CRAN (R 4.3.0)
+    jsonlite         1.8.7 2023-06-29 CRAN (R 4.3.0)
+       knitr          1.43 2023-05-25 CRAN (R 4.3.0)
+   lifecycle         1.0.3 2022-10-07 CRAN (R 4.3.0)
+  listviewer         3.0.0 2019-11-02 CRAN (R 4.3.0)
+      lobstr         1.1.2 2022-06-22 CRAN (R 4.3.0)
+   lubridate         1.9.2 2023-02-10 CRAN (R 4.3.0)
+    magrittr         2.0.3 2022-03-30 CRAN (R 4.3.0)
+     munsell         0.5.0 2018-06-12 CRAN (R 4.3.0)
+      pillar         1.9.0 2023-03-22 CRAN (R 4.3.0)
+   pkgconfig         2.0.3 2019-09-22 CRAN (R 4.3.0)
+       purrr         1.0.1 2023-01-10 CRAN (R 4.3.0)
+          R6         2.5.1 2021-08-19 CRAN (R 4.3.0)
+        ragg         1.2.5 2023-01-12 CRAN (R 4.3.0)
+      reactR         0.4.4 2021-02-22 CRAN (R 4.3.0)
+       readr         2.1.4 2023-02-10 CRAN (R 4.3.0)
+        renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
+       rlang         1.1.1 2023-04-28 CRAN (R 4.3.0)
+   rmarkdown          2.22 2023-06-01 CRAN (R 4.3.0)
+  rstudioapi          0.14 2022-08-22 CRAN (R 4.3.0)
+      scales         1.2.1 2022-08-20 CRAN (R 4.3.0)
+ sessioninfo         1.2.2 2021-12-06 CRAN (R 4.3.0)
+     stringi        1.7.12 2023-01-11 CRAN (R 4.3.0)
+     stringr         1.5.0 2022-12-02 CRAN (R 4.3.0)
+ systemfonts         1.0.4 2022-02-11 CRAN (R 4.3.0)
+ textshaping         0.3.6 2021-10-13 CRAN (R 4.3.0)
+      tibble         3.2.1 2023-03-20 CRAN (R 4.3.0)
+       tidyr         1.3.0 2023-01-24 CRAN (R 4.3.0)
+  tidyselect         1.2.0 2022-10-10 CRAN (R 4.3.0)
+   tidyverse         2.0.0 2023-02-22 CRAN (R 4.3.0)
+  timechange         0.2.0 2023-01-11 CRAN (R 4.3.0)
+        tzdb         0.4.0 2023-05-12 CRAN (R 4.3.0)
+        utf8         1.2.3 2023-01-31 CRAN (R 4.3.0)
+       vctrs         0.6.3 2023-06-14 CRAN (R 4.3.0)
+       withr         2.5.0 2022-03-03 CRAN (R 4.3.0)
+        xfun          0.39 2023-04-20 CRAN (R 4.3.0)
+        yaml         2.3.7 2023-01-23 CRAN (R 4.3.0)</code></pre>
+</div>
+</div>
+</details>
+</div>
+
+
+</section> ]]></description>
+  <category>misc</category>
+  <guid>https://abraver.github.io/usefulRstuff/posts/lobstr/index.html</guid>
+  <pubDate>Mon, 10 Jul 2023 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Composing multiple plots with patchwork
 </title>
