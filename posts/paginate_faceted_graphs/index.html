@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.361">
+<head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta charset="utf-8" />
+<meta name="generator" content="quarto-1.3.361" />
 
-<meta name="author" content="Aaron Braver">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 
-<title>Useful R Stuff</title>
+<meta name="dcterms.date" content="2023-07-01" />
+
+<title>Useful R Stuff – Paginate faceted graph and save as a single multi-page pdf</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,27 +23,43 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
-
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<!-- htmldependencies:E3FAD763 -->
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -62,70 +80,27 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
+<link href="../../site_libs/roboto-condensed-0.3.3/css/roboto-condensed.css" rel="stylesheet" />
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-title','listing-categories','listing-file-modified',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-title-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-N1MBV4L3FV"></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
-</script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Useful R Stuff">
-<meta property="og:description" content="">
-<meta property="og:site-name" content="Useful R Stuff">
-<meta name="twitter:title" content="Useful R Stuff">
-<meta name="twitter:description" content="">
-<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="../../styles.css" />
 </head>
 
-<body class="nav-fixed">
+<body>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-md navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="/index.html">
     <span class="navbar-title">Useful R Stuff</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+  aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
+  onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -135,14 +110,7 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
  <span class="menu-text">Aaron Braver</span></a>
   </li>  
 </ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./index.xml" rel="" target=""><i class="bi bi-rss" role="img">
-</i> 
- <span class="menu-text">RSS</span></a>
-  </li>  
-</ul>
-            <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools ms-auto">
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -153,26 +121,29 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="hidden">hidden <span class="quarto-category-count">(1)</span></div></div></div>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Useful R Stuff</h1>
-</div>
+<h1 class="title">Paginate faceted graph and save as a single multi-page pdf</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">visualization</div>
+  </div>
+  </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p><a href="https://www.aaronbraver.com">Aaron Braver</a> </p>
-          </div>
-  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 1, 2023</p>
+    </div>
+  </div>
   
     
   </div>
@@ -180,95 +151,122 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 
 </header>
 
-<!-- This style block and the following script blocks are all because the `categories` column defaults to not having spaces after commas -->
-
-<style>
-table.quarto-listing-table * td:first-child {
-  width: 55%;
-}
-table.quarto-listing-table * td:nth-child(2) {
-  width: 35%;
-}
-table.quarto-listing-table * td:nth-child(2) {
-  width: 10%;
-}
-</style>
-<script src="./jquery-3.7.0.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-  $tds = $(".listing-categories");
-  
-  $tds.each(function () {
-    this.innerHTML = this.innerHTML.replace(",", ", ");
-    $(this).parent().css("width", "30%");
-  });
-  
-});
-</script>
-<p>This is a collection of R packages, bits of code, and other trivia that I find useful. It was originally written for myself, but hopefully others will find some useful tidbits.</p>
-<p><br></p>
-
-
-
-
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-       <option value="" disabled="" selected="" hidden="">Order By</option>
-       <option value="index" data-direction="asc">Default</option>
-         <option value="listing-title-sort" data-direction="asc">
-          Title
-        </option>
-         <option value="listing-file-modified-sort" data-direction="asc">
-          Modified - Oldest
-        </option>
-         <option value="listing-file-modified-sort" data-direction="desc">
-          Modified - Newest
-        </option>
-     </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
+<script src="/jquery-3.7.0.min.js"></script>
+<script src="/fold.js"></script>
+<!-- begin content -->
+<p>When you have a plot with just a few facets, it’s easy to fit them all on a single page. But what if you have a whole bunch of facets that you want to visualize? For example, the <code>USArrests</code> dataset has data from all 50 US states.</p>
+<p>If we just use the usual <code>facet_wrap</code> or <code>facet_grid</code> from <code>ggplot2</code>, you end up with a bunch of separate graphs:</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_99bf0bc6ab9af60b025e86edc0d8b865">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>USArrests <span class="sc">|&gt;</span>  <span class="co"># dataset on US arrests</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">&quot;State&quot;</span>) <span class="sc">|&gt;</span>   <span class="co"># This is just so we can see the state names</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> UrbanPop, <span class="at">y =</span> Murder)) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()  <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> State)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672" /></p>
+</div>
+</div>
+<!-- End content -->
+<hr>
+<details>
+<summary>
+Session info and package versions
+</summary>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_7b24da9e1e9e91f53f915cbc658f4f85">
+<div class="cell-output cell-output-stdout">
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> setting  value
+ version  R version 4.3.1 (2023-06-16)
+ os       macOS Ventura 13.4.1
+ system   aarch64, darwin20
+ ui       X11
+ language (EN)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       America/Chicago
+ date     2023-07-01
+ pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>─ Packages ───────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     package loadedversion       date         source
+         cli         3.6.1 2023-03-23 CRAN (R 4.3.0)
+   codetools        0.2-19 2023-02-01 CRAN (R 4.3.1)
+  colorspace         2.1-0 2023-01-23 CRAN (R 4.3.0)
+      digest        0.6.31 2022-12-11 CRAN (R 4.3.0)
+       dplyr         1.1.2 2023-04-20 CRAN (R 4.3.0)
+    evaluate          0.21 2023-05-05 CRAN (R 4.3.0)
+       fansi         1.0.4 2023-01-22 CRAN (R 4.3.0)
+      farver         2.1.1 2022-07-06 CRAN (R 4.3.0)
+     fastmap         1.1.1 2023-02-24 CRAN (R 4.3.0)
+     forcats         1.0.0 2023-01-29 CRAN (R 4.3.0)
+    generics         0.1.3 2022-07-05 CRAN (R 4.3.0)
+     ggplot2         3.4.2 2023-04-03 CRAN (R 4.3.0)
+        glue         1.6.2 2022-02-24 CRAN (R 4.3.0)
+      gtable         0.3.3 2023-03-21 CRAN (R 4.3.0)
+         hms         1.1.3 2023-03-21 CRAN (R 4.3.0)
+   htmltools         0.5.5 2023-03-23 CRAN (R 4.3.0)
+ htmlwidgets         1.6.2 2023-03-17 CRAN (R 4.3.0)
+    jsonlite         1.8.7 2023-06-29 CRAN (R 4.3.0)
+       knitr          1.43 2023-05-25 CRAN (R 4.3.0)
+    labeling         0.4.2 2020-10-20 CRAN (R 4.3.0)
+   lifecycle         1.0.3 2022-10-07 CRAN (R 4.3.0)
+   lubridate         1.9.2 2023-02-10 CRAN (R 4.3.0)
+    magrittr         2.0.3 2022-03-30 CRAN (R 4.3.0)
+     munsell         0.5.0 2018-06-12 CRAN (R 4.3.0)
+      pillar         1.9.0 2023-03-22 CRAN (R 4.3.0)
+   pkgconfig         2.0.3 2019-09-22 CRAN (R 4.3.0)
+       purrr         1.0.1 2023-01-10 CRAN (R 4.3.0)
+          R6         2.5.1 2021-08-19 CRAN (R 4.3.0)
+       readr         2.1.4 2023-02-10 CRAN (R 4.3.0)
+        renv        0.17.3 2023-04-06 CRAN (R 4.3.0)
+       rlang         1.1.1 2023-04-28 CRAN (R 4.3.0)
+   rmarkdown          2.22 2023-06-01 CRAN (R 4.3.0)
+  rstudioapi          0.14 2022-08-22 CRAN (R 4.3.0)
+      scales         1.2.1 2022-08-20 CRAN (R 4.3.0)
+ sessioninfo         1.2.2 2021-12-06 CRAN (R 4.3.0)
+     stringi        1.7.12 2023-01-11 CRAN (R 4.3.0)
+     stringr         1.5.0 2022-12-02 CRAN (R 4.3.0)
+      tibble         3.2.1 2023-03-20 CRAN (R 4.3.0)
+       tidyr         1.3.0 2023-01-24 CRAN (R 4.3.0)
+  tidyselect         1.2.0 2022-10-10 CRAN (R 4.3.0)
+   tidyverse         2.0.0 2023-02-22 CRAN (R 4.3.0)
+  timechange         0.2.0 2023-01-11 CRAN (R 4.3.0)
+        tzdb         0.4.0 2023-05-12 CRAN (R 4.3.0)
+        utf8         1.2.3 2023-01-31 CRAN (R 4.3.0)
+       vctrs         0.6.3 2023-06-14 CRAN (R 4.3.0)
+       withr         2.5.0 2022-03-03 CRAN (R 4.3.0)
+        xfun          0.39 2023-04-20 CRAN (R 4.3.0)
+        yaml         2.3.7 2023-01-23 CRAN (R 4.3.0)</code></pre>
+</div>
+</div>
+</details>
+<div id="quarto-navigation-envelope" class="hidden">
+<p><span class="hidden" data-render-id="quarto-int-sidebar-title">Useful R Stuff</span> <span class="hidden" data-render-id="quarto-int-navbar-title">Useful R Stuff</span> <span class="hidden" data-render-id="quarto-int-navbar:Aaron Braver">Aaron Braver</span> <span class="hidden" data-render-id="quarto-int-navbar:http://www.aaronbraver.com">http://www.aaronbraver.com</span></p>
+</div>
+<div id="quarto-meta-markdown" class="hidden">
+<p><span class="hidden" data-render-id="quarto-metatitle">Useful R Stuff - Paginate faceted graph and save as a single multi-page pdf</span> <span class="hidden" data-render-id="quarto-twittercardtitle">Useful R Stuff - Paginate faceted graph and save as a single multi-page pdf</span> <span class="hidden" data-render-id="quarto-ogcardtitle">Useful R Stuff - Paginate faceted graph and save as a single multi-page pdf</span> <span class="hidden" data-render-id="quarto-metasitename">Useful R Stuff</span> <span class="hidden" data-render-id="quarto-twittercarddesc"></span> <span class="hidden" data-render-id="quarto-ogcardddesc"></span></p>
 </div>
 
-<table class="quarto-listing-table table">
-<thead>
-<tr>
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
-</th>
-<th>
-Categories
-</th>
-<th>
-<a class="sort" data-sort="listing-file-modified-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Modified</a>
-</th>
-</tr>
-</thead>
-<tbody class="list">
-<tr data-index="0" data-categories="hidden" data-listing-date-sort="1688792400000" data-listing-file-modified-sort="1688844339000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-title-sort="Figure stuff" data-listing-filename-sort="index.qmd">
-<td>
-<a href="./posts/figure_working/index.html" class="title listing-title">Figure stuff</a>
-</td>
-<td>
-<span class="listing-categories">hidden</span>
-</td>
-<td>
-<span class="listing-file-modified">7/8/23</span>
-</td>
-</tr>
-</tbody>
-
-</table>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</main> <!-- /main -->
+<script id = "quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -568,6 +566,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 </div> <!-- /content -->
 
+</body>
 
-
-</body></html>
+</html>

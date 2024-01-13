@@ -1,0 +1,67 @@
+---
+title: "Sort numbered strings (or factor levels, or filenames) correctly even without zero-padding"
+
+date: "2024-01-12"
+
+categories:
+  - data cleaning
+  - sorting
+---
+
+{{< include /_include_header.qmd >}}
+
+<!-- begin content -->
+
+```{r setup}
+#| code-fold: true
+#| code-summary: "Setup"
+#| output: false
+#| warning: false
+
+library(tidyverse)
+library(naturalsort)
+```
+
+
+It's quite common to see lists of items (data, files, etc) that are numbered, such as the hypothetical list of files below:
+
+```{r}
+filenames <- c("file2.csv", "file1.csv",  "file3.csv",
+               "file11.csv", "file10.csv", "file20.csv")
+print(filenames)
+```
+
+If you want to `sort` these by number, you run into a problem, since the filenames are string: `1` is followed by `10`, which is followed by `2`, since `10` precedes `2` "alphabetically":
+
+```{r}
+filenames |> sort()
+```
+
+One solution is to rename your items such that they are zero-padded.  A kludge with `stringr`'s str_replace()` and `str_pad()` can get the job done.  Because of the leading zeros, `sort()` will get the result you expect:
+
+```{r}
+padded <- str_replace(filenames, "[0-9]+", \(x) str_pad(x, 2, pad="0"))
+padded |> sort()
+```
+
+Rather than renaming your items, `naturalsort::naturalsort()` orders your items in "human natural" order:
+
+```{r}
+filenames |> naturalsort::naturalsort()
+```
+
+The `naturalsort` package also comes with the command `naturalfactor()`, which can reorder a factor in the same way, or turn an unordered list of strings into a factor:
+
+```{r}
+my_factor <- factor(c("level_1", "level_10", "level_2"))
+naturalsort::naturalfactor(my_factor)
+```
+```{r}
+c("level1", "level10", "level2") |> naturalfactor()
+```
+
+
+
+<!-- End content -->
+{{< include /_include_footer.qmd >}}
+
