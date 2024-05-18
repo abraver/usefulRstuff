@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.361">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Aaron Braver">
 <meta name="dcterms.date" content="2024-01-12">
-
 <title>Useful R Stuff - Sort numbered strings (or factor levels, or filenames) correctly even without zero-padding</title>
 <style>
 code{white-space: pre-wrap;}
@@ -58,7 +55,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
@@ -74,8 +70,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -94,19 +89,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-N1MBV4L3FV"></script>
-
-<script type="text/javascript">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-N1MBV4L3FV"></script><script type="text/javascript">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
-</script>
-<link href="../../site_libs/roboto-condensed-0.3.3/css/roboto-condensed.css" rel="stylesheet">
-
-
+</script><link href="../../site_libs/roboto-condensed-0.3.3/css/roboto-condensed.css" rel="stylesheet">
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Useful R Stuff - Sort numbered strings (or factor levels, or filenames) correctly even without zero-padding">
 <meta property="og:description" content="">
@@ -115,13 +104,10 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 <meta name="twitter:description" content="">
 <meta name="twitter:card" content="summary">
 </head>
-
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-md navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-md navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Useful R Stuff</span>
@@ -133,34 +119,28 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="http://www.aaronbraver.com" rel="" target="">
  <span class="menu-text">Aaron Braver</span></a>
   </li>  
 </ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
     <a class="nav-link" href="../../index.xml" rel="" target=""><i class="bi bi-rss" role="img">
 </i> 
  <span class="menu-text">RSS</span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+<div class="quarto-navbar-tools">
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">Sort numbered strings (or factor levels, or filenames) correctly even without zero-padding</h1>
   <div class="quarto-categories">
     <div class="quarto-category">data cleaning</div>
@@ -190,24 +170,16 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
   </div>
   
 
-</header>
-
-<script src="../../jquery-3.7.0.min.js"></script>
-<script src="../../fold.js"></script>
-<script src="../../move_session_info.js"></script>
-<!-- begin content -->
-<div class="cell" data-hash="index_cache/html/setup_f406cc97a1aa210701afcdb775ee775a">
-<details>
-<summary>Setup</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naturalsort)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</header><script src="../../jquery-3.7.0.min.js"></script><script src="../../fold.js"></script><script src="../../move_session_info.js"></script><!-- begin content --><div class="cell" data-hash="index_cache/html/setup_f406cc97a1aa210701afcdb775ee775a">
+<details><summary>Setup</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">naturalsort</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>It’s quite common to see lists of items (data, files, etc) that are numbered, such as the hypothetical list of files below:</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-2_bd9dd4dbb3bfff83779d3ac5a56dbdc6">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>filenames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"file2.csv"</span>, <span class="st">"file1.csv"</span>,  <span class="st">"file3.csv"</span>,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>               <span class="st">"file11.csv"</span>, <span class="st">"file10.csv"</span>, <span class="st">"file20.csv"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(filenames)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">filenames</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"file2.csv"</span>, <span class="st">"file1.csv"</span>,  <span class="st">"file3.csv"</span>,</span>
+<span>               <span class="st">"file11.csv"</span>, <span class="st">"file10.csv"</span>, <span class="st">"file20.csv"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">filenames</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "file2.csv"  "file1.csv"  "file3.csv"  "file11.csv" "file10.csv"
 [6] "file20.csv"</code></pre>
@@ -215,40 +187,40 @@ gtag('config', 'G-N1MBV4L3FV', { 'anonymize_ip': true});
 </div>
 <p>If you want to <code>sort</code> these by number, you run into a problem, since the filenames are strings: <code>1</code> is followed by <code>10</code>, which is followed by <code>2</code>, since <code>10</code> precedes <code>2</code> “alphabetically”:</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-3_041c9c0d4b41f8bc3fab0cf3149e0567">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>filenames <span class="sc">|&gt;</span> <span class="fu">sort</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">filenames</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "file1.csv"  "file10.csv" "file11.csv" "file2.csv"  "file20.csv"
 [6] "file3.csv" </code></pre>
 </div>
 </div>
-<p>One solution is to rename your items such that they are zero-padded. A kludge with <code>stringr</code>’s str_replace()<code>and</code>str_pad()<code>can get the job done.  Because of the leading zeros,</code>sort()` will get the result you expect:</p>
+<p>One solution is to rename your items such that they are zero-padded. A kludge with <code>stringr</code>’s <code><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace()</a></code>and<code><a href="https://stringr.tidyverse.org/reference/str_pad.html">str_pad()</a></code>can get the job done. Because of the leading zeros,<code><a href="https://rdrr.io/r/base/sort.html">sort()</a></code> will get the result you expect:</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-4_0b4ad8819d1e1b35e8d6a984bcca9a93">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>padded <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(filenames, <span class="st">"[0-9]+"</span>, \(x) <span class="fu">str_pad</span>(x, <span class="dv">2</span>, <span class="at">pad=</span><span class="st">"0"</span>))</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>padded <span class="sc">|&gt;</span> <span class="fu">sort</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">padded</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">filenames</span>, <span class="st">"[0-9]+"</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_pad.html">str_pad</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span>, pad<span class="op">=</span><span class="st">"0"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">padded</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "file01.csv" "file02.csv" "file03.csv" "file10.csv" "file11.csv"
 [6] "file20.csv"</code></pre>
 </div>
 </div>
-<p>Rather than renaming your items, <code>naturalsort::naturalsort()</code> orders your items in “human natural” order:</p>
+<p>Rather than renaming your items, <code><a href="https://rdrr.io/pkg/naturalsort/man/naturalsort.html">naturalsort::naturalsort()</a></code> orders your items in “human natural” order:</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-5_0ca3619554f2ea02482c4f4aca9499f4">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>filenames <span class="sc">|&gt;</span> naturalsort<span class="sc">::</span><span class="fu">naturalsort</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">filenames</span> <span class="op">|&gt;</span> <span class="fu">naturalsort</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/naturalsort/man/naturalsort.html">naturalsort</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "file1.csv"  "file2.csv"  "file3.csv"  "file10.csv" "file11.csv"
 [6] "file20.csv"</code></pre>
 </div>
 </div>
-<p>The <code>naturalsort</code> package also comes with the command <code>naturalfactor()</code>, which can reorder a factor in the same way, or turn an unordered list of strings into a factor:</p>
+<p>The <code>naturalsort</code> package also comes with the command <code><a href="https://rdrr.io/pkg/naturalsort/man/naturalfactor.html">naturalfactor()</a></code>, which can reorder a factor in the same way, or turn an unordered list of strings into a factor:</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-6_02ca9ab89d76ed58f675613caba487ab">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>my_factor <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"level_1"</span>, <span class="st">"level_10"</span>, <span class="st">"level_2"</span>))</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>naturalsort<span class="sc">::</span><span class="fu">naturalfactor</span>(my_factor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_factor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"level_1"</span>, <span class="st">"level_10"</span>, <span class="st">"level_2"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">naturalsort</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/naturalsort/man/naturalfactor.html">naturalfactor</a></span><span class="op">(</span><span class="va">my_factor</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] level_1  level_10 level_2 
 Levels: level_1 &lt; level_2 &lt; level_10</code></pre>
 </div>
 </div>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-7_cace4774e7df13b8b92442d44f676478">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">"level1"</span>, <span class="st">"level10"</span>, <span class="st">"level2"</span>) <span class="sc">|&gt;</span> <span class="fu">naturalfactor</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"level1"</span>, <span class="st">"level10"</span>, <span class="st">"level2"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/naturalsort/man/naturalfactor.html">naturalfactor</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] level1  level10 level2 
 Levels: level1 &lt; level2 &lt; level10</code></pre>
@@ -256,11 +228,9 @@ Levels: level1 &lt; level2 &lt; level10</code></pre>
 </div>
 <!-- End content -->
 <div id="footer-session-info">
-<details>
-<summary>
+<details><summary>
 Session info and package versions
-</summary>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_e9175bd67460e15c5615e5268fb63de0">
+</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-9_e9175bd67460e15c5615e5268fb63de0">
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
 </div>
@@ -339,8 +309,7 @@ Session info and package versions
 
 
 
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");

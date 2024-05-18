@@ -22,7 +22,6 @@ library(tidyverse)
 library(naturalsort)
 ```
 
-
 It's quite common to see lists of items (data, files, etc) that are numbered, such as the hypothetical list of files below:
 
 ```{r}
@@ -37,7 +36,7 @@ If you want to `sort` these by number, you run into a problem, since the filenam
 filenames |> sort()
 ```
 
-One solution is to rename your items such that they are zero-padded.  A kludge with `stringr`'s str_replace()` and `str_pad()` can get the job done.  Because of the leading zeros, `sort()` will get the result you expect:
+One solution is to rename your items such that they are zero-padded. A kludge with `stringr`'s `str_replace()`and`str_pad()`can get the job done.  Because of the leading zeros,`sort()` will get the result you expect:
 
 ```{r}
 padded <- str_replace(filenames, "[0-9]+", \(x) str_pad(x, 2, pad="0"))
@@ -56,12 +55,11 @@ The `naturalsort` package also comes with the command `naturalfactor()`, which c
 my_factor <- factor(c("level_1", "level_10", "level_2"))
 naturalsort::naturalfactor(my_factor)
 ```
+
 ```{r}
 c("level1", "level10", "level2") |> naturalfactor()
 ```
 
-
-
 <!-- End content -->
-{{< include /_include_footer.qmd >}}
 
+{{< include /_include_footer.qmd >}}

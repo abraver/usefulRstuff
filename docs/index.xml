@@ -2232,48 +2232,62 @@ Session info and package versions
   <title>Sort numbered strings (or factor levels, or filenames) correctly even without zero-padding</title>
   <dc:creator>Aaron Braver</dc:creator>
   <link>https://abraver.github.io/usefulRstuff/posts/naturalsort/index.html</link>
-  <description><![CDATA[ 
-
-
-
-<script src="../../jquery-3.7.0.min.js"></script>
-<script src="../../fold.js"></script>
-<script src="../../move_session_info.js"></script>
-<!-- begin content -->
-<div class="cell" data-hash="index_cache/html/setup_f406cc97a1aa210701afcdb775ee775a">
-<details>
-<summary>Setup</summary>
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+  <description><![CDATA[ <script src="../../jquery-3.7.0.min.js"></script><script src="../../fold.js"></script><script src="../../move_session_info.js"></script><!-- begin content --><div class="cell" data-hash="index_cache/html/setup_f406cc97a1aa210701afcdb775ee775a">
+<details><summary>Setup</summary><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
 background-color: null;
-font-style: inherit;">library</span>(tidyverse)</span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">library</span>(naturalsort)</span></code></pre></div>
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">naturalsort</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
 </details>
 </div>
 <p>It’s quite common to see lists of items (data, files, etc) that are numbered, such as the hypothetical list of files below:</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-2_bd9dd4dbb3bfff83779d3ac5a56dbdc6">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">filenames <span class="ot" style="color: #003B4F;
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">filenames</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"file2.csv"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"file1.csv"</span>,  <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"file3.csv"</span>,</span>
-<span id="cb2-2">               <span class="st" style="color: #20794D;
+<span>               <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"file11.csv"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"file10.csv"</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"file20.csv"</span>)</span>
-<span id="cb2-3"><span class="fu" style="color: #4758AB;
+font-style: inherit;">"file20.csv"</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">print</span>(filenames)</span></code></pre></div>
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">filenames</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "file2.csv"  "file1.csv"  "file3.csv"  "file11.csv" "file10.csv"
 [6] "file20.csv"</code></pre>
@@ -2281,96 +2295,162 @@ font-style: inherit;">print</span>(filenames)</span></code></pre></div>
 </div>
 <p>If you want to <code>sort</code> these by number, you run into a problem, since the filenames are strings: <code>1</code> is followed by <code>10</code>, which is followed by <code>2</code>, since <code>10</code> precedes <code>2</code> “alphabetically”:</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-3_041c9c0d4b41f8bc3fab0cf3149e0567">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">filenames <span class="sc" style="color: #5E5E5E;
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">filenames</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">sort</span>()</span></code></pre></div>
+font-style: inherit;"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "file1.csv"  "file10.csv" "file11.csv" "file2.csv"  "file20.csv"
 [6] "file3.csv" </code></pre>
 </div>
 </div>
-<p>One solution is to rename your items such that they are zero-padded. A kludge with <code>stringr</code>’s str_replace()<code>and</code>str_pad()<code>can get the job done.  Because of the leading zeros,</code>sort()` will get the result you expect:</p>
+<p>One solution is to rename your items such that they are zero-padded. A kludge with <code>stringr</code>’s <code><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace()</a></code>and<code><a href="https://stringr.tidyverse.org/reference/str_pad.html">str_pad()</a></code>can get the job done. Because of the leading zeros,<code><a href="https://rdrr.io/r/base/sort.html">sort()</a></code> will get the result you expect:</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-4_0b4ad8819d1e1b35e8d6a984bcca9a93">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">padded <span class="ot" style="color: #003B4F;
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">padded</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">str_replace</span>(filenames, <span class="st" style="color: #20794D;
+font-style: inherit;"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">"[0-9]+"</span>, \(x) <span class="fu" style="color: #4758AB;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">str_pad</span>(x, <span class="dv" style="color: #AD0000;
+font-style: inherit;">filenames</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">2</span>, <span class="at" style="color: #657422;
+font-style: inherit;">"[0-9]+"</span>, \<span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">pad=</span><span class="st" style="color: #20794D;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">"0"</span>))</span>
-<span id="cb6-2">padded <span class="sc" style="color: #5E5E5E;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://stringr.tidyverse.org/reference/str_pad.html">str_pad</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">x</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"0"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">padded</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">sort</span>()</span></code></pre></div>
+font-style: inherit;"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "file01.csv" "file02.csv" "file03.csv" "file10.csv" "file11.csv"
 [6] "file20.csv"</code></pre>
 </div>
 </div>
-<p>Rather than renaming your items, <code>naturalsort::naturalsort()</code> orders your items in “human natural” order:</p>
+<p>Rather than renaming your items, <code><a href="https://rdrr.io/pkg/naturalsort/man/naturalsort.html">naturalsort::naturalsort()</a></code> orders your items in “human natural” order:</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-5_0ca3619554f2ea02482c4f4aca9499f4">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">filenames <span class="sc" style="color: #5E5E5E;
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">|&gt;</span> naturalsort<span class="sc" style="color: #5E5E5E;
+font-style: inherit;">filenames</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">naturalsort</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">naturalsort</span>()</span></code></pre></div>
+font-style: inherit;"><a href="https://rdrr.io/pkg/naturalsort/man/naturalsort.html">naturalsort</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "file1.csv"  "file2.csv"  "file3.csv"  "file10.csv" "file11.csv"
 [6] "file20.csv"</code></pre>
 </div>
 </div>
-<p>The <code>naturalsort</code> package also comes with the command <code>naturalfactor()</code>, which can reorder a factor in the same way, or turn an unordered list of strings into a factor:</p>
+<p>The <code>naturalsort</code> package also comes with the command <code><a href="https://rdrr.io/pkg/naturalsort/man/naturalfactor.html">naturalfactor()</a></code>, which can reorder a factor in the same way, or turn an unordered list of strings into a factor:</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-6_02ca9ab89d76ed58f675613caba487ab">
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">my_factor <span class="ot" style="color: #003B4F;
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">my_factor</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">factor</span>(<span class="fu" style="color: #4758AB;
+font-style: inherit;"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"level_1"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"level_10"</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"level_2"</span>))</span>
-<span id="cb10-2">naturalsort<span class="sc" style="color: #5E5E5E;
+font-style: inherit;">"level_2"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">naturalsort</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">naturalfactor</span>(my_factor)</span></code></pre></div>
+font-style: inherit;"><a href="https://rdrr.io/pkg/naturalsort/man/naturalfactor.html">naturalfactor</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">my_factor</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] level_1  level_10 level_2 
 Levels: level_1 &lt; level_2 &lt; level_10</code></pre>
 </div>
 </div>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-7_cace4774e7df13b8b92442d44f676478">
-<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"level1"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"level10"</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"level2"</span>) <span class="sc" style="color: #5E5E5E;
+font-style: inherit;">"level2"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">naturalfactor</span>()</span></code></pre></div>
+font-style: inherit;"><a href="https://rdrr.io/pkg/naturalsort/man/naturalfactor.html">naturalfactor</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] level1  level10 level2 
 Levels: level1 &lt; level2 &lt; level10</code></pre>
@@ -2378,11 +2458,9 @@ Levels: level1 &lt; level2 &lt; level10</code></pre>
 </div>
 <!-- End content -->
 <div id="footer-session-info">
-<details>
-<summary>
+<details><summary>
 Session info and package versions
-</summary>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_e9175bd67460e15c5615e5268fb63de0">
+</summary><div class="cell" data-hash="index_cache/html/unnamed-chunk-9_e9175bd67460e15c5615e5268fb63de0">
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────</code></pre>
 </div>
