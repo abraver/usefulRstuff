@@ -1,0 +1,284 @@
+---
+title: "Tables for Word in `flextable`"
+
+date: "2024-05-17"
+
+categories:
+  - tables
+---
+
+{{< include /_include_header.qmd >}}
+
+<!-- begin content -->
+
+```{r setup}
+#| code-fold: true
+#| code-summary: "Setup"
+#| output: false
+#| warning: false
+library(tidyverse)
+library(gt)
+library(flextable)
+```
+
+On those occasions where I have a coauthor working in Word rather than LaTeX, it's sometimes useful to be able to output nicely formatted, editable tables directly from R. I like the tables from `gt`, but they don't render certain style and formatting options correctly in Word or RTF output (see [this issue](https://github.com/rstudio/gt/issues/1098)).[^1]
+
+[^1]: If you're reading this some time in the future, it might be worth checking that issue to see if it's been resolved.
+
+So, in this post I'll show some tables made with `flextable`, which has better Word support.
+
+::: {.callout-tip collapse="true"}
+## If you don't need editability or formatting...
+
+There are a few options if you don't need editable output, or output with fancy formatting.
+
+### Editable but not pretty
+
+The option I use the most, for sending tables to Word or Excel is `clipr::write_clip(df)`, which writes `df` to the clipboard for easy pasting. There's also `clipr::write_last_clip()` which can be called right after you create a dataframe and copies it to the clipboard.
+
+### Pretty but not editable
+
+Another option is to save a `gt` as an image or a pdf:
+
+```{r}
+head(mtcars, 3) |> 
+  gt() |> 
+  gtsave("table.png") # or table.pdf, or whatever
+```
+
+(Saving as an image requires that `webshot2` be installed.)
+:::
+
+## `flextable`
+
+Piping a dataframe to `flextable()` produces a pretty decent initial result:
+
+```{r}
+palmerpenguins::penguins |> 
+  select(species, island, bill_length_mm, sex, year) |> 
+  slice_sample(n = 5) |>  # select 5 random rows
+  flextable()
+```
+
+While we're at it, let's change the formatting of that `year` column. `colformat_num` targets numeric columns; the `j` argument narrows it down to specific columns if needed. `colformat_num` passes `...` to `format()`, so you can use most `format()` arguments---here I've just used `big.mark`.
+
+```{r}
+penguin_flextable_1 <- palmerpenguins::penguins |> 
+  select(species, island, bill_length_mm, sex, year) |> 
+  slice_sample(n = 5) |> 
+  flextable() |> 
+  colformat_num(j = "year", big.mark = "")
+
+penguin_flextable_1
+```
+
+You can also format columns with a function using `set_formatter()`. We could, for example, make the `species` column lowercase and the `island` column uppercase:
+
+```{r}
+penguin_flextable_1 |> 
+  set_formatter(species = tolower, island = toupper)
+```
+
+You can also pass a anonymous function if you need to specify arguments:
+
+```{r}
+penguin_flextable_1 |> 
+  set_formatter(sex = \(x) ifelse(x == "male", "m", "f")) 
+```
+
+A particularly good use of this is using one of the labeller functions from `scales`, e.g. if you want to format currency:
+
+```{r}
+data.frame(A = c(12.1, 21.56, 3.64), B = c(44.0, 54.44, 6)) |> 
+  flextable() |> 
+  set_formatter(A = scales::label_dollar())
+```
+
+### Multiple heading levels/grouping
+
+You can also make fairly nice tables with a grouping structure in the header using `separate_header()`. This function will interpret column names with a separator (e.g. "\_" as groups and sub-groups.
+
+Consider the following (unremarkable) dataframe which summarizes penguin bill length by `species` and `sex`:
+
+```{r}
+
+penguin_data <- palmerpenguins::penguins |> 
+  select(species, sex, bill_length_mm, year) |> 
+  drop_na(sex) |> 
+  group_by(species, sex, year) |> 
+  summarize(bill.length = mean(bill_length_mm), .groups = "drop")
+
+penguin_data |> 
+  slice_sample(n = 5)
+```
+
+Let's pipe that into `flextable`, repeat the `year` column formatting from before, and also round the `bill.length` column to 2 digits.
+
+```{r}
+penguin_flextable_2 <- penguin_data |> 
+  slice_sample(n = 5) |> 
+  flextable() |> 
+  colformat_num(j = "year", big.mark = "") |> 
+  colformat_double(digits = 2)
+
+penguin_flextable_2
+```
+
+We can make this a lot easier to read if we have species and island as header rows. We'll start by `pivot_wider`-ing these two columns. Note that `pivot_wider` defaults to combining `species` and `island` with an underscore (this becomes important momentarily):
+
+```{r}
+penguin_flextable_3 <- penguin_data |> 
+  pivot_wider(names_from = c("species", "sex"), values_from = "bill.length") |> 
+  flextable() |> 
+  colformat_num(j = "year", big.mark = "") |> # reapply our formatting from before
+  colformat_double(digits = 2)
+
+penguin_flextable_3
+```
+
+`separate_header()` parses the column names using the underscore, and makes two header levels:
+
+```{r}
+penguin_flextable_4 <- penguin_flextable_3 |> 
+  separate_header()
+
+penguin_flextable_4
+```
+
+You can change separator with \`separate_header(..., split = "...regex..."). This is useful if your variable names already use underscore as a separator.
+
+Note that since in the combined column names, `species` comes before `sex` (e.g. `Adelie_male`), it's been used as the top header row. If you switch the order of the `names_from` argument in `pivot_wider`, you get `sex` as the top row. This gives a slightly unexpected result: why are female/male repeated across each category?
+
+```{r}
+penguin_data |> 
+  pivot_wider(names_from = c("sex", "species"), values_from = "bill.length") |> 
+  flextable() |> 
+  separate_header() |> 
+  colformat_num(j = "year", big.mark = "") |> # reapply our formatting from before
+  colformat_double(digits = 2)
+```
+
+`separate_header()` doesn't rearrange columns to put relevant groups next to each other. If you want a spanning column, you'll need to reorder the columns manually with `relocate()`:
+
+```{r}
+penguin_data |> 
+  pivot_wider(names_from = c("sex", "species"), values_from = "bill.length") |>
+  relocate(starts_with("female")) |> 
+  flextable() |> 
+  separate_header() |> 
+  colformat_num(j = "year", big.mark = "") |> # reapply our formatting from before
+  colformat_double(digits = 2)
+```
+
+With savvy use of `pivot_wider(names_from = ...)` combined with `relocate`, you can the ordering of header rows and spanning columns you're after.
+
+### Change labels
+
+We can edit text/values with `labelizor()`. The example below changes all instances of female/male to f/m:
+
+```{r}
+penguin_flextable_4 |> 
+  labelizor(labels = c("female" = "f", "male" = "m"))
+```
+
+Adding the `j` argument selects columns to restrict the changes to:
+
+```{r}
+penguin_flextable_4 |> 
+  labelizor(j = c("Adelie_female", "Chinstrap_female"), labels = c("female" = "f", "male" = "m"))
+```
+
+Note that for the `j` argument, the rownames are based on the underlying `df`, not what you seen in the flextable. That's why I have to refer to `Adelie_female`, which was one of the columns that resulted from out `pivot_wider()`ing. You can do a lot with `j` (and in other functions that support it, `i` for rows), including using logical expressions to filter columns. [See here](https://ardata-fr.github.io/flextable-book/table-design.html#usage) for more details. The `labels` argument takes name-value pairs where the name is the value to replace and the value is the replacement value.
+
+### Conditional formatting
+
+You can target cells with specific values for various kinds of formatting. For example, `color()` sets the text color. The `color` argument takes either a vector of colors or a function which returns a vector of colors---here I've just used an anonymous function to color code based on whether a value is below or above 40:
+
+```{r}
+penguin_flextable_4 |> 
+  color(color = \(x) ifelse(x < 40, "red", "black"))
+```
+
+You can get more fancy and use a scale from the `scales` package:
+
+```{r}
+penguin_flextable_4 |> 
+  color(color = scales::col_numeric(palette = "viridis", domain = c(30, 52)))
+
+penguin_flextable_4 |> 
+  color(color = scales::col_bin(palette = "viridis", domain = c(30, 60), bins = 3))
+```
+
+You can also select rows or columns with the `i` and `j` arguments, using formula syntax. To target rows, provide `i` with a formula to filter through the rows. Here we color in red rows for years greater than 2007:
+
+```{r}
+penguin_flextable_4 |> 
+  color(i = ~ year > 2007, color = "red" )
+```
+
+You can restrict this to specific columns with the `j` argument:
+
+```{r}
+penguin_flextable_4 |> 
+  color(i = ~ year > 2007, j = c("year", "Adelie_female"), color = "red" )
+```
+
+### Getting `flextable`s into Word
+
+There are three main ways to get a `flextable` into Word: open a temporary preview file that you can copy from with `print(preview = "docx")`, save to a Word file with `save_as_docx()`, or insert into an existing Word document with the `officer` package.
+
+#### Temporary Word file
+
+This is probably the easiest method. The following code opens a new temporary document in Word (assuming it's installed on your computer) that contains the `flextable` object.
+
+```{r}
+#| output: false
+
+penguin_flextable_4 |> 
+  print(preview = "docx")
+```
+
+That's it! You can now copy and paste that table wherever you need. NB: this creates a *temporary file* which will be deleted when your R session closes, so save any output you want in a separate document.
+
+#### Save to a new Word file
+
+`save_as_docx` will do as the name suggests---insert the `flextable` into a new .docx file whose location you specify:
+
+```{r}
+penguin_flextable_4 |> 
+  save_as_docx(path = "penguin_table.docx") # I find it necessary to explicitly name the path argument
+```
+
+#### Import into an existing Word file.
+
+The package `officer` lets you read a Word document into R, manipulate it, and save it again with any additions or changes.
+
+Read in an existing Word document with `officer::read_docx()`. Here I'll read the `penguin_table.docx` document we created above.:
+
+```{r}
+#| output: false
+penguin_doc <- officer::read_docx("penguin_table.docx")
+```
+
+Now add your `flextable` with `flextable::body_add_flextable()`:
+
+```{r}
+#| output: false 
+penguin_doc <- flextable::body_add_flextable(penguin_doc, penguin_flextable_4)
+```
+
+And finally, save this Word object as a Word document:
+
+```{r}
+#| output: false 
+penguin_doc |> 
+  print(target = "penguin_table.docx")
+```
+
+## Conclusion
+
+That's it!  `flextable` has a bunch more functionality, but these are the things I find myself using regularly.  Check out [the `flextable` page](https://davidgohel.github.io/flextable/) or [the `flextable` book](https://ardata-fr.github.io/flextable-book/) (free online).
+
+<!-- End content -->
+
+{{< include /_include_footer.qmd >}}

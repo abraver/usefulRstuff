@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://abraver.github.io/usefulRstuff/index.html</loc>
-    <lastmod>2024-01-13T01:46:12.046Z</lastmod>
+    <lastmod>2024-05-18T04:53:26.337Z</lastmod>
   </url>
   <url>
     <loc>https://abraver.github.io/usefulRstuff/posts/skimr/index.html</loc>
@@ -62,7 +62,7 @@
   </url>
   <url>
     <loc>https://abraver.github.io/usefulRstuff/hidden.html</loc>
-    <lastmod>2024-01-13T01:46:10.907Z</lastmod>
+    <lastmod>2024-05-18T04:53:25.165Z</lastmod>
   </url>
   <url>
     <loc>https://abraver.github.io/usefulRstuff/posts/regex_tools/index.html</loc>
@@ -70,10 +70,14 @@
   </url>
   <url>
     <loc>https://abraver.github.io/usefulRstuff/AARONREADME.html</loc>
-    <lastmod>2024-01-12T21:16:08.096Z</lastmod>
+    <lastmod>2024-05-08T19:26:57.863Z</lastmod>
   </url>
   <url>
     <loc>https://abraver.github.io/usefulRstuff/posts/naturalsort/index.html</loc>
-    <lastmod>2024-01-13T01:46:10.547Z</lastmod>
+    <lastmod>2024-05-08T19:26:59.653Z</lastmod>
+  </url>
+  <url>
+    <loc>https://abraver.github.io/usefulRstuff/posts/tables_for_word_flextable/index.html</loc>
+    <lastmod>2024-05-18T04:53:24.775Z</lastmod>
   </url>
 </urlset>

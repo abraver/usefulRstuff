@@ -31,7 +31,7 @@ filenames <- c("file2.csv", "file1.csv",  "file3.csv",
 print(filenames)
 ```
 
-If you want to `sort` these by number, you run into a problem, since the filenames are string: `1` is followed by `10`, which is followed by `2`, since `10` precedes `2` "alphabetically":
+If you want to `sort` these by number, you run into a problem, since the filenames are strings: `1` is followed by `10`, which is followed by `2`, since `10` precedes `2` "alphabetically":
 
 ```{r}
 filenames |> sort()

@@ -1,27 +1,35 @@
 ---
-title: "TITLE"
-
-date: "DATE"
-
-categories:
-  - CATEGORY
+title: "Stuff to add"
 ---
 
-{{< include /_include_header.qmd >}}
+{{< include ../../_include_header.qmd >}}
 
 <!-- begin content -->
 
-```{r setup}
-#| code-fold: true
-#| code-summary: "Setup"
-#| output: false
-#| warning: false
+<!-- ```{r setup} -->
+<!-- #| code-fold: true -->
+<!-- #| code-summary: "Setup" -->
+<!-- #| output: false -->
+<!-- #| warning: false -->
 
-library(tidyverse)
-```
+<!-- library(tidyverse) -->
+<!-- ``` -->
 
 
+
+## R/Praat mashups and textgrid stuff
+- <https://bsky.app/profile/abraver.bsky.social/post/3kn5a6jwk2k2g>
+- <https://github.com/tjmahr/readtextgrid>
+- <http://www.aaronalbin.com/praatr/tutorial.html>
+- <https://github.com/patrickreidy/textgRid>
+- <https://fu.ff.cuni.cz/praat/rDemo.html>
+- <https://docs.ropensci.org/phonfieldwork/reference/index.html>
+- <https://github.com/oliverehmer/act>
+
+## Visualizations
+- <https://mjskay.github.io/ggdist/index.html>
+- Update Patchwork post with collect axes: <https://www.data-imaginist.com/posts/2024-01-05-patchwork-1-2-0/>
 
 <!-- End content -->
-{{< include /_include_footer.qmd >}}
+{{< include ../../_include_footer.qmd >}}
 
